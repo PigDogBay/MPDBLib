@@ -1,0 +1,258 @@
+package com.pigdogbay.lib.utils;
+
+import com.pigdogbay.lib.utils.WordList;
+
+import java.util.Locale;
+
+
+/*
+ * Query parser for WordList
+ * 
+ * The following steps are needed to perform a word search
+ * 
+ * query = _WordSearch.preProcessQuery(query);
+ * SearchType type = _WordSearch.getQueryType(query); 
+ * query = _WordSearch.postProcessQuery(query, type);
+ * _WordSearch.runQuery(query, type, callback);
+ */
+public class WordSearch 
+{
+	public enum SearchType
+	{
+		Crossword,
+		Anagram,
+		TwoWordAnagram,
+		Wildcard,
+		WildcardAndCrossword,
+		Supergram,
+		SupergramWild,
+	}
+	public static final char CROSSWORD_CHAR = '.';
+	public static final char CROSSWORD_CHAR_ALTERNATIVE = '?';
+	public static final char TWOWORD_CHAR = ' ';
+	public static final char WILDCARD_CHAR = '#';
+	public static final char WILDCARD_CHAR_ALTERNATIVE = '@';
+	public static final char SUPERGRAM_CHAR = '+';
+	public static final char SUPERGRAMWILD_CHAR = '*';
+	public static final char LOWEST_ASCII_VALUE = ' ';
+	public static final char HIGHEST_ASCII_VALUE = 'z';
+	public static final String CROSSWORD_STR = ".";
+	public static final String TWOWORD_STR = " ";
+	public static final String WILDCARD_STR = "#";
+	public static final String SUPERGRAM_STR = "+";
+	public static final String SUPERGRAMWILD_STR = "*";
+	
+	
+	public final static int MAX_WORD_LEN = 30;
+	
+	private static final char DEL_CHAR = 'X';
+	private static final String DEL_STR = "X";
+	private WordList _WordList;
+	private boolean _FindSubAnagrams=true;
+	
+	public void setFindSubAnagrams(boolean value)
+	{
+		_FindSubAnagrams = value;
+	}
+	
+	public WordSearch(WordList list)
+	{
+		_WordList = list;
+	}
+	
+	/**
+	 * Remove non-ascii chars
+	 * chop down to max length
+	 * trim whitespace
+	 * lowercase
+	 * 
+	 */
+	public String clean(String raw)
+	{
+		if (raw.length()==0)
+		{
+			return "";
+		}
+		StringBuilder sbuff = new StringBuilder();
+		for (int i=0; i<raw.length() && i<=MAX_WORD_LEN; i++)
+		{
+			char c = raw.charAt(i);
+			if (c>=LOWEST_ASCII_VALUE && c<=HIGHEST_ASCII_VALUE){
+				sbuff.append(c);
+			}
+		}
+		return sbuff
+				.toString()
+				.trim()
+				.toLowerCase(Locale.US);
+	}
+	public String standardSearchesOnly(String query)
+	{
+		return query
+				.replace(SUPERGRAM_CHAR, CROSSWORD_CHAR)
+				.replace(SUPERGRAMWILD_CHAR, CROSSWORD_CHAR);
+	}
+	public String preProcessQuery(String query)
+	{
+		query = query
+				.toLowerCase(Locale.US)
+				.replace(WILDCARD_CHAR_ALTERNATIVE,WILDCARD_CHAR)
+				.replace(CROSSWORD_CHAR_ALTERNATIVE, CROSSWORD_CHAR)
+				.replace("2", "..")
+				.replace("3", "...")
+				.replace("4", "....")
+				.replace("5", ".....")
+				.replace("6", "......")
+				.replace("7", ".......")
+				.replace("8", "........")
+				.replace("9", ".........");
+
+		if (query.length() > MAX_WORD_LEN) 
+		{
+			query = query.substring(0, MAX_WORD_LEN);
+		}
+		return query;
+	}
+
+	public SearchType getQueryType(String query)
+	{
+		if (query.contains(WILDCARD_STR) && query.contains(CROSSWORD_STR)) {
+			return SearchType.WildcardAndCrossword;
+		} else if (query.contains(WILDCARD_STR)) {
+			return SearchType.Wildcard;
+		} else if (query.contains(CROSSWORD_STR)) {
+			return SearchType.Crossword;
+		} else if (query.contains(TWOWORD_STR)) {
+			return SearchType.TwoWordAnagram;
+		} else if (query.contains(SUPERGRAM_STR)) {
+			return SearchType.Supergram;
+		} else if (query.contains(SUPERGRAMWILD_STR)) {
+			return SearchType.SupergramWild;
+		}
+		return SearchType.Anagram;
+	}
+
+	public String postProcessQuery(String query, SearchType type)
+	{
+		switch (type)
+		{
+		case Anagram:
+			//Keep a-z, remove any other char
+			query = stripChars(query,DEL_CHAR,DEL_CHAR);
+			break;
+		case Crossword:
+			//keep a-z and .
+			query = stripChars(query,CROSSWORD_CHAR,DEL_CHAR);
+			break;
+		case Supergram:
+			//keep a-z and +
+			query = stripChars(query,SUPERGRAM_CHAR,DEL_CHAR);
+			break;
+		case SupergramWild:
+			//keep a-z and *
+			query = stripChars(query,SUPERGRAMWILD_CHAR,DEL_CHAR);
+			break;
+		case TwoWordAnagram:
+			//keep a-z and ' '
+			query = stripChars(query,TWOWORD_CHAR,DEL_CHAR);
+			break;
+		case Wildcard:
+			//keep a-z and #
+			query = stripChars(query,WILDCARD_CHAR,DEL_CHAR);
+			break;
+		case WildcardAndCrossword:
+			//keep a-z . and #
+			query = stripChars(query,CROSSWORD_CHAR,WILDCARD_CHAR);
+			break;
+		default:
+			query="";
+			break;
+		}
+		return query;
+	}
+	
+	/**
+	 * Removed any cruft that might upset the word list algorithms
+	 */
+	private String stripChars(String s, char except1, char except2)
+	{
+		char[] chars = s.toCharArray();
+		for (int i = 0; i < chars.length; i++) 
+		{
+			char c = chars[i];
+			if ((c< 'a' || c > 'z') && c!=except1 && c!=except2) 
+			{
+				chars[i] = DEL_CHAR;
+			}
+		}		
+		return new String(chars).replace(DEL_STR, "");
+	}
+	
+	public void runQuery(String query, SearchType type, WordListCallback callback) 
+	{
+		_WordList.reset();
+		switch (type)
+		{
+		case Anagram:
+			_WordList.FindAnagrams(query, callback);
+			if (_FindSubAnagrams
+					&& query.length() > 4
+					&& query.length() < MAX_WORD_LEN)
+			{
+				WordListCallback missingLettersWrapper = new WordListCallback.MissingLettersWrapper(
+						query, callback);
+				WordListCallback filterWrapper = new WordListCallback.FilterWrapper(
+						missingLettersWrapper);
+				_WordList.FindSubAnagrams(query, filterWrapper);
+			}
+			break;
+		case Crossword:
+			_WordList.FindPartialWords(query, callback);
+			break;
+		case Supergram:
+			int len = query.length();
+			query=query.replace("+", "");
+			_WordList.FindSupergrams(query, callback,len);
+			break;
+		case SupergramWild:
+			query=query.replace("*", "");
+			_WordList.FindSupergrams(query, callback,0);
+			break;
+		case TwoWordAnagram:
+			String[] words = query.split(" ");
+			_WordList.FindMultiwordAnagrams(words[0], words[1], callback);
+			break;
+		case Wildcard:
+			_WordList.FindWildcardWords(query, callback);
+			break;
+		case WildcardAndCrossword:
+			_WordList.FindWildcardWords(query, callback);
+			break;
+		default:
+			break;
+		
+		}
+	}	
+	
+	public static String toString(SearchType type)
+	{
+		switch (type)
+		{
+		case Anagram:
+			return "anagram";
+		case Crossword:
+			return "crossword";
+		case Supergram:
+			return "supergram";
+		case SupergramWild:
+			return "supergram wild";
+		case TwoWordAnagram:
+			return "two word anagram";
+		case Wildcard:
+			return "wildcard";
+		case WildcardAndCrossword:
+			return "wildcard and crossword";
+		}
+		return "undefined";
+	}
+}

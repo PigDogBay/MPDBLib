@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array translatable="false" name="background_colours">
+        <item name="skyblue">@string/color_skyblue</item>
+        <item name="pink">@string/color_dark_pink</item>
+        <item name="lightpink">@string/color_light_pink</item>
+        <item name="turquoise">@string/color_turquoise</item>
+        <item name="sunshine">@string/color_yellow</item>
+        <item name="grey">@string/color_grey</item>
+        <item name="white">@string/color_white</item>
+        </string-array>
+    <string-array translatable="false" name="background_colours_values">
+        <item name="skyblue">0</item>
+        <item name="pink">1</item>
+        <item name="lightpink">2</item>
+        <item name="turquoise">3</item>
+        <item name="sunshine">4</item>
+        <item name="grey">5</item>
+        <item name="white">6</item>
+        </string-array>
+</resources>

@@ -156,6 +156,23 @@ public final class ActivityUtils
 		}
 		catch (Exception e) {
 		}
-	}	
-	
+	}
+	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
+	public static void setBackground(Activity activity, int viewID, int backgroundID)
+	{
+		Drawable background = activity.getResources().getDrawable(backgroundID);
+		View view = (View)activity.findViewById(viewID);
+		int sdk = android.os.Build.VERSION.SDK_INT;
+		if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN)
+		{
+			view.setBackgroundDrawable(background);
+		}
+		else
+		{
+			view.setBackground(background);
+		}
+	}
+
+
 }

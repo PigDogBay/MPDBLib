@@ -1,13 +1,50 @@
 package com.pigdogbay.mpdblib;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.pigdogbay.lib.usercontrols.GoProNagBox;
+
+public class MainActivity extends AppCompatActivity implements GoProNagBox.IGoProResult {
+
+    private static String TAG = "MPDB";
+    private GoProNagBox goProNagBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ((Button) findViewById(R.id.btnGoProNagBox)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goProNagBoxTest();
+            }
+        });
+
+        goProNagBox = new GoProNagBox(this);
+        goProNagBox.setFrequency(5)
+                .setResultListener(this)
+                .setMessageId(R.string.go_pro_message)
+                .setUrlId(R.string.market_cleverdic);
+    }
+
+    private void goProNagBoxTest(){
+        goProNagBox.save();
+        goProNagBox.check();
+    }
+
+    @Override
+    public void noGoPro() {
+        Log.v(TAG,"No Go Pro");
+    }
+
+    @Override
+    public void yesGoPro() {
+        Log.v(TAG,"Yes Go Pro");
     }
 }

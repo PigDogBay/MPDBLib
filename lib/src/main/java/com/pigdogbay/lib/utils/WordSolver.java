@@ -116,7 +116,7 @@ public class WordSolver
 	private class SearchTask extends AsyncTask<String, String, Void> implements WordListCallback
 	{
 		/* 
-		 * @see com.pigdogbay.androidutils.utils.WordListCallback#Update(java.lang.String)
+		 * @see com.pigdogbay.lib.utils.WordListCallback#Update(java.lang.String)
 		 */
 		@Override
 		public void Update(String result) {

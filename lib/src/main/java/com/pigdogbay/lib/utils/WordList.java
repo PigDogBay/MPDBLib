@@ -181,13 +181,6 @@ public class WordList {
 		if (word1.length() != word2.length()){
 			listB = getFilteredList(superset, word2.length());
 		}
-		//want to work on the smallest list
-		if (listA.size() > listB.size())
-		{
-			List<String> swap = listA;
-			listA = listB;
-			listB = swap;
-		}
 		for (String first : listA)
 		{
 			superset.clear();

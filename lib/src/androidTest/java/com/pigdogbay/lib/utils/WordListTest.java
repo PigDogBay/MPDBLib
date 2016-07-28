@@ -116,6 +116,19 @@ public class WordListTest {
         assertEquals("unmastered ethnic",callback.GetMatches().get(49));
         timing.LogDuration(TAG);
     }
+    @Test
+    public void FindMultiwordAnagramsTest2()
+    {
+        TestWordListCallback callback = new TestWordListCallback();
+        WordList target = new WordList();
+        target.SetWordList(LoadList());
+        Timing timing = new Timing();
+        target.FindMultiwordAnagrams("united","manchester", callback);
+        assertEquals(51, callback.GetMatches().size());
+        assertEquals("dement raunchiest",callback.GetMatches().get(7));
+        assertEquals("tamest unenriched",callback.GetMatches().get(42));
+        timing.LogDuration(TAG);
+    }
 
     @Test
     public void FindPartialWordsTest1()

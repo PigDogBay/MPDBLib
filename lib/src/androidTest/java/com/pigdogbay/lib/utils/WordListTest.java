@@ -247,7 +247,7 @@ public class WordListTest {
         WordList target = new WordList();
         target.SetWordList(list);
         target.FindSubAnagrams("earths",callback);
-        assertEquals(80, callback.GetMatches().size());
+        assertEquals(128, callback.GetMatches().size());
 
     }
 
@@ -259,7 +259,7 @@ public class WordListTest {
         WordList target = new WordList();
         target.SetWordList(list);
         target.FindSubAnagrams("galls",callback);
-        assertEquals(4, callback.GetMatches().size());
+        assertEquals(13, callback.GetMatches().size());
 
     }
 
@@ -282,7 +282,7 @@ public class WordListTest {
         List<String> list = LoadList();
         WordList target = new WordList();
         target.SetWordList(list);
-        target.FindSubAnagrams("ab",callback);
+        target.FindSubAnagrams("xy",callback);
         assertEquals(0, callback.GetMatches().size());
 
     }

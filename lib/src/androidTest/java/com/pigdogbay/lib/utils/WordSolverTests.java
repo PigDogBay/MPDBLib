@@ -93,7 +93,7 @@ public class WordSolverTests {
         while (target.stateObservable.getValue()!= WordSolver.States.finished){
             try {Thread.sleep(100);} catch (InterruptedException e) {}
         }
-        assertEquals(263, target.matches.size());
+        assertEquals(347, target.matches.size());
         assertEquals("graspable", target.matches.get(0));
     }
 

@@ -196,7 +196,6 @@ public class WordSearch
 		case Anagram:
 			_WordList.FindAnagrams(query, callback);
 			if (_FindSubAnagrams
-					&& query.length() > 4
 					&& query.length() < MAX_WORD_LEN)
 			{
 				WordListCallback missingLettersWrapper = new WordListCallback.MissingLettersWrapper(

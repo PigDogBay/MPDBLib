@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class WordList {
-	private static final int MIN_ANAGRAM_LEN = 3;
 	private int _ResultLimit = 500;
 	private int _Count = 0;
 	private volatile boolean _Stop;
@@ -88,7 +87,7 @@ public class WordList {
 	public void FindSubAnagrams(String anagram, WordListCallback callback) 
 	{
 		int len = anagram.length();
-		if (len<=MIN_ANAGRAM_LEN)
+		if (len==1)
 		{
 			return;
 		}
@@ -97,7 +96,7 @@ public class WordList {
 		{
 			if (_Stop){break;}
 			int wordLen = word.length();
-			if (word.length()>MIN_ANAGRAM_LEN && wordLen<len)
+			if (wordLen<len)
 			{
 				if (set.isSubgram(word))
 				{

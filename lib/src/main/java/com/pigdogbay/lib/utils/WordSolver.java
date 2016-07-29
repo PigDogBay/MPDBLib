@@ -107,12 +107,16 @@ public class WordSolver
 	public String getWordURL(int pos)
 	{
 		String word = this.matches.get(pos);
+		return getWordURL(word);
+	}
+	public String getWordURL(String word)
+	{
 		//Removes formatting such as missing letters
 		int index = word.indexOf(" (");
 		word =  index==-1 ? word : word.substring(0,index);
 		return "http://www.google.com/search?q=define:"+word;
 	}
-	
+
 	private class SearchTask extends AsyncTask<String, String, Void> implements WordListCallback
 	{
 		/* 

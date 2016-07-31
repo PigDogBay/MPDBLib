@@ -100,8 +100,6 @@ public class WordSolver
 			sbuff.append(result);
 			sbuff.append('\n');
 		}
-		sbuff.append('\n');
-		sbuff.append(APP_URL);
 		return sbuff.toString();
 	}
 	public String getWordURL(int pos)

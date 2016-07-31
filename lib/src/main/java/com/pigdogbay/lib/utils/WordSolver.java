@@ -114,7 +114,7 @@ public class WordSolver
 		//Removes formatting such as missing letters
 		int index = word.indexOf(" (");
 		word =  index==-1 ? word : word.substring(0,index);
-		return "http://www.google.com/search?q=define:"+word;
+		return "https://www.google.com/search?q=define:"+word;
 	}
 
 	private class SearchTask extends AsyncTask<String, String, Void> implements WordListCallback

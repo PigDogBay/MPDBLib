@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.greaterThan;
@@ -108,6 +109,26 @@ public class StringUtilsTests {
         Timing t = new Timing();
         StringUtils.sortByLengthReverse(list);
         t.LogDuration(TAG);
+    }
+    @Test
+    public void sizeThenAtoZComparator1()
+    {
+        List<String> list = new ArrayList<>();
+        list.add("pear");
+        list.add("orange");
+        list.add("lemon");
+        list.add("banana");
+        list.add("apple");
+        list.add("grapefruit");
+
+        Collections.sort(list, new StringUtils.sizeThenAtoZComparator());
+
+        assertEquals(list.get(0),"grapefruit");
+        assertEquals(list.get(1),"banana");
+        assertEquals(list.get(2),"orange");
+        assertEquals(list.get(3),"apple");
+        assertEquals(list.get(4),"lemon");
+        assertEquals(list.get(5),"pear");
     }
 
 

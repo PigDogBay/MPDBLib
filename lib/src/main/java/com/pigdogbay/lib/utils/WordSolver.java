@@ -1,6 +1,9 @@
 package com.pigdogbay.lib.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.content.Context;
@@ -43,8 +46,7 @@ public class WordSolver
 	public List<String> matches;
 	public ObservableProperty<States> stateObservable;
 	public ObservableProperty<String> matchObservable;
-	public boolean isStandard = true;
-		
+
 	public String getQuery()
 	{
 		return query;
@@ -63,7 +65,22 @@ public class WordSolver
 	
 	public void loadDictionary(Context context, int resourceId)
 	{
-		this.new LoadTask(context, resourceId).execute();
+		loadDictionary(context, resourceId, -1);
+	}
+	public void loadDictionary(Context context, int stdId, int proId)
+	{
+		States state = stateObservable.getValue();
+		switch (state){
+
+			case uninitialized:
+			case ready:
+			case finished:
+				this.new LoadTask(context, stdId, proId).execute();
+				break;
+			default:
+				break;
+		}
+
 	}
 	public boolean setAndValidateQuery(String rawQuery)
 	{
@@ -132,10 +149,6 @@ public class WordSolver
 		@Override
 		protected Void doInBackground(String... params) {
 			String processedQuery = query;
-			if (isStandard)
-			{
-				processedQuery = WordSolver.this.wordSearch.standardSearchesOnly(processedQuery);
-			}
 			processedQuery = WordSolver.this.wordSearch.preProcessQuery(processedQuery);
 			WordSearch.SearchType searchType = WordSolver.this.wordSearch.getQueryType(processedQuery);
 			processedQuery = WordSolver.this.wordSearch.postProcessQuery(processedQuery, searchType);
@@ -167,13 +180,16 @@ public class WordSolver
 	private class LoadTask extends AsyncTask<Void, Void, Void> {
 		
 		Context context;
-		int resourceId;
+		int standandWordListId, proWordListId;
 		boolean isLoadError = false;
-		public LoadTask(Context context, int resourceId)
+
+		public LoadTask(Context context, int stdId, int proId)
 		{
 			this.context = context;
-			this.resourceId = resourceId;
+			this.standandWordListId = stdId;
+			this.proWordListId = proId;
 		}
+
 		@Override
 		protected void onPreExecute() {
 			stateObservable.setValue(States.loading);
@@ -183,7 +199,12 @@ public class WordSolver
 			try 
 			{
 				List<String> words = new ArrayList<String>();
-				words = LineReader.Read(context, resourceId);
+				words = LineReader.Read(context, standandWordListId);
+				if (proWordListId!=-1){
+					List<String> proWords = LineReader.Read(context, proWordListId);
+					words.addAll(proWords);
+					Collections.sort(words, new StringUtils.sizeThenAtoZComparator());
+				}
 				wordList.SetWordList(words);
 			} 
 			catch (Exception e) 
@@ -205,7 +226,5 @@ public class WordSolver
 				stateObservable.setValue(States.ready);
 			}
 		}
-	
-		
 	}
 }

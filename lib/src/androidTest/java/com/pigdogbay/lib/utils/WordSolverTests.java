@@ -42,8 +42,8 @@ public class WordSolverTests {
         target.matches.add("tailor");
         target.matches.add("soldier");
         target.matches.add("smiley (george)");
-        assertEquals("http://www.google.com/search?q=define:soldier",target.getWordURL(2));
-        assertEquals("http://www.google.com/search?q=define:smiley",target.getWordURL(3));
+        assertEquals("https://www.google.com/search?q=define:soldier",target.getWordURL(2));
+        assertEquals("https://www.google.com/search?q=define:smiley",target.getWordURL(3));
     }
 
     /**

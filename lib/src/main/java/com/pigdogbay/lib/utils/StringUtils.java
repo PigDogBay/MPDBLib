@@ -195,4 +195,24 @@ public final class StringUtils {
 		return defaultValue;
 	}
 
+	/**
+	 * Sorts first by size, bigger words first
+	 * words of same length are sorted in usual A to Z fashion
+	 */
+	public static class sizeThenAtoZComparator implements Comparator<String> {
+		@Override
+		public int compare(String lhs, String rhs) {
+			int llen = lhs.length();
+			int rlen = rhs.length();
+			if (llen<rlen)
+			{
+				return 1;
+			}
+			if (llen==rlen){
+				return lhs.compareTo(rhs);
+			}
+			return -1;
+		}
+	}
+
 }

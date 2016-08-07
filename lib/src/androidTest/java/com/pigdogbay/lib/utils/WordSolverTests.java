@@ -37,13 +37,12 @@ public class WordSolverTests {
     @Test
     public void getWordURL1()
     {
-        WordSolver target = new WordSolver();
-        target.matches.add("tinker");
-        target.matches.add("tailor");
-        target.matches.add("soldier");
-        target.matches.add("smiley (george)");
-        assertEquals("https://www.google.com/search?q=define:soldier",target.getWordURL(2));
-        assertEquals("https://www.google.com/search?q=define:smiley",target.getWordURL(3));
+        assertEquals("https://www.google.com/search?q=define:soldier",WordSolver.getWordURL("soldier"));
+    }
+    @Test
+    public void removeMissingLetters1()
+    {
+        assertEquals("hat",WordSolver.removeMissingLetters("hat (stand)"));
     }
 
     /**

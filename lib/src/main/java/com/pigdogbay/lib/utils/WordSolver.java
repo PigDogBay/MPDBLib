@@ -1,9 +1,7 @@
 package com.pigdogbay.lib.utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import android.content.Context;
@@ -32,10 +30,19 @@ import android.os.AsyncTask;
  */
 public class WordSolver
 {
-	public static final String APP_URL = "http://pigdogbay.com";
 	public static final int TABLE_MAX_COUNT_TO_RELOAD = 40;
 	public static final int DEFAULT_RESULTS_LIMIT = 500;
-	
+	public static String getWordURL(String word)
+	{
+		word = removeMissingLetters(word);
+		return "https://www.google.com/search?q=define:"+word;
+	}
+	public static String removeMissingLetters(String word){
+		//Removes formatting such as missing letters
+		int index = word.indexOf(" (");
+		return  index==-1 ? word : word.substring(0,index);
+	}
+
 	public enum States
 	{
 		uninitialized, loading, ready, searching, finished, loadError
@@ -58,9 +65,9 @@ public class WordSolver
 		wordSearch = new WordSearch(wordList);
 		wordSearch.setFindSubAnagrams(true);
 		query = "";
-		matches = new ArrayList<String>();
-		stateObservable = new ObservableProperty<WordSolver.States>(States.uninitialized);
-		matchObservable = new ObservableProperty<String>("");
+		matches = new ArrayList<>();
+		stateObservable = new ObservableProperty<>(States.uninitialized);
+		matchObservable = new ObservableProperty<>("");
 	}
 	
 	public void loadDictionary(Context context, int resourceId)
@@ -110,7 +117,7 @@ public class WordSolver
 	public String Share(String title)
 	{
 		StringBuilder sbuff = new StringBuilder();
-		sbuff.append("-"+title+"-\n\nQuery:\n");
+		sbuff.append("-").append(title).append("-\n\nQuery:\n");
 		sbuff.append(query);
 		sbuff.append("\n\nMatches:\n");
 		for (String result : this.matches) {
@@ -118,18 +125,6 @@ public class WordSolver
 			sbuff.append('\n');
 		}
 		return sbuff.toString();
-	}
-	public String getWordURL(int pos)
-	{
-		String word = this.matches.get(pos);
-		return getWordURL(word);
-	}
-	public String getWordURL(String word)
-	{
-		//Removes formatting such as missing letters
-		int index = word.indexOf(" (");
-		word =  index==-1 ? word : word.substring(0,index);
-		return "https://www.google.com/search?q=define:"+word;
 	}
 
 	private class SearchTask extends AsyncTask<String, String, Void> implements WordListCallback
@@ -198,7 +193,7 @@ public class WordSolver
 		protected Void doInBackground(Void... params) {
 			try 
 			{
-				List<String> words = new ArrayList<String>();
+				List<String> words = new ArrayList();
 				words = LineReader.Read(context, standandWordListId);
 				if (proWordListId!=-1){
 					List<String> proWords = LineReader.Read(context, proWordListId);

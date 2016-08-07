@@ -60,6 +60,20 @@ public class LetterSet
 		}
 		return true;
 	}
+	public boolean isAnagram(String word, int numberOfBlanks){
+		clearSetB();
+		addToSetB(word);
+		for (int i=0; i<26; i++)
+		{
+			setB[i] = setB[i]-setA[i];
+			if (setB[i]<0)
+			{
+				setB[i] = 0;
+			}
+		}
+		int count = countSet(setB);
+		return count <=numberOfBlanks;
+	}
 	public boolean isAnagram(String word)
 	{
 		clearSetB();
@@ -130,6 +144,14 @@ public class LetterSet
 			int index = ((int)buffer[i])-LOWEST_CHAR_VALUE;
 			setB[index]++;
 		}
+	}
+
+	private int countSet(int[] set){
+		int count = 0;
+		for (int i=0; i<26;i++){
+			count = count + set[i];
+		}
+		return count;
 	}
 
 }

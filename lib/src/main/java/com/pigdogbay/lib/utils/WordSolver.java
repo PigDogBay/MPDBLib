@@ -193,7 +193,7 @@ public class WordSolver
 		protected Void doInBackground(Void... params) {
 			try 
 			{
-				List<String> words = new ArrayList();
+				List<String> words = new ArrayList<>();
 				words = LineReader.Read(context, standandWordListId);
 				if (proWordListId!=-1){
 					List<String> proWords = LineReader.Read(context, proWordListId);

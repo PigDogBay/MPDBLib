@@ -155,6 +155,18 @@ public class WordListTest {
         assertEquals("pectrums",callback.GetMatches().get(1));
         assertEquals("murtpecs",callback.GetMatches().get(2));
     }
+    @Test
+    public void FindAnagramsTest2()
+    {
+        TestWordListCallback callback = new TestWordListCallback();
+        WordList target = new WordList();
+        target.SetWordList(CreateList());
+        target.FindAnagrams("think",2,callback);
+        assertEquals(2,callback.GetMatches().size());
+        assertEquals("eight",callback.GetMatches().get(0));
+        assertEquals("bit",callback.GetMatches().get(1));
+    }
+
     /*
      * convertQuery() and runQuery() have been removed, parsing is now done by WordSearch
      * These tests have been updated as they still stress the underlying search algorithms

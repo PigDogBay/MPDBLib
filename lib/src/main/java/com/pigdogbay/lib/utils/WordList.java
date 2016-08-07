@@ -61,6 +61,28 @@ public class WordList {
 			}
 		}
 	}
+	public void FindAnagrams(String anagram, int numberOfBlanks, WordListCallback callback)
+	{
+		int len = anagram.length();
+		LetterSet set = new LetterSet(anagram);
+		int too_big = len+numberOfBlanks+1;
+		for (String word : _WordList)
+		{
+			if (_Stop){break;}
+			if (word.length()<too_big)
+			{
+				if (set.isAnagram(word,numberOfBlanks))
+				{
+					callback.Update(word);
+					_Count++;
+					if (_Count == _ResultLimit)
+					{
+						break;
+					}
+				}
+			}
+		}
+	}
 
 	public void FindAnagrams(String anagram, WordListCallback callback) 
 	{

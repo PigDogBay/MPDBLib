@@ -36,6 +36,7 @@ public class LetterSetTest {
     @Test
     public void isAnagram2(){
         LetterSet letterSet = new LetterSet("");
+        assertThat(letterSet.isAnagram("",0),is(true));
         assertThat(letterSet.isAnagram("cat",3),is(true));
         assertThat(letterSet.isAnagram("cats",3),is(false));
     }

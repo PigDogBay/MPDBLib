@@ -1,7 +1,5 @@
 package com.pigdogbay.lib.utils;
 
-import com.pigdogbay.lib.utils.WordList;
-
 import java.util.Locale;
 
 
@@ -24,23 +22,23 @@ public class WordSearch
 		TwoWordAnagram,
 		Wildcard,
 		WildcardAndCrossword,
+		Blanks,
 		Supergram,
-		SupergramWild,
 	}
 	public static final char CROSSWORD_CHAR = '.';
 	public static final char CROSSWORD_CHAR_ALTERNATIVE = '?';
 	public static final char TWOWORD_CHAR = ' ';
 	public static final char WILDCARD_CHAR = '#';
 	public static final char WILDCARD_CHAR_ALTERNATIVE = '@';
-	public static final char SUPERGRAM_CHAR = '+';
-	public static final char SUPERGRAMWILD_CHAR = '*';
+	public static final char BLANK_CHAR = '+';
+	public static final char SUPERGRAM_CHAR = '*';
 	public static final char LOWEST_ASCII_VALUE = ' ';
 	public static final char HIGHEST_ASCII_VALUE = 'z';
 	public static final String CROSSWORD_STR = ".";
 	public static final String TWOWORD_STR = " ";
 	public static final String WILDCARD_STR = "#";
-	public static final String SUPERGRAM_STR = "+";
-	public static final String SUPERGRAMWILD_STR = "*";
+	public static final String BLANK_STR = "+";
+	public static final String SUPERGRAM_STR = "*";
 	
 	
 	public final static int MAX_WORD_LEN = 30;
@@ -86,12 +84,6 @@ public class WordSearch
 				.trim()
 				.toLowerCase(Locale.US);
 	}
-	public String standardSearchesOnly(String query)
-	{
-		return query
-				.replace(SUPERGRAM_CHAR, CROSSWORD_CHAR)
-				.replace(SUPERGRAMWILD_CHAR, CROSSWORD_CHAR);
-	}
 	public String preProcessQuery(String query)
 	{
 		query = query
@@ -124,10 +116,10 @@ public class WordSearch
 			return SearchType.Crossword;
 		} else if (query.contains(TWOWORD_STR)) {
 			return SearchType.TwoWordAnagram;
+		} else if (query.contains(BLANK_STR)) {
+			return SearchType.Blanks;
 		} else if (query.contains(SUPERGRAM_STR)) {
 			return SearchType.Supergram;
-		} else if (query.contains(SUPERGRAMWILD_STR)) {
-			return SearchType.SupergramWild;
 		}
 		return SearchType.Anagram;
 	}
@@ -144,13 +136,13 @@ public class WordSearch
 			//keep a-z and .
 			query = stripChars(query,CROSSWORD_CHAR,DEL_CHAR);
 			break;
-		case Supergram:
+		case Blanks:
 			//keep a-z and +
-			query = stripChars(query,SUPERGRAM_CHAR,DEL_CHAR);
+			query = stripChars(query, BLANK_CHAR,DEL_CHAR);
 			break;
-		case SupergramWild:
+		case Supergram:
 			//keep a-z and *
-			query = stripChars(query,SUPERGRAMWILD_CHAR,DEL_CHAR);
+			query = stripChars(query, SUPERGRAM_CHAR,DEL_CHAR);
 			break;
 		case TwoWordAnagram:
 			//keep a-z and ' '
@@ -208,12 +200,13 @@ public class WordSearch
 		case Crossword:
 			_WordList.FindPartialWords(query, callback);
 			break;
-		case Supergram:
-			int len = query.length();
+		case Blanks:
+			int numberOfBlanks = query.length();
 			query=query.replace("+", "");
-			_WordList.FindSupergrams(query, callback,len);
+			numberOfBlanks = numberOfBlanks - query.length();
+			_WordList.FindAnagrams(query,numberOfBlanks,callback);
 			break;
-		case SupergramWild:
+		case Supergram:
 			query=query.replace("*", "");
 			_WordList.FindSupergrams(query, callback,0);
 			break;
@@ -241,9 +234,9 @@ public class WordSearch
 			return "anagram";
 		case Crossword:
 			return "crossword";
-		case Supergram:
+		case Blanks:
 			return "supergram";
-		case SupergramWild:
+		case Supergram:
 			return "supergram wild";
 		case TwoWordAnagram:
 			return "two word anagram";

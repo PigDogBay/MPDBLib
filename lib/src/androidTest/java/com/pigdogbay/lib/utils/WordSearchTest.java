@@ -1,16 +1,12 @@
 package com.pigdogbay.lib.utils;
 
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
@@ -71,8 +67,8 @@ public class WordSearchTest {
         assertEquals(WordSearch.SearchType.WildcardAndCrossword, target.getQueryType("m.g#"));
         assertEquals(WordSearch.SearchType.Wildcard, target.getQueryType("mag#"));
         assertEquals(WordSearch.SearchType.Anagram, target.getQueryType("magic"));
-        assertEquals(WordSearch.SearchType.Supergram, target.getQueryType("magic++"));
-        assertEquals(WordSearch.SearchType.SupergramWild, target.getQueryType("magic*"));
+        assertEquals(WordSearch.SearchType.Blanks, target.getQueryType("magic++"));
+        assertEquals(WordSearch.SearchType.Supergram, target.getQueryType("magic*"));
         assertEquals(WordSearch.SearchType.TwoWordAnagram, target.getQueryType("monkey magic"));
 
     }
@@ -84,8 +80,8 @@ public class WordSearchTest {
         assertEquals("m.g#", target.postProcessQuery("m.g#", WordSearch.SearchType.WildcardAndCrossword));
         assertEquals("#mag#", target.postProcessQuery("#mag#", WordSearch.SearchType.Wildcard));
         assertEquals("magic", target.postProcessQuery("magic", WordSearch.SearchType.Anagram));
-        assertEquals("magic++", target.postProcessQuery("magic++", WordSearch.SearchType.Supergram));
-        assertEquals("magic*", target.postProcessQuery("magic*", WordSearch.SearchType.SupergramWild));
+        assertEquals("magic++", target.postProcessQuery("magic++", WordSearch.SearchType.Blanks));
+        assertEquals("magic*", target.postProcessQuery("magic*", WordSearch.SearchType.Supergram));
         assertEquals("monkey magic", target.postProcessQuery("monkey magic", WordSearch.SearchType.TwoWordAnagram));
 
     }
@@ -97,8 +93,8 @@ public class WordSearchTest {
         assertEquals("m.g#", target.postProcessQuery("m.!g#*", WordSearch.SearchType.WildcardAndCrossword));
         assertEquals("#mag#", target.postProcessQuery("#mAaBg$.#", WordSearch.SearchType.Wildcard));
         assertEquals("magic", target.postProcessQuery("magic.#*+", WordSearch.SearchType.Anagram));
-        assertEquals("magic++", target.postProcessQuery("magic**++", WordSearch.SearchType.Supergram));
-        assertEquals("magic*", target.postProcessQuery("magic*++", WordSearch.SearchType.SupergramWild));
+        assertEquals("magic++", target.postProcessQuery("magic**++", WordSearch.SearchType.Blanks));
+        assertEquals("magic*", target.postProcessQuery("magic*++", WordSearch.SearchType.Supergram));
         assertEquals("monkey magic", target.postProcessQuery("mo.n+key m*KagSiXc", WordSearch.SearchType.TwoWordAnagram));
 
     }
@@ -110,52 +106,12 @@ public class WordSearchTest {
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.WildcardAndCrossword));
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Wildcard));
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Anagram));
+        assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Blanks));
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Supergram));
-        assertEquals("", target.postProcessQuery("", WordSearch.SearchType.SupergramWild));
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.TwoWordAnagram));
 
     }
 
-    @Test
-    public void standardSearchesOnly1()
-    {
-        WordList wordList = new WordList();
-        WordSearch target = new WordSearch(wordList);
-
-        String expected = "";
-        String actual = target.standardSearchesOnly(expected);
-        assertEquals(expected,actual);
-
-        expected = "1z9";
-        actual = target.standardSearchesOnly(expected);
-        assertEquals(expected,actual);
-
-        expected = "m.g..";
-        actual = target.standardSearchesOnly(expected);
-        assertEquals(expected,actual);
-
-        expected = "#ace";
-        actual = target.standardSearchesOnly(expected);
-        assertEquals(expected,actual);
-
-        expected = "manchester united";
-        actual = target.standardSearchesOnly(expected);
-        assertEquals(expected,actual);
-
-        expected = "abcdefghijklmnopqrstuvwxyz";
-        actual = target.standardSearchesOnly(expected);
-        assertEquals(expected,actual);
-    }
-    @Test
-    public void standardSearchesOnly2()
-    {
-        WordList wordList = new WordList();
-        WordSearch target = new WordSearch(wordList);
-        String actual = target.standardSearchesOnly("super++++");
-        assertEquals("super....",actual);
-        actual = target.standardSearchesOnly("*su*per*");
-        assertEquals(".su.per.",actual);
-    }
     @Test
     public void clean1()
     {

@@ -40,7 +40,11 @@ public interface WordListCallback {
 		@Override
 		public void Update(String result) {
 			String missingLetters = StringUtils.SubtractChars(_OriginalWord, result);
-			_Callback.Update(result + " (" + missingLetters + ")");
+			if (missingLetters.length()>0) {
+				_Callback.Update(result + " (" + missingLetters + ")");
+			}else{
+				_Callback.Update(result);
+			}
 		}
 	
 	}

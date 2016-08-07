@@ -203,8 +203,9 @@ public class WordSearch
 		case Blanks:
 			int numberOfBlanks = query.length();
 			query=query.replace("+", "");
+			WordListCallback missingLettersWrapper = new WordListCallback.MissingLettersWrapper(query, callback);
 			numberOfBlanks = numberOfBlanks - query.length();
-			_WordList.FindAnagrams(query,numberOfBlanks,callback);
+			_WordList.FindAnagrams(query,numberOfBlanks,missingLettersWrapper);
 			break;
 		case Supergram:
 			query=query.replace("*", "");

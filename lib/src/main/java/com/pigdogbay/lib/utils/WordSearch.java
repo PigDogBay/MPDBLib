@@ -190,10 +190,8 @@ public class WordSearch
 			if (_FindSubAnagrams
 					&& query.length() < MAX_WORD_LEN)
 			{
-				WordListCallback missingLettersWrapper = new WordListCallback.MissingLettersWrapper(
-						query, callback);
 				WordListCallback filterWrapper = new WordListCallback.FilterWrapper(
-						missingLettersWrapper);
+						callback);
 				_WordList.FindSubAnagrams(query, filterWrapper);
 			}
 			break;
@@ -203,9 +201,8 @@ public class WordSearch
 		case Blanks:
 			int numberOfBlanks = query.length();
 			query=query.replace("+", "");
-			WordListCallback missingLettersWrapper = new WordListCallback.MissingLettersWrapper(query, callback);
 			numberOfBlanks = numberOfBlanks - query.length();
-			_WordList.FindAnagrams(query,numberOfBlanks,missingLettersWrapper);
+			_WordList.FindAnagrams(query,numberOfBlanks,callback);
 			break;
 		case Supergram:
 			query=query.replace("*", "");

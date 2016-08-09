@@ -59,7 +59,7 @@ public class WordMatchesTest
     @Test
     public void getFormattedWord21(){
         WordMatches target = new WordMatches();
-        target.newSearch("kayleigh", WordSearch.SearchType.Supergram);
+        target.newSearch("kayleigh*", WordSearch.SearchType.Supergram);
         assertThat(target.getFormattedWord("breathtakingly"), is("<b>br</b>ea<b>t</b>h<b>ta</b>ki<b>n</b>gly"));
     }
 

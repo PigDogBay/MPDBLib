@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public interface WordListCallback {
 	void Update(String result);
 
-	public static class FilterWrapper implements WordListCallback {
+	class FilterWrapper implements WordListCallback {
 
-		ArrayList<String> matches = new ArrayList<String>();
+		ArrayList<String> matches = new ArrayList<>();
 		WordListCallback _Callback;
 
 		public FilterWrapper(WordListCallback callback) {
@@ -25,28 +25,4 @@ public interface WordListCallback {
 		}
 
 	}
-	
-	public static class MissingLettersWrapper implements WordListCallback {
-		
-		String _OriginalWord;
-		WordListCallback _Callback;
-		
-		public MissingLettersWrapper(String originalWord, WordListCallback callback)
-		{
-			_Callback = callback;
-			_OriginalWord = originalWord;
-		}
-
-		@Override
-		public void Update(String result) {
-			String missingLetters = StringUtils.SubtractChars(_OriginalWord, result);
-			if (missingLetters.length()>0) {
-				_Callback.Update(result + " (" + missingLetters + ")");
-			}else{
-				_Callback.Update(result);
-			}
-		}
-	
-	}
-
 }

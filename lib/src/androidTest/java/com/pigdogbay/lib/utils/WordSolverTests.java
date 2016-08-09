@@ -39,11 +39,6 @@ public class WordSolverTests {
     {
         assertEquals("https://www.google.com/search?q=define:soldier",WordSolver.getWordURL("soldier"));
     }
-    @Test
-    public void removeMissingLetters1()
-    {
-        assertEquals("hat",WordSolver.removeMissingLetters("hat (stand)"));
-    }
 
     /**
      * Test loading, searching and state change callback
@@ -92,8 +87,8 @@ public class WordSolverTests {
         while (target.stateObservable.getValue()!= WordSolver.States.finished){
             try {Thread.sleep(100);} catch (InterruptedException e) {}
         }
-        assertEquals(347, target.matches.size());
-        assertEquals("graspable", target.matches.get(0));
+        assertEquals(347, target.wordMatches.getMatches().size());
+        assertEquals("graspable", target.wordMatches.getWord(0));
     }
 
     /**

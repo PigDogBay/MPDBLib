@@ -55,6 +55,9 @@ public class WordMatches
     public String getFormattedWord(String word){
         return formatter.format(word);
     }
+    public int getCount(){
+        return matches.size();
+    }
     public void newSearch(String query, WordSearch.SearchType searchType){
         matches.clear();
         this.query = query;
@@ -94,7 +97,8 @@ public class WordMatches
         private final String originalWord;
         private final MissingLetters missingLetters;
         public BlankFormatting(String originalWord) {
-            this.originalWord = originalWord.replace("+", "");
+            //remove blanks / supergram chars
+            this.originalWord = originalWord.replace("+", "").replace("*","");
             missingLetters = new MissingLetters(query);
         }
 

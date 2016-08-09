@@ -34,13 +34,7 @@ public class WordSolver
 	public static final int DEFAULT_RESULTS_LIMIT = 500;
 	public static String getWordURL(String word)
 	{
-		word = removeMissingLetters(word);
 		return "https://www.google.com/search?q=define:"+word;
-	}
-	public static String removeMissingLetters(String word){
-		//Removes formatting such as missing letters
-		int index = word.indexOf(" (");
-		return  index==-1 ? word : word.substring(0,index);
 	}
 
 	public enum States
@@ -50,9 +44,9 @@ public class WordSolver
 	private WordList wordList;
 	private WordSearch wordSearch;
 	private String query;
-	public List<String> matches;
 	public ObservableProperty<States> stateObservable;
 	public ObservableProperty<String> matchObservable;
+	public WordMatches wordMatches;
 
 	public String getQuery()
 	{
@@ -65,7 +59,7 @@ public class WordSolver
 		wordSearch = new WordSearch(wordList);
 		wordSearch.setFindSubAnagrams(true);
 		query = "";
-		matches = new ArrayList<>();
+		wordMatches = new WordMatches();
 		stateObservable = new ObservableProperty<>(States.uninitialized);
 		matchObservable = new ObservableProperty<>("");
 	}
@@ -96,7 +90,7 @@ public class WordSolver
 	}
 	public void prepareToSearch()
 	{
-		matches.clear();
+		wordMatches.getMatches().clear();
 	}
 	public void search()
 	{
@@ -120,7 +114,7 @@ public class WordSolver
 		sbuff.append("-").append(title).append("-\n\nQuery:\n");
 		sbuff.append(query);
 		sbuff.append("\n\nMatches:\n");
-		for (String result : this.matches) {
+		for (String result : this.wordMatches.getMatches()) {
 			sbuff.append(result);
 			sbuff.append('\n');
 		}
@@ -147,6 +141,7 @@ public class WordSolver
 			processedQuery = WordSolver.this.wordSearch.preProcessQuery(processedQuery);
 			WordSearch.SearchType searchType = WordSolver.this.wordSearch.getQueryType(processedQuery);
 			processedQuery = WordSolver.this.wordSearch.postProcessQuery(processedQuery, searchType);
+			wordMatches.newSearch(processedQuery,searchType);
 			WordSolver.this.wordSearch.runQuery(processedQuery, searchType, this);
 			return null;
 		}
@@ -154,9 +149,9 @@ public class WordSolver
 		protected void onProgressUpdate(String... values) {
 			//The array will be used in the views array adapter
 			//this means the array must be updated only from the UI thread
-			matches.add(values[0]);
+			wordMatches.getMatches().add(values[0]);
 			//only update the UI for the first page or so of results
-			if (matches.size()<=TABLE_MAX_COUNT_TO_RELOAD)
+			if (wordMatches.getMatches().size()<=TABLE_MAX_COUNT_TO_RELOAD)
 			{
 				matchObservable.setValue(values[0]);
 			}
@@ -193,8 +188,7 @@ public class WordSolver
 		protected Void doInBackground(Void... params) {
 			try 
 			{
-				List<String> words = new ArrayList<>();
-				words = LineReader.Read(context, standandWordListId);
+				List<String> words = LineReader.Read(context, standandWordListId);
 				if (proWordListId!=-1){
 					List<String> proWords = LineReader.Read(context, proWordListId);
 					words.addAll(proWords);

@@ -48,15 +48,11 @@ public class MissingLetters
             if (pos==-1) {
                 positions[index] = i;
                 index++;
-                if (index==lettersLen)break;
-
             } else {
                 //remove char to stop it being found again
                 buffer[pos] = '\0';
             }
         }
-
-
         return index;
     }
 

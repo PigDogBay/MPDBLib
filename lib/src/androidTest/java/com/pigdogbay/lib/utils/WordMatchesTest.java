@@ -45,6 +45,12 @@ public class WordMatchesTest
         assertThat(target.getFormattedWord("a"), is("a (mgika)"));
     }
     @Test
+    public void getFormattedWord5(){
+        WordMatches target = new WordMatches();
+        target.newSearch("llanfairllgwyngyllgogeryqjxzchwyrndrobwllllantysiliogogogoch++", WordSearch.SearchType.Blanks);
+        assertThat(target.getFormattedWord("llanfairpwllgwyngyllgogeryqjxzchwyrndrobwllllantysiliogogogoch"), is("llanfair<b>p</b>wllgwyngyllgogeryqjxzchwyrndrob<b>w</b>llllantysiliogogogoch"));
+    }
+    @Test
     public void getFormattedWord10(){
         WordMatches target = new WordMatches();
         target.newSearch("magicka", WordSearch.SearchType.Anagram);
@@ -57,10 +63,30 @@ public class WordMatchesTest
         assertThat(target.getFormattedWord("i"), is("i (magcka)"));
     }
     @Test
+    public void getFormattedWord12(){
+        WordMatches target = new WordMatches();
+        target.newSearch("llanfairpwllgwyngyllgogeryqjxzchwyrndrobwllllantysiliogogogoch", WordSearch.SearchType.Anagram);
+        assertThat(target.getFormattedWord("llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"), is("llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch (qjxz)"));
+    }
+    @Test
     public void getFormattedWord21(){
         WordMatches target = new WordMatches();
         target.newSearch("kayleigh*", WordSearch.SearchType.Supergram);
         assertThat(target.getFormattedWord("breathtakingly"), is("<b>br</b>ea<b>t</b>h<b>ta</b>ki<b>n</b>gly"));
+    }
+    @Test
+    public void getFormattedWord22(){
+        WordMatches target = new WordMatches();
+        target.newSearch("holly*", WordSearch.SearchType.Supergram);
+        assertThat(target.getFormattedWord("thermodynamically"), is("<b>t</b>h<b>erm</b>o<b>d</b>y<b>namica</b>ll<b>y</b>"));
+    }
+    @Test
+    public void getFormattedWord23(){
+        WordMatches target = new WordMatches();
+        target.newSearch("holly*", WordSearch.SearchType.Supergram);
+        assertThat(target.getFormattedWord(
+                "llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"),
+                is("ll<b>anfairpwllgw</b>y<b>ngyllg</b>o<b>geryc</b>h<b>wyrndrobwllllantysiliogogogoch</b>"));
     }
 
 }

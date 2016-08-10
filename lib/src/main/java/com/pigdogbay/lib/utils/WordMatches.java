@@ -67,8 +67,10 @@ public class WordMatches
                 formatter = new WordMatches.SubAnagramFormatting();
                 break;
             case Blanks:
-            case Supergram:
                 formatter = new WordMatches.BlankFormatting(query);
+                break;
+            case Supergram:
+                formatter = new WordMatches.SupergramFormatting(query);
                 break;
             default:
                 formatter = defaultFormatter;
@@ -97,9 +99,9 @@ public class WordMatches
         private final String originalWord;
         private final MissingLetters missingLetters;
         public BlankFormatting(String originalWord) {
-            //remove blanks / supergram chars
-            this.originalWord = originalWord.replace("+", "").replace("*","");
-            missingLetters = new MissingLetters(query);
+            //remove blanks
+            this.originalWord = originalWord.replace("+", "");
+            missingLetters = new MissingLetters(originalWord);
         }
 
         @Override
@@ -110,6 +112,18 @@ public class WordMatches
                 return formatted + unusedLettersPrefix + unusedLetters + unusedLettersSuffix;
             }
             return formatted;
+        }
+    }
+    private class SupergramFormatting implements IWordFormatter{
+        private final MissingLetters missingLetters;
+        public SupergramFormatting(String originalWord) {
+            //remove supergram chars
+            originalWord = originalWord.replace("*","");
+            missingLetters = new MissingLetters(originalWord);
+        }
+        @Override
+        public String format(String word) {
+            return missingLetters.highlightMissingLetters(word,blankPrefix,blankSuffix);
         }
     }
 }

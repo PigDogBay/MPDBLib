@@ -69,6 +69,13 @@ public class MissingLettersTest {
         assertThat(target.getPositionAt(4), is(7));
         assertThat(target.getPositionAt(5), is(10));
     }
+    @Test
+    public void findPositions8(){
+        MissingLetters target = new MissingLetters("holly");
+        int actual = target.findPositions("llanfairpwllgwyngyllgogeryqjxzchwyrndrobwllllantysiliogogogoch");
+        assertThat(actual, is(57));
+        assertThat(target.getPositionAt(0), is(2));
+    }
 
     @Test
     public void highlightMissingLetters1(){

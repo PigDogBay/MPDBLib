@@ -100,7 +100,7 @@ public class WordMatches
         private final MissingLetters missingLetters;
         public BlankFormatting(String originalWord) {
             //remove blanks
-            this.originalWord = originalWord.replace("+", "");
+            this.originalWord = originalWord.replace(WordSearch.BLANK_STR, "");
             missingLetters = new MissingLetters(originalWord);
         }
 
@@ -118,7 +118,7 @@ public class WordMatches
         private final MissingLetters missingLetters;
         public SupergramFormatting(String originalWord) {
             //remove supergram chars
-            originalWord = originalWord.replace("*","");
+            originalWord = originalWord.replace(WordSearch.SUPERGRAM_STR,"");
             missingLetters = new MissingLetters(originalWord);
         }
         @Override

@@ -3,7 +3,7 @@ package com.pigdogbay.lib.utils;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 
 import org.junit.After;
 import org.junit.Before;

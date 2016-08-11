@@ -23,8 +23,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //Instrumentation Unit Tests
     androidTestCompile 'com.android.support:support-annotations:24.1.1'
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
     // Optional -- Hamcrest library
     androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
     //Local Unit Tests

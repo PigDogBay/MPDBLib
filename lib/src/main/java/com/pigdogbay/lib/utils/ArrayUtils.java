@@ -5,6 +5,20 @@ package com.pigdogbay.lib.utils;
  */
 public class ArrayUtils {
 
+    /**
+     * Reversre operation of Arrays.toString(int[])
+     * @param str [1, 2, 3, 4, 5]
+     * @return
+     */
+    public static int[] fromString(String str){
+        String[] strings = str.replace("[", "").replace("]", "").split(",");
+        int result[] = new int[strings.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = Integer.parseInt(strings[i].trim());
+        }
+        return result;
+    }
+
     public static boolean contains(int[] data, int value){
         for (int aData : data) {
             if (aData == value) return true;

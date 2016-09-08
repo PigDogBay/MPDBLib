@@ -34,6 +34,10 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 	{
 		return numberPickerValue.getValue();
 	}
+	public void setValue(double value){
+		numberPickerValue.setValue(value);
+		setButton.setText(numberPickerValue.getFormattedString());
+	}
 	public NumberPickerController(Button minus, Button set, Button plus)
 	{
 		minus.setOnClickListener(new OnClickListener() {

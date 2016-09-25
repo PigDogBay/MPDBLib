@@ -11,6 +11,7 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 	private final Button plusBtn;
 	private INumberPickerValue numberPickerValue;
 	private INumberEditorDialog numberEditorDialog;
+	private OnValueChangedListener onValueChangedListener;
 	Button setButton;
 
 	Button getMinusBtn(){return minusBtn;}
@@ -99,6 +100,7 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 		{
 			numberPickerValue.decrease();
 			setButton.setText(numberPickerValue.getFormattedString());
+			onValueChanged(numberPickerValue.getValue());
 		}
 	}
 	private void plusButtonClicked()
@@ -107,6 +109,7 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 		{
 			numberPickerValue.increase();
 			setButton.setText(numberPickerValue.getFormattedString());
+			onValueChanged(numberPickerValue.getValue());
 		}
 	}
 	private void displayButtonClicked()
@@ -120,6 +123,23 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 	@Override
 	public void onDismiss(DialogInterface dialog) {
 		setButton.setText(numberPickerValue.getFormattedString());
+		onValueChanged(getValue());
 	}
-	
+
+
+	private void onValueChanged(double newValue){
+		if (onValueChangedListener!=null){
+			onValueChangedListener.onValueChanged(newValue);
+		}
+	}
+	public interface OnValueChangedListener {
+		void onValueChanged(double newValue);
+	}
+	public OnValueChangedListener getOnValueChangedListener() {
+		return onValueChangedListener;
+	}
+	public void setOnValueChangedListener(OnValueChangedListener onValueChangedListener) {
+		this.onValueChangedListener = onValueChangedListener;
+	}
+
 }

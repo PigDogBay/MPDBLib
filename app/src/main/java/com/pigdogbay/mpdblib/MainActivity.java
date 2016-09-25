@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.pigdogbay.lib.usercontrols.CustomNumberPicker;
 import com.pigdogbay.lib.usercontrols.GoProNagBox;
+import com.pigdogbay.lib.usercontrols.NumberPickerController;
 
-public class MainActivity extends AppCompatActivity implements GoProNagBox.IGoProResult {
+public class MainActivity extends AppCompatActivity implements GoProNagBox.IGoProResult, NumberPickerController.OnValueChangedListener {
 
     private static String TAG = "MPDB";
     private GoProNagBox goProNagBox;
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements GoProNagBox.IGoPr
                 .setResultListener(this)
                 .setMessageId(R.string.go_pro_message)
                 .setUrlId(R.string.market_cleverdic);
+
+        CustomNumberPicker customNumberPicker = (CustomNumberPicker) findViewById(R.id.numPick);
+        customNumberPicker.setOnValueChangedListener(this);
     }
 
     private void goProNagBoxTest(){
@@ -46,5 +51,10 @@ public class MainActivity extends AppCompatActivity implements GoProNagBox.IGoPr
     @Override
     public void yesGoPro() {
         Log.v(TAG,"Yes Go Pro");
+    }
+
+    @Override
+    public void onValueChanged(double newValue) {
+        Log.v(TAG, String.format("Num Picker New Value: %.0f",newValue));
     }
 }

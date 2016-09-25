@@ -32,9 +32,13 @@ public class CustomNumberPicker extends LinearLayout{
 	private String displayFormat;
 	private float value;
 	private int minusBtnColor, plusBtnColor;
-	public NumberPickerController getController()
-	{
-		return controller;
+
+	public void setOnValueChangedListener(NumberPickerController.OnValueChangedListener onValueChangedListener) {
+		controller.setOnValueChangedListener(onValueChangedListener);
+	}
+
+	public NumberPickerController.OnValueChangedListener getOnValueChangedListener() {
+		return controller.getOnValueChangedListener();
 	}
 
 	public double getValue(){return controller.getValue();}

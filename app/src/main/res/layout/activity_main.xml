@@ -24,9 +24,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        spinner:displayFormat="%.0f"
+        spinner:displayFormat="%.0f nuggets"
         spinner:minusButtonColor="#00F"
         spinner:plusButtonColor="#0F0"
+        spinner:min="-8"
+        spinner:max="50"
+        spinner:step="4"
         spinner:value="42"
 
         />

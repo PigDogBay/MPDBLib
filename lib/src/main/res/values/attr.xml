@@ -3,6 +3,9 @@
     <declare-styleable name="CustomNumberPicker">
         <attr name="displayFormat" format="string" />
         <attr name="value" format="float"/>
+        <attr name="min" format="float"/>
+        <attr name="max" format="float"/>
+        <attr name="step" format="float"/>
         <attr name="plusButtonColor" format="color"/>
         <attr name="minusButtonColor" format="color"/>
     </declare-styleable>

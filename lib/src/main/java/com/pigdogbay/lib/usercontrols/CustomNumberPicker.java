@@ -29,8 +29,7 @@ public class CustomNumberPicker extends LinearLayout{
 	private static String STATE_SUPER_CLASS = "SuperClass";
 
 	private NumberPickerController controller;
-	private String displayFormat;
-	private float value;
+	private NumberPickerValue numberPickerValue;
 	private int minusBtnColor, plusBtnColor;
 
 	public void setOnValueChangedListener(NumberPickerController.OnValueChangedListener onValueChangedListener) {
@@ -51,8 +50,15 @@ public class CustomNumberPicker extends LinearLayout{
 		super(context,attributeSet);
 		init(context);
 		TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.CustomNumberPicker);
-		displayFormat = typedArray.getString(R.styleable.CustomNumberPicker_displayFormat);
-		value = typedArray.getFloat(R.styleable.CustomNumberPicker_value,0.0f);
+		numberPickerValue = new NumberPickerValue();
+		String displayFormat = typedArray.getString(R.styleable.CustomNumberPicker_displayFormat);
+		if(displayFormat!=null) {
+			numberPickerValue.setDisplayFormat(displayFormat);
+		}
+		numberPickerValue.setMin(typedArray.getFloat(R.styleable.CustomNumberPicker_min,0.0f));
+		numberPickerValue.setMax(typedArray.getFloat(R.styleable.CustomNumberPicker_max,100.0f));
+		numberPickerValue.setStep(typedArray.getFloat(R.styleable.CustomNumberPicker_step,1.0f));
+		numberPickerValue.setValue(typedArray.getFloat(R.styleable.CustomNumberPicker_value,0.0f));
 		minusBtnColor = typedArray.getColor(R.styleable.CustomNumberPicker_minusButtonColor,0xFF000000);
 		plusBtnColor = typedArray.getColor(R.styleable.CustomNumberPicker_plusButtonColor,0xFF000000);
 		typedArray.recycle();
@@ -68,12 +74,8 @@ public class CustomNumberPicker extends LinearLayout{
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		controller = new NumberPickerController(this,R.id.pickerMinusBtn,R.id.pickerSetBtn, R.id.pickerPlusBtn);
-		controller.setNumberPickerValue(new NumberPickerValue());
+		controller.setNumberPickerValue(numberPickerValue);
 		controller.setNumberEditorDialog(new NumberEditorDialog(this.getContext(), "Enter Value", "Enter Value"));
-		if (displayFormat!=null) {
-			controller.getNumberPickerValue().setDisplayFormat(displayFormat);
-		}
-		controller.setValue(value);
 		controller.getMinusBtn().setTextColor(minusBtnColor);
 		controller.getPlusBtn().setTextColor(plusBtnColor);
 	}

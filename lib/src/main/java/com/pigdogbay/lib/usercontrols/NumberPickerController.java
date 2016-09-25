@@ -9,7 +9,7 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 {
 	private final Button minusBtn;
 	private final Button plusBtn;
-	private INumberPickerValue numberPickerValue;
+	private NumberPickerValue numberPickerValue;
 	private INumberEditorDialog numberEditorDialog;
 	private OnValueChangedListener onValueChangedListener;
 	Button setButton;
@@ -26,11 +26,11 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 		this.numberEditorDialog = numberEditorDialog;
 		this.numberEditorDialog.setOnDismissListener(this);
 	}
-	public INumberPickerValue getNumberPickerValue()
+	public NumberPickerValue getNumberPickerValue()
 	{
 		return numberPickerValue;
 	}	
-	public void setNumberPickerValue(INumberPickerValue numberPickerValue)
+	public void setNumberPickerValue(NumberPickerValue numberPickerValue)
 	{
 		this.numberPickerValue = numberPickerValue;
 		setButton.setText(numberPickerValue.getFormattedString());

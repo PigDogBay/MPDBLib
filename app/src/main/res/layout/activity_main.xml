@@ -2,8 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:spinner="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -15,5 +17,17 @@
         android:text="Go Pro Nag Box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        />
+    <com.pigdogbay.lib.usercontrols.CustomNumberPicker
+        android:id="@+id/numPick"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        spinner:displayFormat="%.0f"
+        spinner:minusButtonColor="#00F"
+        spinner:plusButtonColor="#0F0"
+        spinner:value="42"
+
         />
 </LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomNumberPicker">
+        <attr name="displayFormat" format="string" />
+        <attr name="value" format="float"/>
+        <attr name="plusButtonColor" format="color"/>
+        <attr name="minusButtonColor" format="color"/>
+    </declare-styleable>
+</resources>

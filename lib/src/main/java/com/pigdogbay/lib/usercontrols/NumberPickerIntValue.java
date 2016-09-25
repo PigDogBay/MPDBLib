@@ -31,6 +31,16 @@ public class NumberPickerIntValue implements INumberPickerValue
         this.value = (int)value;
     }
 
+    @Override
+    public String getDisplayFormat() {
+        return null;
+    }
+
+    @Override
+    public void setDisplayFormat(String format) {
+
+    }
+
     public int getMinValue() {
         return minValue;
     }

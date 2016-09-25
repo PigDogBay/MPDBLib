@@ -7,10 +7,15 @@ import android.widget.Button;
 
 public class NumberPickerController implements DialogInterface.OnDismissListener
 {
-	INumberPickerValue numberPickerValue;
-	INumberEditorDialog numberEditorDialog;
+	private final Button minusBtn;
+	private final Button plusBtn;
+	private INumberPickerValue numberPickerValue;
+	private INumberEditorDialog numberEditorDialog;
 	Button setButton;
-	
+
+	Button getMinusBtn(){return minusBtn;}
+	Button getPlusBtn(){return plusBtn;}
+
 	public void setNumberEditorDialog(INumberEditorDialog numberEditorDialog)
 	{
 		if (this.numberEditorDialog!=null)
@@ -40,6 +45,8 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 	}
 	public NumberPickerController(Button minus, Button set, Button plus)
 	{
+		minusBtn = minus;
+		plusBtn = plus;
 		minus.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -63,13 +70,15 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 	}
 	public NumberPickerController(View view, int minusButtonId, int setButtonId, int plusButtonId)
 	{
-		((Button)view.findViewById(minusButtonId)).setOnClickListener(new OnClickListener() {
+		minusBtn = (Button)view.findViewById(minusButtonId);
+		plusBtn = (Button)view.findViewById(plusButtonId);
+		minusBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				minusButtonClicked();
 			}
 		});
-		((Button)view.findViewById(plusButtonId)).setOnClickListener(new OnClickListener() {
+		plusBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				plusButtonClicked();

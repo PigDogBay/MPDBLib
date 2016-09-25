@@ -26,5 +26,8 @@
     <string name="color_grey">Shades of Grey</string>
     <string name="color_white">Simply White</string>
     <string name="ok">OK</string>
+    <string name="number_picker_minus">-</string>
+    <string name="number_picker_plus">+</string>
+    <string name="number_picker_default_value">42</string>
 
 </resources>

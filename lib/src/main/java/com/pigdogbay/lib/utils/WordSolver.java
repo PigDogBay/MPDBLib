@@ -1,6 +1,5 @@
 package com.pigdogbay.lib.utils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,6 +31,7 @@ public class WordSolver
 {
 	public static final int TABLE_MAX_COUNT_TO_RELOAD = 40;
 	public static final int DEFAULT_RESULTS_LIMIT = 500;
+	public static final WordListCallbackAbstractFactory.Null NULL_WLC_FACTORY = new WordListCallbackAbstractFactory.Null();
 	public static String getWordURL(String word)
 	{
 		return "https://www.google.com/search?q=define:"+word;
@@ -47,6 +47,7 @@ public class WordSolver
 	public ObservableProperty<States> stateObservable;
 	public ObservableProperty<String> matchObservable;
 	public WordMatches wordMatches;
+	public WordListCallbackAbstractFactory wordListCallbackFactory = NULL_WLC_FACTORY;
 
 	public String getQuery()
 	{
@@ -142,7 +143,8 @@ public class WordSolver
 			WordSearch.SearchType searchType = WordSolver.this.wordSearch.getQueryType(processedQuery);
 			processedQuery = WordSolver.this.wordSearch.postProcessQuery(processedQuery, searchType);
 			wordMatches.newSearch(processedQuery,searchType);
-			WordSolver.this.wordSearch.runQuery(processedQuery, searchType, this);
+			WordListCallback filterPipeline = WordSolver.this.wordListCallbackFactory.createChainedCallback(this);
+			WordSolver.this.wordSearch.runQuery(processedQuery, searchType, filterPipeline);
 			return null;
 		}
 		@Override

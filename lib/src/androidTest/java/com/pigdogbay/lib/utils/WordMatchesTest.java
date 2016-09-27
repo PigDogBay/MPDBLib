@@ -14,6 +14,47 @@ import static org.junit.Assert.assertThat;
 public class WordMatchesTest
 {
     @Test
+    public void sortAZ1(){
+        WordMatches target = new WordMatches();
+        target.getMatches().add("orange");
+        target.getMatches().add("apple");
+        target.getMatches().add("banana");
+        target.sortAZ();
+        assertThat(target.getMatches().get(0),is("apple"));
+        assertThat(target.getMatches().get(2),is("orange"));
+
+    }
+    @Test
+    public void sortZA1(){
+        WordMatches target = new WordMatches();
+        target.getMatches().add("banana");
+        target.getMatches().add("orange");
+        target.getMatches().add("apple");
+        target.sortZA();
+        assertThat(target.getMatches().get(0),is("orange"));
+        assertThat(target.getMatches().get(2),is("apple"));
+    }
+    @Test
+    public void sortLengthAsc1(){
+        WordMatches target = new WordMatches();
+        target.getMatches().add("orange");
+        target.getMatches().add("apple");
+        target.getMatches().add("banana");
+        target.sortLengthAsc();
+        assertThat(target.getMatches().get(0),is("apple"));
+        assertThat(target.getMatches().get(2),is("orange"));
+    }
+    @Test
+    public void sortLengthDesc1(){
+        WordMatches target = new WordMatches();
+        target.getMatches().add("apple");
+        target.getMatches().add("orange");
+        target.getMatches().add("banana");
+        target.sortLengthDesc();
+        assertThat(target.getMatches().get(1),is("orange"));
+        assertThat(target.getMatches().get(2),is("apple"));
+    }
+    @Test
     public void newSearch1(){
         WordMatches target = new WordMatches();
         target.newSearch("babbage", WordSearch.SearchType.Anagram);

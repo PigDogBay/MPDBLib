@@ -1,6 +1,8 @@
 package com.pigdogbay.lib.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -126,4 +128,48 @@ public class WordMatches
             return missingLetters.highlightMissingLetters(word,blankPrefix,blankSuffix);
         }
     }
+
+    public void sortAZ(){
+        Collections.sort(matches, new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                return s.compareTo(t1);
+            }
+        });
+    }
+    public void sortZA(){
+        Collections.sort(matches, new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                return t1.compareTo(s);
+            }
+        });
+    }
+    public void sortLengthAsc(){
+        Collections.sort(matches, new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                int sLen = s.length();
+                int tLen = t1.length();
+                if (sLen==tLen){
+                    return s.compareTo(t1);
+                }
+                return sLen-tLen;
+            }
+        });
+    }
+    public void sortLengthDesc(){
+        Collections.sort(matches, new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                int sLen = s.length();
+                int tLen = t1.length();
+                if (sLen==tLen){
+                    return s.compareTo(t1);
+                }
+                return tLen-sLen;
+            }
+        });
+    }
+
 }

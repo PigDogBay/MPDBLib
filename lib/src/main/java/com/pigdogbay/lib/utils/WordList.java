@@ -226,20 +226,20 @@ public class WordList {
 	 */
 	public void FindMultiwordAnagrams(String letters, int startLen, WordListCallback callback){
 		int len = letters.length();
-		int maxWordSize = len/2;
+		int middleWordSize = len/2;
 
 		//First show the users requested word sizes
 		findOtherMultiwordAnagrams(letters, callback, startLen);
 
 		//Show other words sizes, but skip the ones already shown
-		if (startLen>maxWordSize){
+		if (startLen>middleWordSize){
 			startLen = len-startLen;
 		}
-		for (int i = maxWordSize; i>0 ; i--)
+		for (int i = middleWordSize; i>0 ; i--)
 		{
+			if (i==startLen) continue;
 			if (_Stop){break;}
 			if (_Count==_ResultLimit) break;
-			if (i==startLen) continue;
 			findOtherMultiwordAnagrams(letters, callback, i);
 		}
 	}

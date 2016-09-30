@@ -146,30 +146,60 @@ public class WordMatches
         });
     }
     public void sortLengthAsc(){
-        Collections.sort(matches, new Comparator<String>() {
-            @Override
-            public int compare(String s, String t1) {
-                int sLen = s.length();
-                int tLen = t1.length();
-                if (sLen==tLen){
-                    return s.compareTo(t1);
+        if (WordSearch.SearchType.TwoWordAnagram == searchType)
+        {
+            Collections.sort(matches, new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    int sLen = s.indexOf(' ');
+                    int tLen = t1.indexOf(' ');
+                    if (sLen == tLen) {
+                        return s.compareTo(t1);
+                    }
+                    return sLen - tLen;
                 }
-                return sLen-tLen;
-            }
-        });
+            });
+        } else {
+            Collections.sort(matches, new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    int sLen = s.length();
+                    int tLen = t1.length();
+                    if (sLen == tLen) {
+                        return s.compareTo(t1);
+                    }
+                    return sLen - tLen;
+                }
+            });
+        }
     }
     public void sortLengthDesc(){
-        Collections.sort(matches, new Comparator<String>() {
-            @Override
-            public int compare(String s, String t1) {
-                int sLen = s.length();
-                int tLen = t1.length();
-                if (sLen==tLen){
-                    return s.compareTo(t1);
+        if (WordSearch.SearchType.TwoWordAnagram == searchType)
+        {
+            Collections.sort(matches, new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    int sLen = s.indexOf(' ');
+                    int tLen = t1.indexOf(' ');
+                    if (sLen == tLen) {
+                        return s.compareTo(t1);
+                    }
+                    return tLen - sLen;
                 }
-                return tLen-sLen;
-            }
-        });
+            });
+        } else {
+            Collections.sort(matches, new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    int sLen = s.length();
+                    int tLen = t1.length();
+                    if (sLen == tLen) {
+                        return s.compareTo(t1);
+                    }
+                    return tLen - sLen;
+                }
+            });
+        }
     }
 
 }

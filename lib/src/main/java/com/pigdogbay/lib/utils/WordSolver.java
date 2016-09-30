@@ -36,6 +36,19 @@ public class WordSolver
 	{
 		return "https://www.google.com/search?q=define:"+word;
 	}
+	public static String getMerriamWebsterURL(String word)
+	{
+		return "http://www.merriam-webster.com/dictionary/"+word;
+	}
+	public static String getDictionaryCom(String word)
+	{
+		return "http://www.dictionary.com/browse/"+word;
+	}
+	public static String getWikipediaURL(String word)
+	{
+		return "https://en.wikipedia.org/wiki/"+word;
+	}
+
 
 	public enum States
 	{

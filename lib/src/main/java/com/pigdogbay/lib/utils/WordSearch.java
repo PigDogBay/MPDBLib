@@ -210,7 +210,7 @@ public class WordSearch
 			break;
 		case TwoWordAnagram:
 			String[] words = query.split(" ");
-			_WordList.FindMultiwordAnagrams(words[0], words[1], callback);
+			_WordList.FindMultiwordAnagrams(words[0]+words[1],words[0].length(), callback);
 			break;
 		case Wildcard:
 			_WordList.FindWildcardWords(query, callback);

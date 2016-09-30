@@ -216,17 +216,43 @@ public class WordList {
 				{
 					callback.Update(first+" "+second);
 					_Count++;
-					if (_Count==_ResultLimit)
-					{
-						break;
-					}
+					if (_Count==_ResultLimit) return;
 				}
 			}
-		}		
+		}
 	}
+	/*
+		Tries to find all word size combinations
+	 */
+	public void FindMultiwordAnagrams(String letters, int startLen, WordListCallback callback){
+		int len = letters.length();
+		int maxWordSize = len/2;
+
+		//First show the users requested word sizes
+		findOtherMultiwordAnagrams(letters, callback, startLen);
+
+		//Show other words sizes, but skip the ones already shown
+		if (startLen>maxWordSize){
+			startLen = len-startLen;
+		}
+		for (int i = maxWordSize; i>0 ; i--)
+		{
+			if (_Stop){break;}
+			if (_Count==_ResultLimit) break;
+			if (i==startLen) continue;
+			findOtherMultiwordAnagrams(letters, callback, i);
+		}
+	}
+
+	private void findOtherMultiwordAnagrams(String letters, WordListCallback callback, int i) {
+		String word1 = letters.substring(0,i);
+		String word2 = letters.substring(i,letters.length());
+		FindMultiwordAnagrams(word1,word2,callback);
+	}
+
 	private List<String> getFilteredList(LetterSet set, int length)
 	{
-		ArrayList<String> matches = new ArrayList<String>();
+		ArrayList<String> matches = new ArrayList<>();
 		for (String word : _WordList) 
 		{
 			if (word.length() == length && set.isSubgram(word))

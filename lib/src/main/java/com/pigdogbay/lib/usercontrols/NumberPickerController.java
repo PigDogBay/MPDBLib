@@ -30,7 +30,7 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 	{
 		return numberPickerValue;
 	}	
-	public void setNumberPickerValue(NumberPickerValue numberPickerValue)
+	public void setNumberPickerValue(INumberPickerValue numberPickerValue)
 	{
 		this.numberPickerValue = numberPickerValue;
 		setButton.setText(numberPickerValue.getFormattedString());

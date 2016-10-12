@@ -44,6 +44,7 @@ public class CustomNumberPicker extends LinearLayout{
 	public void setValue(double newValue){
 		controller.setValue(newValue);
 	}
+	public NumberPickerController getController(){return controller;}
 	
 	public CustomNumberPicker(Context context) {
 		super(context);

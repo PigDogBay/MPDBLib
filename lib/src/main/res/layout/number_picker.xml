@@ -15,6 +15,7 @@
         android:id="@+id/pickerSetBtn"
         android:textSize="24sp"
         android:text="@string/number_picker_default_value"
+        android:textAllCaps="false"
         />
     <Button
         style="@style/Widget.AppCompat.Button.Borderless"

@@ -3,34 +3,42 @@ package com.pigdogbay.lib.usercontrols;
 import android.annotation.SuppressLint;
 
 @SuppressLint("DefaultLocale")
-public class NumberPickerValue{
+public class NumberPickerValue implements INumberPickerValue
+{
 	private double value = 0D;
 	private double step = 1.0D;
 	private double min = 0.0D;
 	private double max = 0.0D;
 	private String displayFormat = "%.1f";
 
+	@Override
 	public void increase(){
 		value = value+step;
 		rangeCheck();
 	}
+	@Override
 	public void decrease(){
 		value = value -step;
 		rangeCheck();
 	}
+	@Override
 	public String getFormattedString(){
 		return String.format(displayFormat, value);
 	}
+	@Override
 	public double getValue() {
 		return value;
 	}
+	@Override
 	public void setValue(double value) {
 		this.value = value;
 		rangeCheck();
 	}
+	@Override
 	public String getDisplayFormat() {
 		return displayFormat;
 	}
+	@Override
 	public void setDisplayFormat(String displayFormat) {
 		this.displayFormat = displayFormat;
 	}

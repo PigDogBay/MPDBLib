@@ -21,7 +21,7 @@ public class NumberEditorDialog implements INumberEditorDialog {
 		_Title  = title;
 	}
 	@Override
-	public void show(final NumberPickerValue numberPickerValue) {
+	public void show(final INumberPickerValue numberPickerValue) {
 		final AlertDialog.Builder alert = new AlertDialog.Builder(_Context);
 		final EditText input = new EditText(_Context);
 		input.setText(String.format(Locale.US, "%.1f",numberPickerValue.getValue()));

@@ -2,21 +2,18 @@ package com.pigdogbay.lib.mvp;
 
 public class BackgroundColorPresenter {
 
-	private IBackgroundColorModel _Model;
+	private BackgroundColorModel _Model;
 	private IBackgroundColorView _View;
 	
 	public void setView(IBackgroundColorView view)
 	{
 		_View = view;
 	}
-	public void setModel(IBackgroundColorModel model)
+	public void setModel(BackgroundColorModel model)
 	{
 		_Model = model;
 	}
-	public BackgroundColorPresenter()
-	{
-	}
-	public BackgroundColorPresenter(IBackgroundColorView view,IBackgroundColorModel model)
+	public BackgroundColorPresenter(IBackgroundColorView view,BackgroundColorModel model)
 	{
 		_View = view;
 		_Model = model;
@@ -26,9 +23,5 @@ public class BackgroundColorPresenter {
 	{
 		int bgId = _Model.getBackgroundId();
 		_View.setBackgroundColor(bgId);
-	}
-	public String getColorName()
-	{
-		return _Model.getColorName();
 	}
 }

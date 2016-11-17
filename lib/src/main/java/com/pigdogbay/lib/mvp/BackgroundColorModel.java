@@ -4,7 +4,7 @@ import com.pigdogbay.lib.R;
 import com.pigdogbay.lib.utils.PreferencesHelper;
 
 
-public class BackgroundColorModel implements IBackgroundColorModel{
+public class BackgroundColorModel {
 	public static final int SKY_BLUE_INDEX = 0;
 	public static final int DARK_PINK_INDEX = 1;
 	public static final int LIGHT_PINK_INDEX = 2;
@@ -13,14 +13,16 @@ public class BackgroundColorModel implements IBackgroundColorModel{
 	public static final int GREY_INDEX = 5;
 	public static final int WHITE_INDEX = 6;
 	PreferencesHelper _PreferencesHelper;
-	public BackgroundColorModel(PreferencesHelper prefHelper)
+	private final int defaultValue;
+
+	public BackgroundColorModel(PreferencesHelper prefHelper, int defaultValue)
 	{
 		_PreferencesHelper = prefHelper;
+		this.defaultValue = defaultValue;
 	}
-	@Override
 	public int getBackgroundId()
 	{
-        int colorIndex =_PreferencesHelper.getInt(R.string.code_pref_background_colour, SKY_BLUE_INDEX);
+        int colorIndex =_PreferencesHelper.getInt(R.string.code_pref_background_colour, defaultValue);
 		switch (colorIndex){
 		case DARK_PINK_INDEX:
 			return R.drawable.bgpink;
@@ -39,17 +41,12 @@ public class BackgroundColorModel implements IBackgroundColorModel{
 	}
 	public int getBackgroundIndex()
 	{
-		return _PreferencesHelper.getInt(R.string.code_pref_background_colour, SKY_BLUE_INDEX);
+		return _PreferencesHelper.getInt(R.string.code_pref_background_colour, defaultValue);
 	}
 	public void setBackgroundIndex(int index)
 	{
 		_PreferencesHelper.setInt(R.string.code_pref_background_colour, index);
 	}
-	@Override
-	public int getDefaultBackgroundId() {
-		return R.drawable.bgskyblue;
-	}
-	@Override
 	public String getColorName() {
 		switch(getBackgroundIndex()){
 		case BackgroundColorModel.DARK_PINK_INDEX:

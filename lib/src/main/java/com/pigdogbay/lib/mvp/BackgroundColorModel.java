@@ -47,6 +47,9 @@ public class BackgroundColorModel {
 	{
 		_PreferencesHelper.setInt(R.string.code_pref_background_colour, index);
 	}
+	public void resetBackgroundIndex(){
+		setBackgroundIndex(defaultValue);
+	}
 	public String getColorName() {
 		switch(getBackgroundIndex()){
 		case BackgroundColorModel.DARK_PINK_INDEX:

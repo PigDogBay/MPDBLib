@@ -18,6 +18,10 @@ public class BackgroundColorPresenter {
 		_View = view;
 		_Model = model;
 	}
+	public void resetBackground(){
+		_Model.resetBackgroundIndex();
+		updateBackground();
+	}
 
 	public void updateBackground()
 	{

@@ -4,6 +4,7 @@ package com.pigdogbay.lib.utils;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.SmallTest;
+import android.util.Log;
 
 import com.pigdogbay.lib.test.R;
 import com.pigdogbay.lib.diagnostics.Timing;
@@ -89,6 +90,21 @@ public class WordListTest {
             }
         }
 
+    }
+    @Test
+    public void findCodeWords1()
+    {
+        TestWordListCallback callback = new TestWordListCallback();
+        WordList target = new WordList();
+        target.SetWordList(LoadList());
+        CodewordSolver codewordSolver = new CodewordSolver();
+        codewordSolver.parse("112..12.");
+        codewordSolver.setFoundLetters("");
+        Timing timing = new Timing();
+        target.findCodewords(codewordSolver,callback);
+        assertEquals(1, callback.GetMatches().size());
+        assertThat(callback.GetMatches().get(0),is("aardvark"));
+        timing.LogDuration(TAG);
     }
 
     @Test

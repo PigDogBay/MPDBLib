@@ -262,4 +262,20 @@ public class WordList {
 		}
 		return matches;
 	}
+
+	public void findCodewords(CodewordSolver codewordSolver, WordListCallback callback){
+		int expectedLength = codewordSolver.getWordLength();
+		for (String word : _WordList) {
+			if (_Stop) {
+				break;
+			}
+			int len = word.length();
+			if (len!=expectedLength)continue;
+			if (codewordSolver.isMatch(word)){
+				callback.Update(word);
+				_Count++;
+				if (_Count==_ResultLimit) return;
+			}
+		}
+	}
 }

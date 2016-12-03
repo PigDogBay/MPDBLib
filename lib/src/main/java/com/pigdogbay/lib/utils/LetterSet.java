@@ -92,7 +92,9 @@ public class LetterSet
 		addToSetB(word);
 		return isASupersetOfB();
 	}
-	
+	int getCount(int c){
+		return setA[c-LOWEST_CHAR_VALUE];
+	}
 	private boolean isASupersetOfB()
 	{
 		for (int i=0; i<26; i++)

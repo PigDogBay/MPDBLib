@@ -8,8 +8,16 @@ import java.util.regex.Pattern;
 public class WordList {
 	private int _ResultLimit = 500;
 	private int _Count = 0;
+	private int resourceId;
 	private volatile boolean _Stop;
 	List<String> _WordList;
+
+	public int getResourceId() {
+		return resourceId;
+	}
+	public void setResourceId(int resourceId) {
+		this.resourceId = resourceId;
+	}
 
 	/**
 	 * Signal to stop any searches
@@ -278,4 +286,5 @@ public class WordList {
 			}
 		}
 	}
+
 }

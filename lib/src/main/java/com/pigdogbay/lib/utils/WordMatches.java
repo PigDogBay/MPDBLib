@@ -23,7 +23,7 @@ public class WordMatches
     private String unusedLettersPrefix=" (";
     private String unusedLettersSuffix = ")";
 
-    protected List<String> getMatches() {
+    public List<String> getMatches() {
         return matches;
     }
     public void setBlankPrefix(String blankPrefix) {

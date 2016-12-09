@@ -18,6 +18,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+    <Button
+        android:id="@+id/btnRateNow"
+        android:text="Rate Now"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <com.pigdogbay.lib.usercontrols.CustomNumberPicker
         android:id="@+id/numPick"
         android:orientation="horizontal"

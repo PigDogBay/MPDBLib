@@ -3,7 +3,7 @@ package com.pigdogbay.lib.apprate;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +19,8 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.pigdogbay.lib.R;
+
 /* Based on code from
  * AppRate From TimotheeJeanin
  * http://github.com/TimotheeJeannin/AppRate
@@ -30,6 +32,7 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 	private SharedPreferences preferences;
 	private Activity hostActivity;
 	private AlertDialog.Builder dialogBuilder = null;
+	private int styleId = R.style.AppRateAlertDialogStyle;
 
 	private long minLaunchesUntilPrompt = 10;
 	private long minDaysUntilPrompt = 7;
@@ -41,6 +44,10 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 		preferences = hostActivity.getSharedPreferences(PrefsContract.SHARED_PREFS_NAME, 0);
 	}
 
+	public AppRate setStyleId(int id){
+		styleId = id;
+		return this;
+	}
 	/**
 	 * @param minLaunchesUntilPrompt The minimum number of days before showing the rate dialog.<br/>
 	 *            Default value is 7 days.
@@ -167,11 +174,11 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 
 		String title = "Rate " + getApplicationName(hostActivity.getApplicationContext());
 		String message = "If you enjoy using " + getApplicationName(hostActivity.getApplicationContext()) + ", please take a moment to rate it. Thanks for your support!";
-		String rate = "Rate it !";
-		String remindLater = "Remind me later";
+		String rate = "Rate Now";
+		String remindLater = "later";
 		String dismiss = "No thanks";
 
-		new AlertDialog.Builder(hostActivity)
+		new AlertDialog.Builder(hostActivity, styleId)
 				.setTitle(title)
 				.setMessage(message)
 				.setPositiveButton(rate, this)

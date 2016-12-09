@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.pigdogbay.lib.apprate.AppRate;
 import com.pigdogbay.lib.usercontrols.CustomNumberPicker;
 import com.pigdogbay.lib.usercontrols.GoProNagBox;
 import com.pigdogbay.lib.usercontrols.NumberPickerController;
@@ -27,6 +28,12 @@ public class MainActivity extends AppCompatActivity implements GoProNagBox.IGoPr
                 goProNagBoxTest();
             }
         });
+        ((Button) findViewById(R.id.btnRateNow)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rateNowTest();
+            }
+        });
 
         goProNagBox = new GoProNagBox(this);
         goProNagBox.setFrequency(5)
@@ -36,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements GoProNagBox.IGoPr
 
         CustomNumberPicker customNumberPicker = (CustomNumberPicker) findViewById(R.id.numPick);
         customNumberPicker.setOnValueChangedListener(this);
+    }
+
+    private void rateNowTest() {
+        AppRate.reset(this);
+        new AppRate(this).setMinDaysUntilPrompt(0).setMinLaunchesUntilPrompt(0).init();
     }
 
     private void goProNagBoxTest(){

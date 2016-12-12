@@ -76,6 +76,13 @@ public class CodewordSolverTest {
         assertThat(codewordSolver.isMatch("aardvask"), is(false));
         assertThat(codewordSolver.isMatch("wardvark"), is(false));
     }
+    @Test
+    public void sameLetters4(){
+        CodewordSolver codewordSolver = new CodewordSolver();
+        codewordSolver.parse("12345671234567");
+        assertThat(codewordSolver.isMatch("abcdefgabcdefg"), is(true));
+        assertThat(codewordSolver.isMatch("abcdefgabcdefk"), is(false));
+    }
 
     /**
      * Same letters - unknown letter is the same

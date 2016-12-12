@@ -16,6 +16,8 @@ public class CodewordSolver {
     public static final int SAME_CHAR_3 = '3';
     public static final int SAME_CHAR_4 = '4';
     public static final int SAME_CHAR_5 = '5';
+    public static final int SAME_CHAR_6 = '6';
+    public static final int SAME_CHAR_7 = '7';
 
     private static class Letter {
         Letter(int character, int position){
@@ -26,7 +28,7 @@ public class CodewordSolver {
         int position;
     }
     private List<String> _WordList;
-    private List<Letter> unknowns, knowns, same1, same2, same3, same4, same5;
+    private List<Letter> unknowns, knowns, same1, same2, same3, same4, same5, same6, same7;
     private String foundLetters;
     private LetterSet letterSet;
 
@@ -50,6 +52,8 @@ public class CodewordSolver {
         same3 = new ArrayList<>();
         same4 = new ArrayList<>();
         same5 = new ArrayList<>();
+        same6 = new ArrayList<>();
+        same7 = new ArrayList<>();
         foundLetters = "";
         letterSet = new LetterSet("");
     }
@@ -62,6 +66,8 @@ public class CodewordSolver {
         same3.clear();
         same4.clear();
         same5.clear();
+        same6.clear();
+        same7.clear();
         wordLength = query.length();
 
         for (int i = 0; i<query.length(); i++){
@@ -78,6 +84,10 @@ public class CodewordSolver {
                 same4.add(new Letter(c,i));
             } else if (SAME_CHAR_5 == c) {
                 same5.add(new Letter(c, i));
+            } else if (SAME_CHAR_6 == c) {
+                same6.add(new Letter(c, i));
+            } else if (SAME_CHAR_7 == c) {
+                same7.add(new Letter(c, i));
             }
             else {
                 knowns.add(new Letter(c,i));
@@ -96,6 +106,8 @@ public class CodewordSolver {
         if (!checkSameLetters(word, same3)) return false;
         if (!checkSameLetters(word, same4)) return false;
         if (!checkSameLetters(word, same5)) return false;
+        if (!checkSameLetters(word, same6)) return false;
+        if (!checkSameLetters(word, same7)) return false;
 
         //check knowns do not equal unknown
         for (Letter unknown : unknowns){

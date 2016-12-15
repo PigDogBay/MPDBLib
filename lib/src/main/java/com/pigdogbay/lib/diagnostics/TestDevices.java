@@ -11,5 +11,7 @@ public class TestDevices {
     public static final String TEST_DEVICE_ID_5 = "8C59A54D2DCE04C1F1D14ABFB28CC2AB";
     public static final String TEST_DEVICE_ID_6 = "08D348D0ACE6EB1318A54FBCC6DC0571";
     public static final String TEST_DEVICE_ID_7 = "FA72BF4DDA6E65FDF9D275DD853ACE85";
+    public static final String TEST_DEVICE_ID_8 = "3FC3F7CC74011A2280C51FC1A7864804";
+
 
 }

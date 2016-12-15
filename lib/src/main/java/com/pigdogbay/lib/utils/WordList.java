@@ -18,6 +18,7 @@ public class WordList {
 	public void setResourceId(int resourceId) {
 		this.resourceId = resourceId;
 	}
+	public int getCcount(){return _Count;}
 
 	/**
 	 * Signal to stop any searches

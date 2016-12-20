@@ -59,8 +59,8 @@ public class CustomNumberPicker extends LinearLayout{
 		if(displayFormat!=null) {
 			numberPickerValue.setDisplayFormat(displayFormat);
 		}
-		numberPickerValue.setMin(typedArray.getFloat(R.styleable.CustomNumberPicker_min,0.0f));
-		numberPickerValue.setMax(typedArray.getFloat(R.styleable.CustomNumberPicker_max,100.0f));
+		numberPickerValue.setMin(typedArray.getFloat(R.styleable.CustomNumberPicker_minValue,0.0f));
+		numberPickerValue.setMax(typedArray.getFloat(R.styleable.CustomNumberPicker_maxValue,100.0f));
 		numberPickerValue.setStep(typedArray.getFloat(R.styleable.CustomNumberPicker_step,1.0f));
 		numberPickerValue.setValue(typedArray.getFloat(R.styleable.CustomNumberPicker_value,0.0f));
 		minusBtnColor = typedArray.getColor(R.styleable.CustomNumberPicker_minusButtonColor,0xFF000000);

@@ -33,8 +33,8 @@
         spinner:displayFormat="%.0f nuggets"
         spinner:minusButtonColor="#00F"
         spinner:plusButtonColor="#0F0"
-        spinner:min="-8"
-        spinner:max="50"
+        spinner:minValue="-8"
+        spinner:maxValue="50"
         spinner:step="4"
         spinner:value="42"
 

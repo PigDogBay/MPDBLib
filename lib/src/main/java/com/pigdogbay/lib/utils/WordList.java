@@ -6,8 +6,6 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class WordList {
-	private int _ResultLimit = 500;
-	private int _Count = 0;
 	private int resourceId;
 	private volatile boolean _Stop;
 	List<String> _WordList;
@@ -18,7 +16,6 @@ public class WordList {
 	public void setResourceId(int resourceId) {
 		this.resourceId = resourceId;
 	}
-	public int getCcount(){return _Count;}
 
 	/**
 	 * Signal to stop any searches
@@ -31,7 +28,6 @@ public class WordList {
 	public void reset()
 	{
 		_Stop = false;
-		_Count = 0;
 	}
 	/*
 	 * Wordlist must be sorted and all lower case
@@ -42,10 +38,6 @@ public class WordList {
 
 	public WordList() {
 		_WordList = null;
-	}
-
-	public void SetResultLimit(int limit) {
-		_ResultLimit = limit;
 	}
 
 	public void FindSupergrams(String anagram, WordListCallback callback, int length)
@@ -61,11 +53,6 @@ public class WordList {
 				if (set.isSupergram(word))
 				{
 					callback.Update(word);
-					_Count++;
-					if (_Count == _ResultLimit) 
-					{
-						break;
-					}
 				}
 			}
 		}
@@ -83,11 +70,6 @@ public class WordList {
 				if (set.isAnagram(word,numberOfBlanks))
 				{
 					callback.Update(word);
-					_Count++;
-					if (_Count == _ResultLimit)
-					{
-						break;
-					}
 				}
 			}
 		}
@@ -105,11 +87,6 @@ public class WordList {
 				if (set.isAnagram(word))
 				{
 					callback.Update(word);
-					_Count++;
-					if (_Count == _ResultLimit) 
-					{
-						break;
-					}
 				}
 			}
 		}
@@ -132,11 +109,6 @@ public class WordList {
 				if (set.isSubgram(word))
 				{
 					callback.Update(word);
-					_Count++;
-					if (_Count == _ResultLimit) 
-					{
-						break;
-					}
 				}
 			}
 		}
@@ -154,11 +126,6 @@ public class WordList {
 				if (pattern.matcher(word).matches()) 
 				{
 					callback.Update(word);
-					_Count++;
-					if (_Count == _ResultLimit) 
-					{
-						break;
-					}
 				}
 			}
 		}
@@ -173,11 +140,6 @@ public class WordList {
 			if (pattern.matcher(word).matches()) 
 			{
 				callback.Update(word);
-				_Count++;
-				if (_ResultLimit == _Count) 
-				{
-					break;
-				}
 			}
 		}
 	}
@@ -224,8 +186,6 @@ public class WordList {
 				if (superset.isAnagram(second))
 				{
 					callback.Update(first+" "+second);
-					_Count++;
-					if (_Count==_ResultLimit) return;
 				}
 			}
 		}
@@ -248,7 +208,6 @@ public class WordList {
 		{
 			if (i==startLen) continue;
 			if (_Stop){break;}
-			if (_Count==_ResultLimit) break;
 			findOtherMultiwordAnagrams(letters, callback, i);
 		}
 	}
@@ -282,8 +241,6 @@ public class WordList {
 			if (len!=expectedLength)continue;
 			if (codewordSolver.isMatch(word)){
 				callback.Update(word);
-				_Count++;
-				if (_Count==_ResultLimit) return;
 			}
 		}
 	}

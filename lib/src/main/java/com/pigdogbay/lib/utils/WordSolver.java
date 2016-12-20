@@ -49,11 +49,25 @@ public class WordSolver
 		return "https://en.wikipedia.org/wiki/"+word;
 	}
 
+	public int getResultsLimit() {
+		return resultsLimit;
+	}
+	public void setResultsLimit(int resultsLimit) {
+		this.resultsLimit = resultsLimit;
+	}
+
+	public int getResultsCount() {
+		return resultsCount;
+	}
+
 
 	public enum States
 	{
 		uninitialized, loading, ready, searching, finished, loadError
 	}
+	private int resultsLimit = 5000;
+	private int resultsCount;
+
 	private WordList wordList;
 	private WordSearch wordSearch;
 	private String query;
@@ -69,7 +83,6 @@ public class WordSolver
 	public WordSolver() 
 	{
 		wordList = new WordList();
-		wordList.SetResultLimit(DEFAULT_RESULTS_LIMIT);
 		wordSearch = new WordSearch(wordList);
 		wordSearch.setFindSubAnagrams(true);
 		query = "";
@@ -142,7 +155,12 @@ public class WordSolver
 		 */
 		@Override
 		public void Update(String result) {
+
 			publishProgress(result);
+			resultsCount++;
+			if (resultsCount == resultsLimit){
+				WordSolver.this.stop();
+			}
 		}
 		
 		@Override
@@ -151,6 +169,7 @@ public class WordSolver
 		}
 		@Override
 		protected Void doInBackground(String... params) {
+			resultsCount = 0;
 			String processedQuery = query;
 			processedQuery = WordSolver.this.wordSearch.preProcessQuery(processedQuery);
 			WordSearch.SearchType searchType = WordSolver.this.wordSearch.getQueryType(processedQuery);

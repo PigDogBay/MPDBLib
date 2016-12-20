@@ -26,6 +26,33 @@ import static org.junit.Assert.fail;
 @SmallTest
 public class WordSolverTests {
 
+    private static class LimitTestFilterFactory implements WordListCallbackAbstractFactory{
+        @Override
+        public WordListCallback createChainedCallback(WordListCallback lastCallback) {
+            return new WordListCallback.LessThanFilter(lastCallback,5);
+        }
+    }
+
+    @Test
+    public void wordLimitTest(){
+        WordSolver target = new WordSolver();
+        target.wordListCallbackFactory = new LimitTestFilterFactory();
+        target.setResultsLimit(42);
+        target.loadDictionary(getInstrumentation().getContext(), R.raw.standard);
+        while (target.stateObservable.getValue()!= WordSolver.States.ready){
+            try {Thread.sleep(100);} catch (InterruptedException e) {}
+        }
+
+        target.setAndValidateQuery("procureblast");
+        target.prepareToSearch();
+        target.search();
+        while (target.stateObservable.getValue()!= WordSolver.States.finished){
+            try {Thread.sleep(100);} catch (InterruptedException e) {}
+        }
+        assertThat(target.wordMatches.getMatches().size(),is(42));
+    }
+
+
     @Test
     public void setAndValidateQuery1()
     {

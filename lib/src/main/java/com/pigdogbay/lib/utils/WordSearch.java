@@ -239,7 +239,9 @@ public class WordSearch {
                 _WordList.FindWildcardWords(query, callback);
                 break;
             case Codeword:
+                getCodewordSolver().parse(query);
                 _WordList.findCodewords(getCodewordSolver(),callback);
+                break;
             default:
                 break;
 

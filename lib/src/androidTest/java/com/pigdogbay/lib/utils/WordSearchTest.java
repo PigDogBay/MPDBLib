@@ -58,6 +58,24 @@ public class WordSearchTest {
         String actual = target.preProcessQuery("@ace");
         assertEquals("#ace", actual);
     }
+    @Test
+    public void preProcessQuery7() {
+        WordSearch target = new WordSearch(new WordList());
+        String actual = target.preProcessQuery(".a112332");
+        assertEquals(".a112332", actual);
+    }
+    @Test
+    public void preProcessQuery8() {
+        WordSearch target = new WordSearch(new WordList());
+        String actual = target.preProcessQuery("?a112332");
+        assertEquals(".a112332", actual);
+    }
+    @Test
+    public void preProcessQuery9() {
+        WordSearch target = new WordSearch(new WordList());
+        String actual = target.preProcessQuery("?a12332");
+        assertEquals(".a...........", actual);
+    }
 
     @Test
     public void getQueryType() {
@@ -70,6 +88,9 @@ public class WordSearchTest {
         assertEquals(WordSearch.SearchType.Blanks, target.getQueryType("magic++"));
         assertEquals(WordSearch.SearchType.Supergram, target.getQueryType("magic*"));
         assertEquals(WordSearch.SearchType.TwoWordAnagram, target.getQueryType("monkey magic"));
+        assertEquals(WordSearch.SearchType.Codeword, target.getQueryType(".a112332"));
+        assertEquals(WordSearch.SearchType.Codeword, target.getQueryType("1.a23321"));
+        assertEquals(WordSearch.SearchType.Crossword, target.getQueryType(".a12332"));
 
     }
     @Test
@@ -83,6 +104,7 @@ public class WordSearchTest {
         assertEquals("magic++", target.postProcessQuery("magic++", WordSearch.SearchType.Blanks));
         assertEquals("magic*", target.postProcessQuery("magic*", WordSearch.SearchType.Supergram));
         assertEquals("monkey magic", target.postProcessQuery("monkey magic", WordSearch.SearchType.TwoWordAnagram));
+        assertEquals(".a112332", target.postProcessQuery(".a112332", WordSearch.SearchType.Codeword));
 
     }
     @Test
@@ -96,7 +118,8 @@ public class WordSearchTest {
         assertEquals("magic++", target.postProcessQuery("magic**++", WordSearch.SearchType.Blanks));
         assertEquals("magic*", target.postProcessQuery("magic*++", WordSearch.SearchType.Supergram));
         assertEquals("monkey magic", target.postProcessQuery("mo.n+key m*KagSiXc", WordSearch.SearchType.TwoWordAnagram));
-
+        assertEquals(".az112.332", target.postProcessQuery(".az#+@112.33#+@*2", WordSearch.SearchType.Codeword));
+        assertEquals(".a", target.postProcessQuery(".a112332", WordSearch.SearchType.Crossword));
     }
     @Test
     public void postProcessQuery3() {
@@ -109,6 +132,7 @@ public class WordSearchTest {
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Blanks));
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Supergram));
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.TwoWordAnagram));
+        assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Codeword));
 
     }
 

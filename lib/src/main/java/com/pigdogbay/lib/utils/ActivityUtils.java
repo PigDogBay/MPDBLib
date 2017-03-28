@@ -166,6 +166,13 @@ public final class ActivityUtils
 		catch (Exception e) {
 		}
 	}
+
+	public static void hideKeyboard(Activity activity)
+	{
+		//http://stackoverflow.com/questions/7789514/how-to-get-activitys-windowtoken-without-view
+		//also use findViewById(android.R.id.content).getWind‌​owToken()
+		hideKeyboard(activity,activity.getWindow().getDecorView().getRootView().getWindowToken());
+	}
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public static void setBackground(Activity activity, int viewID, int backgroundID)

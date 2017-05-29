@@ -1,16 +1,9 @@
 package com.pigdogbay.lib.math;
-
-import com.pigdogbay.lib.math.DPoint;
-import com.pigdogbay.lib.math.LeastSquares;
-import com.pigdogbay.lib.math.Matrix;
-import com.pigdogbay.lib.math.QuadraticFit;
-
 import org.junit.Test;
 
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -71,9 +64,6 @@ public class LeastSquaresTest {
         assertEquals(expected.getElement(2,0),actual.getElement(2,0),0.0001);
     }
 
-    /// <summary>
-    ///A test for GetYValuesMatrix
-    ///</summary>
     @Test
     public void getYValuesMatrixTest()
     {

@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,6 +28,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ArrayList;
 
 public final class ActivityUtils
 {
@@ -74,6 +76,29 @@ public final class ActivityUtils
 					.show();
 		}
 	}
+	private void sendMultipleFiles(Activity activity, String[] recipients,
+								   String subject, String body, String chooserTitle, File[] files) {
+		Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE);
+		i.setType("message/rfc822");
+		i.putExtra(Intent.EXTRA_EMAIL, recipients);
+		i.putExtra(Intent.EXTRA_SUBJECT, subject);
+		i.putExtra(Intent.EXTRA_TEXT, body);
+		ArrayList<Uri> uris = new ArrayList<>();
+		for (File f : files){
+			Uri u = Uri.fromFile(f);
+			uris.add(u);
+		}
+		i.putParcelableArrayListExtra(Intent.EXTRA_STREAM,uris);
+		try {
+			activity.startActivity(Intent.createChooser(i,chooserTitle));
+		}
+		catch (android.content.ActivityNotFoundException ex) {
+			Toast.makeText(activity,
+					"No email app found",
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	public static void shareText(Activity activity, String subject, String text, int chooserTitleID) {
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("text/plain");

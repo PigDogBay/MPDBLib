@@ -38,7 +38,7 @@ public class WordSolver
 	}
 	public static String getMerriamWebsterURL(String word)
 	{
-		return "http://www.merriam-webster.com/dictionary/"+word;
+		return "https://www.merriam-webster.com/dictionary/"+word;
 	}
 	public static String getDictionaryCom(String word)
 	{

@@ -103,7 +103,7 @@ public class WordMatches
         public BlankFormatting(String originalWord) {
             //remove blanks
             this.originalWord = originalWord.replace(WordSearch.BLANK_STR, "");
-            missingLetters = new MissingLetters(originalWord);
+            missingLetters = new MissingLetters(this.originalWord);
         }
 
         @Override
@@ -130,74 +130,52 @@ public class WordMatches
     }
 
     public void sortAZ(){
-        Collections.sort(matches, new Comparator<String>() {
-            @Override
-            public int compare(String s, String t1) {
-                return s.compareTo(t1);
-            }
-        });
+        Collections.sort(matches, String::compareTo);
     }
     public void sortZA(){
-        Collections.sort(matches, new Comparator<String>() {
-            @Override
-            public int compare(String s, String t1) {
-                return t1.compareTo(s);
-            }
-        });
+        Collections.sort(matches, (s, t1) -> t1.compareTo(s));
     }
     public void sortLengthAsc(){
         if (WordSearch.SearchType.TwoWordAnagram == searchType)
         {
-            Collections.sort(matches, new Comparator<String>() {
-                @Override
-                public int compare(String s, String t1) {
-                    int sLen = s.indexOf(' ');
-                    int tLen = t1.indexOf(' ');
-                    if (sLen == tLen) {
-                        return s.compareTo(t1);
-                    }
-                    return sLen - tLen;
+            Collections.sort(matches, (s, t1) -> {
+                int sLen = s.indexOf(' ');
+                int tLen = t1.indexOf(' ');
+                if (sLen == tLen) {
+                    return s.compareTo(t1);
                 }
+                return sLen - tLen;
             });
         } else {
-            Collections.sort(matches, new Comparator<String>() {
-                @Override
-                public int compare(String s, String t1) {
-                    int sLen = s.length();
-                    int tLen = t1.length();
-                    if (sLen == tLen) {
-                        return s.compareTo(t1);
-                    }
-                    return sLen - tLen;
+            Collections.sort(matches, (s, t1) -> {
+                int sLen = s.length();
+                int tLen = t1.length();
+                if (sLen == tLen) {
+                    return s.compareTo(t1);
                 }
+                return sLen - tLen;
             });
         }
     }
     public void sortLengthDesc(){
         if (WordSearch.SearchType.TwoWordAnagram == searchType)
         {
-            Collections.sort(matches, new Comparator<String>() {
-                @Override
-                public int compare(String s, String t1) {
-                    int sLen = s.indexOf(' ');
-                    int tLen = t1.indexOf(' ');
-                    if (sLen == tLen) {
-                        return s.compareTo(t1);
-                    }
-                    return tLen - sLen;
+            Collections.sort(matches, (s, t1) -> {
+                int sLen = s.indexOf(' ');
+                int tLen = t1.indexOf(' ');
+                if (sLen == tLen) {
+                    return s.compareTo(t1);
                 }
+                return tLen - sLen;
             });
         } else {
-            Collections.sort(matches, new Comparator<String>() {
-                @Override
-                public int compare(String s, String t1) {
-                    int sLen = s.length();
-                    int tLen = t1.length();
-                    if (sLen == tLen) {
-                        return s.compareTo(t1);
-                    }
-                    return tLen - sLen;
+            Collections.sort(matches, (s, t1) -> {
+                int sLen = s.length();
+                int tLen = t1.length();
+                if (sLen == tLen) {
+                    return s.compareTo(t1);
                 }
+                return tLen - sLen;
             });
         }
     }

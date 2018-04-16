@@ -64,7 +64,7 @@ public class WordSolverTests {
     @Test
     public void getWordURL1()
     {
-        assertEquals("https://www.google.com/search?q=define:soldier",WordSolver.getWordURL("soldier"));
+        assertEquals("https://www.google.com/search?q=dictionary:soldier",WordSolver.getWordURL("soldier"));
     }
 
     /**
@@ -74,33 +74,30 @@ public class WordSolverTests {
     public void search1()
     {
         WordSolver target = new WordSolver();
-        target.stateObservable.addObserver(new ObservableProperty.PropertyChangedObserver<WordSolver.States>() {
-            @Override
-            public void update(ObservableProperty<WordSolver.States> sender, WordSolver.States update) {
-                switch (update) {
-                    case uninitialized:
-                        Log.v("wstests", "unitialized");
-                        break;
-                    case loading:
-                        Log.v("wstests", "loading");
-                        break;
-                    case loadError:
-                        Log.v("wstests", "load error");
-                        fail();
-                        break;
-                    case ready:
-                        Log.v("wstests", "ready");
-                        break;
-                    case searching:
-                        Log.v("wstests", "searching");
-                        break;
-                    case finished:
-                        Log.v("wstests", "finished");
-                        break;
-                    default:
-                        break;
+        target.stateObservable.addObserver((sender, update) -> {
+            switch (update) {
+                case uninitialized:
+                    Log.v("wstests", "unitialized");
+                    break;
+                case loading:
+                    Log.v("wstests", "loading");
+                    break;
+                case loadError:
+                    Log.v("wstests", "load error");
+                    fail();
+                    break;
+                case ready:
+                    Log.v("wstests", "ready");
+                    break;
+                case searching:
+                    Log.v("wstests", "searching");
+                    break;
+                case finished:
+                    Log.v("wstests", "finished");
+                    break;
+                default:
+                    break;
 
-                }
             }
         });
         target.loadDictionary(getInstrumentation().getContext(), R.raw.standard);
@@ -127,14 +124,9 @@ public class WordSolverTests {
     {
         WordSolver target = new WordSolver();
         callbackCount=0;
-        target.matchObservable.addObserver(new ObservableProperty.PropertyChangedObserver<String>() {
-
-            @Override
-            public void update(ObservableProperty<String> sender, String update) {
-                WordSolverTests.this.callbackCount++;
-                Log.v("wstests", update);
-            }
-
+        target.matchObservable.addObserver((sender, update) -> {
+            WordSolverTests.this.callbackCount++;
+            Log.v("wstests", update);
         });
         target.loadDictionary(getInstrumentation().getContext(), R.raw.standard);
         while (target.stateObservable.getValue()!= WordSolver.States.ready){

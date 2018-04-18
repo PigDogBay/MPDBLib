@@ -1,16 +1,12 @@
 package com.pigdogbay.lib.utils;
 
 
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.SmallTest;
-import android.util.Log;
+import android.support.test.runner.AndroidJUnit4;
 
-import com.pigdogbay.lib.test.R;
 import com.pigdogbay.lib.diagnostics.Timing;
+import com.pigdogbay.lib.test.R;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;

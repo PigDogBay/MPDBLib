@@ -1,6 +1,8 @@
 package com.pigdogbay.lib.utils;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 
 public interface WordListCallback {
@@ -162,6 +164,27 @@ public interface WordListCallback {
 			}
 			//Does not contain banned letter
 			wrappedCallback.Update(result);
+		}
+	}
+
+	class CrosswordFilter implements WordListCallback {
+		private final WordListCallback wrappedCallback;
+		private final Pattern pattern;
+
+		public CrosswordFilter(WordListCallback wrappedCallback, String letters) {
+			this.wrappedCallback = wrappedCallback;
+			letters = letters.toLowerCase(Locale.US);
+			letters = letters.replace(".", "[a-z]");
+			letters = letters.replace("@", "[a-z]+");
+			pattern = Pattern.compile(letters);
+		}
+
+		@Override
+		public void Update(String result) {
+			if (pattern.matcher(result).matches())
+			{
+				wrappedCallback.Update(result);
+			}
 		}
 	}
 }

@@ -64,6 +64,9 @@ public class WordSolver
 		return resultsCount;
 	}
 
+	public void setShowSubanagrams(boolean show){
+		this.wordSearch.setFindSubAnagrams(show);
+	}
 
 	public enum States
 	{

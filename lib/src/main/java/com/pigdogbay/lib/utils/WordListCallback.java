@@ -127,6 +127,22 @@ public interface WordListCallback {
 			}
 		}
 	}
+	class ContainsWordFilter implements  WordListCallback {
+		private final WordListCallback wrappedCallback;
+		private final String word;
+
+		public ContainsWordFilter(WordListCallback wrappedCallback, String word) {
+			this.wrappedCallback = wrappedCallback;
+			this.word = word;
+		}
+
+		@Override
+		public void Update(String result) {
+			if (result.contains(word)){
+				wrappedCallback.Update(result);
+			}
+		}
+	}
 	class ExcludesFilter implements WordListCallback{
 		private final WordListCallback wrappedCallback;
 		private final char[] letters;

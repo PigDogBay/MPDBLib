@@ -3,6 +3,7 @@ package com.pigdogbay.lib.utils;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 
 public interface WordListCallback {
@@ -187,4 +188,29 @@ public interface WordListCallback {
 			}
 		}
 	}
+	class RegexFilter implements WordListCallback {
+		private final WordListCallback wrappedCallback;
+		private final Pattern pattern;
+
+		public RegexFilter(WordListCallback wrappedCallback, String letters) {
+			this.wrappedCallback = wrappedCallback;
+			Pattern compiled;
+			try {
+				compiled = Pattern.compile(letters, Pattern.CASE_INSENSITIVE);
+			} catch (PatternSyntaxException e){
+				//blocks any match
+				compiled = Pattern.compile("");
+			}
+			this.pattern = compiled;
+		}
+
+		@Override
+		public void Update(String result) {
+			if (pattern.matcher(result).matches())
+			{
+				wrappedCallback.Update(result);
+			}
+		}
+	}
+
 }

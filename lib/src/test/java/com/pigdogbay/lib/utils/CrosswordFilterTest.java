@@ -3,7 +3,7 @@ package com.pigdogbay.lib.utils;
 import org.junit.Test;
 import static junit.framework.Assert.*;
 
-public class CrosswordFilter implements WordListCallback {
+public class CrosswordFilterTest implements WordListCallback {
     private String result = null;
     @Override
     public void Update(String result) {

@@ -112,23 +112,19 @@ public interface WordListCallback {
 	}
 	class ContainsFilter implements WordListCallback{
 		private final WordListCallback wrappedCallback;
-		private final char[] letters;
+		private final LetterSet letterSet;
 
 		public ContainsFilter(WordListCallback wrappedCallback, String letters) {
 			this.wrappedCallback = wrappedCallback;
-			this.letters = letters.toCharArray();
+			letterSet = new LetterSet(letters);
 		}
 
 		@Override
 		public void Update(String result) {
-			for (char c : letters){
-				if (result.indexOf(c)==-1){
-					//letter not found
-					return;
-				}
+			if (letterSet.isSupergram(result)){
+				//Contains all letters
+				wrappedCallback.Update(result);
 			}
-			//Contains all letters
-			wrappedCallback.Update(result);
 		}
 	}
 	class ExcludesFilter implements WordListCallback{

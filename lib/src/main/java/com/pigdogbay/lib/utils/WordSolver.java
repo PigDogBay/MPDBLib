@@ -52,6 +52,10 @@ public class WordSolver
 	{
 		return "https://en.wikipedia.org/wiki/"+word;
 	}
+	public static String getWordGameDictionaryURL(String word)
+	{
+		return "https://www.wordgamedictionary.com/dictionary/word/"+word;
+	}
 
 	public int getResultsLimit() {
 		return resultsLimit;

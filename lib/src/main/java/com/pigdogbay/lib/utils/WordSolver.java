@@ -34,12 +34,23 @@ public class WordSolver
 	public static final WordListCallbackAbstractFactory.Null NULL_WLC_FACTORY = new WordListCallbackAbstractFactory.Null();
 	public static String getWordURL(String word)
 	{
-		return "https://www.google.com/search?q=dictionary:"+word;
+		return "https://www.google.com/search?q=define:"+word;
 	}
 	public static String getMerriamWebsterURL(String word)
 	{
 		return "https://www.merriam-webster.com/dictionary/"+word;
 	}
+	public static String getMerriamWebsterThesaurusURL(String word)
+	{
+		return "https://www.merriam-webster.com/thesaurus/"+word;
+	}
+	public static String getCollinsUrl(String word){
+		return "https://www.collinsdictionary.com/dictionary/english/"+word;
+	}
+	public static String getOxfordDictionariesUrl(String word){
+		return "https://en.oxforddictionaries.com/definition/"+word;
+	}
+
 	public static String getDictionaryCom(String word)
 	{
 		return "http://www.dictionary.com/browse/"+word;

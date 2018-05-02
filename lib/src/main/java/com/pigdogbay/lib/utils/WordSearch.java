@@ -209,7 +209,7 @@ public class WordSearch {
             case Anagram:
                 _WordList.FindAnagrams(query, callback);
                 if (_FindSubAnagrams
-                        && query.length() < MAX_WORD_LEN) {
+                        && query.length() <= MAX_WORD_LEN) {
                     WordListCallback filterWrapper = new WordListCallback.FilterWrapper(
                             callback);
                     _WordList.FindSubAnagrams(query, filterWrapper);

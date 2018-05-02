@@ -24,6 +24,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+//These tests requires the following permissions to be granted
+//adb shell pm grant com.pigdogbay.lib.test android.permission.READ_EXTERNAL_STORAGE
+//adb shell pm grant com.pigdogbay.lib.test android.permission.WRITE_EXTERNAL_STORAGE
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class FileUtilsTest {
@@ -44,6 +47,9 @@ public class FileUtilsTest {
         assertTrue(FileUtils.isExternalStorageReadable());
     }
 
+    //This test requires the following permissions to be granted
+    //adb shell pm grant com.pigdogbay.lib.test android.permission.READ_EXTERNAL_STORAGE
+    //adb shell pm grant com.pigdogbay.lib.test android.permission.WRITE_EXTERNAL_STORAGE
     @Test
     public void createDownloadsFile() {
         try {
@@ -54,7 +60,6 @@ public class FileUtilsTest {
             fail(e.getMessage());
         }
     }
-
     @Test
     public void readWriteTextFile() {
         try {

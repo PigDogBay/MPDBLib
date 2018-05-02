@@ -64,7 +64,7 @@ public class WordSolverTests {
     @Test
     public void getWordURL1()
     {
-        assertEquals("https://www.google.com/search?q=dictionary:soldier",WordSolver.getWordURL("soldier"));
+        assertEquals("https://www.google.com/search?q=define:soldier",WordSolver.getWordURL("soldier"));
     }
 
     /**

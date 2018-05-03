@@ -49,7 +49,7 @@ public class WordSearch {
     private static final String DEL_STR = "X";
     private WordList _WordList;
     private boolean _FindSubAnagrams = true;
-    private boolean isThreeWordAnagramsEnabled = false;
+    private boolean isThreeWordAnagramsEnabled = true;
     private CodewordSolver codewordSolver;
 
     public void setFindSubAnagrams(boolean value) {

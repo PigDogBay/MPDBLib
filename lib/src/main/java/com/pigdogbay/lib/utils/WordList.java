@@ -208,9 +208,23 @@ public class WordList {
 		} else {
 			listC = getFilteredList(superset, word3.length());
 		}
+		ArrayList<String> sublistB = new ArrayList<>();
+		ArrayList<String> sublistC = new ArrayList<>();
+
 		for (String first : listA)
 		{
-			for (String second : listB)
+			//Prune lists B and C of any words that are impossible with first
+			superset.clear();
+			superset.add(word1);
+			superset.add(word2);
+			superset.add(word3);
+			superset.delete(first);
+			sublistB.clear();
+			sublistC.clear();
+			filterList(superset,word2.length(),sublistB,listB);
+			filterList(superset,word3.length(),sublistC,listC);
+
+			for (String second : sublistB)
 			{
 				if (_Stop){break;}
 				superset.clear();
@@ -219,7 +233,7 @@ public class WordList {
 				superset.add(word3);
 				superset.delete(first);
 				superset.delete(second);
-				for (String third : listC){
+				for (String third : sublistC){
 					if (superset.isAnagram(third))
 					{
 						callback.Update(first+" "+second+" "+third);
@@ -228,6 +242,16 @@ public class WordList {
 			}
 		}
  	}
+	private void filterList(LetterSet set, int length, ArrayList<String> matches, List<String> wordList)
+	{
+		for (String word : wordList)
+		{
+			if (word.length() == length && set.isSubgram(word))
+			{
+				matches.add(word);
+			}
+		}
+	}
 
 	/*
 		Tries to find all word size combinations

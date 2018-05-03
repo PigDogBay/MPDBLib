@@ -209,7 +209,8 @@ public class WordList {
 			listC = getFilteredList(superset, word3.length());
 		}
 		ArrayList<String> sublistB = new ArrayList<>();
-		ArrayList<String> sublistC = new ArrayList<>();
+		boolean are2And3SameLength = word2.length() == word3.length();
+		ArrayList<String> sublistC = are2And3SameLength ? sublistB : new ArrayList<>();
 
 		for (String first : listA)
 		{
@@ -220,9 +221,11 @@ public class WordList {
 			superset.add(word3);
 			superset.delete(first);
 			sublistB.clear();
-			sublistC.clear();
 			filterList(superset,word2.length(),sublistB,listB);
-			filterList(superset,word3.length(),sublistC,listC);
+			if (!are2And3SameLength) {
+				sublistC.clear();
+                filterList(superset, word3.length(), sublistC, listC);
+            }
 
 			for (String second : sublistB)
 			{

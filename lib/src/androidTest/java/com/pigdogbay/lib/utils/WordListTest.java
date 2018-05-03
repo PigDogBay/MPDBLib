@@ -157,6 +157,37 @@ public class WordListTest {
         assertEquals("smashed nan garb",callback.GetMatches().get(3179));
         timing.LogDuration(TAG);
     }
+    /*
+        3 words - same length
+     */
+    @Test
+    public void FindMultiwordAnagramsTest4()
+    {
+        TestWordListCallback callback = new TestWordListCallback();
+        WordList target = new WordList();
+        target.SetWordList(LoadList(R.raw.words));
+        Timing timing = new Timing();
+        target.FindMultiwordAnagrams("time","will","tell", callback);
+        assertEquals(708, callback.GetMatches().size());
+        assertEquals("item lilt well",callback.GetMatches().get(21));
+        timing.LogDuration(TAG);
+    }
+
+    /*
+        3 words - same length, longer
+     */
+    @Test
+    public void FindMultiwordAnagramsTest5()
+    {
+        TestWordListCallback callback = new TestWordListCallback();
+        WordList target = new WordList();
+        target.SetWordList(LoadList(R.raw.words));
+        Timing timing = new Timing();
+        target.FindMultiwordAnagrams("spectrum","computer","magazine", callback);
+        assertEquals(366, callback.GetMatches().size());
+        assertEquals("mutineer compacts gazumper",callback.GetMatches().get(227));
+        timing.LogDuration(TAG);
+    }
 
     @Test
     public void FindPartialWordsTest1()

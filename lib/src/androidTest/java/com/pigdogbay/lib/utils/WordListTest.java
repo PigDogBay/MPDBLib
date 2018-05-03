@@ -3,6 +3,7 @@ package com.pigdogbay.lib.utils;
 
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.pigdogbay.lib.diagnostics.Timing;
 import com.pigdogbay.lib.test.R;
@@ -29,8 +30,8 @@ public class WordListTest {
     private static final String TAG = "WordListTest";
     private class TestWordListCallback implements WordListCallback
     {
-        ArrayList<String> matches = new ArrayList<String>();
-        public List<String> GetMatches() {return matches;}
+        ArrayList<String> matches = new ArrayList<>();
+        List<String> GetMatches() {return matches;}
 
         @Override
         public void Update(String result)
@@ -39,9 +40,9 @@ public class WordListTest {
         }
     }
 
-    List<String> CreateList()
+    private List<String> CreateList()
     {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         list.add("spectrum");
         list.add("commodore");
         list.add("oric");
@@ -63,12 +64,12 @@ public class WordListTest {
         list.add("research");
         return list;
     }
-    List<String> LoadList()
+    private List<String> LoadList(int listId)
     {
         InputStream inputStream = null;
         try
         {
-            inputStream = getInstrumentation().getContext().getResources().openRawResource(R.raw.standard);
+            inputStream = getInstrumentation().getContext().getResources().openRawResource(listId);
             return FileUtils.ReadLines(inputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -80,6 +81,7 @@ public class WordListTest {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -90,7 +92,7 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList());
+        target.SetWordList(LoadList(R.raw.standard));
         CodewordSolver codewordSolver = new CodewordSolver();
         codewordSolver.parse("112..12.");
         codewordSolver.setFoundLetters("");
@@ -106,7 +108,7 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList());
+        target.SetWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
         target.FindWildcardWords("t#and",callback);
         assertEquals(10, callback.GetMatches().size());
@@ -118,7 +120,7 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList());
+        target.SetWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
         target.FindMultiwordAnagrams("manchester", "united", callback);
         assertEquals(51, callback.GetMatches().size());
@@ -131,12 +133,28 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList());
+        target.SetWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
         target.FindMultiwordAnagrams("united","manchester", callback);
         assertEquals(51, callback.GetMatches().size());
         assertEquals("dement raunchiest",callback.GetMatches().get(7));
         assertEquals("tamest unenriched",callback.GetMatches().get(42));
+        timing.LogDuration(TAG);
+    }
+
+    /*
+        3 Word Anagrams
+     */
+    @Test
+    public void FindMultiwordAnagramsTest3()
+    {
+        TestWordListCallback callback = new TestWordListCallback();
+        WordList target = new WordList();
+        target.SetWordList(LoadList(R.raw.words));
+        Timing timing = new Timing();
+        target.FindMultiwordAnagrams("bangers","and","mash", callback);
+        assertEquals(3227, callback.GetMatches().size());
+        assertEquals("smashed nan garb",callback.GetMatches().get(3179));
         timing.LogDuration(TAG);
     }
 
@@ -181,7 +199,7 @@ public class WordListTest {
      * convertQuery() and runQuery() have been removed, parsing is now done by WordSearch
      * These tests have been updated as they still stress the underlying search algorithms
      */
-    TestWordListCallback runQueryHelper(String query)
+    private TestWordListCallback runQueryHelper(String query)
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList wordlist = new WordList();
@@ -278,7 +296,7 @@ public class WordListTest {
     public void FindSubAnagramsTest1()
     {
         TestWordListCallback callback = new TestWordListCallback();
-        List<String> list = LoadList();
+        List<String> list = LoadList(R.raw.standard);
         WordList target = new WordList();
         target.SetWordList(list);
         target.FindSubAnagrams("earths",callback);
@@ -290,7 +308,7 @@ public class WordListTest {
     public void FindSubAnagramsTest2()
     {
         TestWordListCallback callback = new TestWordListCallback();
-        List<String> list = LoadList();
+        List<String> list = LoadList(R.raw.standard);
         WordList target = new WordList();
         target.SetWordList(list);
         target.FindSubAnagrams("galls",callback);
@@ -302,7 +320,7 @@ public class WordListTest {
     public void FindSubAnagramsTest3()
     {
         TestWordListCallback callback = new TestWordListCallback();
-        List<String> list = LoadList();
+        List<String> list = LoadList(R.raw.standard);
         WordList target = new WordList();
         target.SetWordList(list);
         target.FindSubAnagrams("X",callback);
@@ -314,7 +332,7 @@ public class WordListTest {
     public void FindSubAnagramsTest4()
     {
         TestWordListCallback callback = new TestWordListCallback();
-        List<String> list = LoadList();
+        List<String> list = LoadList(R.raw.standard);
         WordList target = new WordList();
         target.SetWordList(list);
         target.FindSubAnagrams("xy",callback);
@@ -326,7 +344,7 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList());
+        target.SetWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
         target.FindSupergrams("kayleigh",callback,0);
         assertEquals(2, callback.GetMatches().size());
@@ -337,7 +355,7 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList());
+        target.SetWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
         target.FindSupergrams("kayleigh",callback,14);
         assertEquals(1, callback.GetMatches().size());

@@ -190,6 +190,45 @@ public class WordList {
 			}
 		}
 	}
+	public void FindMultiwordAnagrams(String word1, String word2, String word3,
+									  WordListCallback callback)
+	{
+		LetterSet superset = new LetterSet(word1+word2+word3);
+		List<String> listA = getFilteredList(superset, word1.length());
+		List<String> listB = listA;
+		List<String> listC;
+		if (word1.length() != word2.length()){
+			listB = getFilteredList(superset, word2.length());
+		}
+
+		if (word3.length() == word1.length()){
+			listC = listA;
+		} else if (word3.length() == word2.length()){
+			listC = listB;
+		} else {
+			listC = getFilteredList(superset, word3.length());
+		}
+		for (String first : listA)
+		{
+			for (String second : listB)
+			{
+				if (_Stop){break;}
+				superset.clear();
+				superset.add(word1);
+				superset.add(word2);
+				superset.add(word3);
+				superset.delete(first);
+				superset.delete(second);
+				for (String third : listC){
+					if (superset.isAnagram(third))
+					{
+						callback.Update(first+" "+second+" "+third);
+					}
+				}
+			}
+		}
+ 	}
+
 	/*
 		Tries to find all word size combinations
 	 */

@@ -43,17 +43,22 @@ public class WordSearch {
     public static final String CODEWORD_STR = "1";
 
 
-    public final static int MAX_WORD_LEN = 30;
+    public final static int MAX_WORD_LEN = 42;
 
     private static final char DEL_CHAR = 'X';
     private static final String DEL_STR = "X";
     private WordList _WordList;
     private boolean _FindSubAnagrams = true;
+    private boolean isThreeWordAnagramsEnabled = false;
     private CodewordSolver codewordSolver;
 
     public void setFindSubAnagrams(boolean value) {
         _FindSubAnagrams = value;
     }
+    public void setThreeWordAnagramsEnabled(boolean threeWordAnagramsEnabled) {
+        this.isThreeWordAnagramsEnabled = threeWordAnagramsEnabled;
+    }
+
 
     public WordSearch(WordList list) {
         _WordList = list;
@@ -230,7 +235,11 @@ public class WordSearch {
                 break;
             case TwoWordAnagram:
                 String[] words = query.split(" ");
-                _WordList.FindMultiwordAnagrams(words[0] + words[1], words[0].length(), callback);
+                if (isThreeWordAnagramsEnabled && words.length > 2){
+                    _WordList.FindMultiwordAnagrams(words[0],words[1],words[2],callback);
+                } else {
+                    _WordList.FindMultiwordAnagrams(words[0] + words[1], words[0].length(), callback);
+                }
                 break;
             case Wildcard:
                 _WordList.FindWildcardWords(query, callback);

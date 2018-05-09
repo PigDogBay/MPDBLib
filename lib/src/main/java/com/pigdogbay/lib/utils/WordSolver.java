@@ -34,7 +34,7 @@ public class WordSolver
 	public static final WordListCallbackAbstractFactory.Null NULL_WLC_FACTORY = new WordListCallbackAbstractFactory.Null();
 	public static String getWordURL(String word)
 	{
-		return "https://www.google.com/search?q=define:"+word;
+		return "https://www.google.com/search?q=dictionary:"+word;
 	}
 	public static String getMerriamWebsterURL(String word)
 	{

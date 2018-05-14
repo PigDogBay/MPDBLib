@@ -229,7 +229,6 @@ public class WordList {
 
 			for (String second : sublistB)
 			{
-				if (_Stop){break;}
 				superset.clear();
 				superset.add(word1);
 				superset.add(word2);
@@ -237,6 +236,7 @@ public class WordList {
 				superset.delete(first);
 				superset.delete(second);
 				for (String third : sublistC){
+					if (_Stop){return;}
 					if (superset.isAnagram(third))
 					{
 						callback.Update(first+" "+second+" "+third);
@@ -249,6 +249,7 @@ public class WordList {
 	{
 		for (String word : wordList)
 		{
+			if (_Stop){break;}
 			if (word.length() == length && set.isSubgram(word))
 			{
 				matches.add(word);
@@ -289,6 +290,7 @@ public class WordList {
 		ArrayList<String> matches = new ArrayList<>();
 		for (String word : _WordList) 
 		{
+			if (_Stop){break;}
 			if (word.length() == length && set.isSubgram(word))
 			{
 				matches.add(word);

@@ -4,15 +4,16 @@ import org.junit.Test
 
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.nullValue
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThat
 
 
-class ObservablePropertyTest : PropertyChangedObserver<ObservablePropertyTest, ObservablePropertyTest.Veg> {
+class ObservablePropertyTest : PropertyChangedObserver<ObservablePropertyTest.Veg> {
 
     var update = Veg.carrots
-    var sender : ObservablePropertyTest? = null
+    var sender : Any? = null
 
-    override fun update(sender: ObservablePropertyTest, update: Veg) {
+    override fun update(sender: Any, update: Veg) {
         this.update = update
         this.sender = sender
     }
@@ -28,7 +29,7 @@ class ObservablePropertyTest : PropertyChangedObserver<ObservablePropertyTest, O
         obs.value = Veg.chillis
         obs.removeObserver(this)
         assertThat(update, `is`(Veg.chillis))
-        assertThat(sender, `is` (this))
+        assertEquals(this,sender)
     }
 
     /**

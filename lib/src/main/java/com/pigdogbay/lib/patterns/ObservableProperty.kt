@@ -6,8 +6,8 @@ import java.util.ArrayList
 /**
  * Observers must implement this interface to receive updates when the property changes
  */
-interface PropertyChangedObserver<T, U> {
-    fun update(sender: T, update: U)
+interface PropertyChangedObserver<T> {
+    fun update(sender: Any, update: T)
 }
 
 /**
@@ -15,10 +15,10 @@ interface PropertyChangedObserver<T, U> {
  * Updates are sent when the property value changes
  * See also utils.ObservableProperty
  */
-class ObservableProperty<T, U>(private val sender: T, initialValue: U) {
+class ObservableProperty<T>(private val sender: Any, initialValue: T) {
 
     private var backingValue = initialValue
-    private val observers: MutableList<PropertyChangedObserver<T, U>> = ArrayList()
+    private val observers: MutableList<PropertyChangedObserver<T>> = ArrayList()
 
     var value
         @Synchronized get() = backingValue
@@ -31,17 +31,17 @@ class ObservableProperty<T, U>(private val sender: T, initialValue: U) {
             }
         }
 
-    fun setValueWithoutNotification(newValue: U) {
+    fun setValueWithoutNotification(newValue: T) {
         this.value = newValue
     }
 
     @Synchronized
-    fun addObserver(observer: PropertyChangedObserver<T, U>) {
+    fun addObserver(observer: PropertyChangedObserver<T>) {
         observers.add(observer)
     }
 
     @Synchronized
-    fun removeObserver(observer: PropertyChangedObserver<T, U>) {
+    fun removeObserver(observer: PropertyChangedObserver<T>) {
         observers.remove(observer)
     }
 

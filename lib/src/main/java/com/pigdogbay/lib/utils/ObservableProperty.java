@@ -3,7 +3,12 @@ package com.pigdogbay.lib.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObservableProperty<T> 
+/**
+ * See com.pigdogbay.lib.patterns.ObservableProperty for specifying a sender
+ * Here sender is an instance of this class
+ * @param <T> Property Type
+ */
+public class ObservableProperty<T>
 {
 	public interface PropertyChangedObserver<T>
 	{
@@ -15,7 +20,7 @@ public class ObservableProperty<T>
 	public ObservableProperty(T value)
 	{
 		this.value = value;
-		observers = new ArrayList<PropertyChangedObserver<T>>();
+		observers = new ArrayList<>();
 	}
 	
 	public synchronized T getValue()

@@ -1,20 +1,14 @@
 package com.pigdogbay.lib.utils;
 
 
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -37,7 +31,7 @@ public class ObservablePropertyTest {
     @Test
     public void enum1()
     {
-        ObservableProperty<Veg> target = new ObservableProperty<ObservablePropertyTest.Veg>(Veg.onions);
+        ObservableProperty<Veg> target = new ObservableProperty<>(Veg.onions);
         Listener listener = new Listener();
         target.addObserver(listener);
         target.setValue(Veg.chillis);

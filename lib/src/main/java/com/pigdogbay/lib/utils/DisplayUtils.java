@@ -37,4 +37,11 @@ public class DisplayUtils {
         DisplayMetrics metrics = resources.getDisplayMetrics();
         return px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
+
+    public static int getScreenWidth(){
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+    public static int getScreenHeight(){
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
 }

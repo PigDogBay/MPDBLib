@@ -2,6 +2,7 @@
     <string name="app_name">MPDB Library</string>
     <string translatable="false" name="code_test_device_acer_tablet">6E52A5AB84AD4B7BEF8274C4A44FF539</string>
     <string translatable="false" name="code_test_device_moto_g">87D716F858A130948AA505E5974BB51F</string>
+    <string translatable="false" name="code_test_device_nokia_6">579CE2A9DC3B420EBF99A669B1D5C9DF</string>
     <string translatable="false" name="email">pigdogbay@yahoo.co.uk</string>
     <string translatable="false" name="website">http://www.mpdbailey.co.uk</string>
     <string translatable="false" name="facebookPage">https://www.facebook.com/pigdogbay</string>

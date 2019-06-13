@@ -1,7 +1,8 @@
 package com.pigdogbay.lib.utils;
 
 import org.junit.Test;
-import static junit.framework.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class ContainsFilterTest implements WordListCallback{
 
@@ -66,6 +67,15 @@ public class ContainsFilterTest implements WordListCallback{
         result = "";
         filter.Update("mississiippi");
         assertEquals("mississiippi",result);
+    }
+    /*
+        Regression test for bug where spaces caused a crash
+     */
+    @Test
+    public void update6() {
+        ContainsFilter filter = new ContainsFilter(this, "swift");
+        filter.Update("words with friends");
+        assertEquals("words with friends",result);
     }
 
 }

@@ -45,5 +45,14 @@ public class ContainsWordFilterTest implements WordListCallback {
         filter.Update("spectrum");
         assertEquals("spectrum",result);
     }
+    /*
+        Regression test for bug where spaces caused a crash
+     */
+    @Test
+    public void update4() {
+        ContainsWordFilter filter = new ContainsWordFilter(this, "swift");
+        filter.Update("as swift as an arrow");
+        assertEquals("as swift as an arrow",result);
+    }
 
 }

@@ -34,7 +34,9 @@ public class LetterSet
 		for (int i=0; i<len; i++)
 		{
 			int index = ((int)buffer[i])-LOWEST_CHAR_VALUE;
-			setA[index]++;
+			if (index>=0 && index<26) {
+				setA[index]++;
+			}
 		}
 	}
 	
@@ -45,7 +47,9 @@ public class LetterSet
 		for (int i=0; i<len; i++)
 		{
 			int index = ((int)buffer[i])-LOWEST_CHAR_VALUE;
-			setA[index]--;
+			if (index>=0 && index<26) {
+				setA[index]--;
+			}
 		}
 	}
 	
@@ -144,7 +148,9 @@ public class LetterSet
 		for (int i=0; i<len; i++)
 		{
 			int index = ((int)buffer[i])-LOWEST_CHAR_VALUE;
-			setB[index]++;
+			if (index>=0 && index<26) {
+				setB[index]++;
+			}
 		}
 	}
 

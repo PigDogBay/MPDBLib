@@ -36,6 +36,10 @@ public class WordSolver
 	{
 		return "https://www.google.com/search?q=dictionary:"+word;
 	}
+	public static String getGoogleDefineURL(String word)
+	{
+		return "https://www.google.com/search?q=define:"+word;
+	}
 	public static String getMerriamWebsterURL(String word)
 	{
 		return "https://www.merriam-webster.com/dictionary/"+word;
@@ -47,8 +51,8 @@ public class WordSolver
 	public static String getCollinsUrl(String word){
 		return "https://www.collinsdictionary.com/dictionary/english/"+word;
 	}
-	public static String getOxfordDictionariesUrl(String word){
-		return "https://en.oxforddictionaries.com/definition/"+word;
+	public static String getLexicoUrl(String word){
+		return "https://www.lexico.com/en/definition/"+word;
 	}
 
 	public static String getDictionaryCom(String word)

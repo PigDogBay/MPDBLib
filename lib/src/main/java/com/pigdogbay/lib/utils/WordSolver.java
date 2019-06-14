@@ -57,11 +57,11 @@ public class WordSolver
 
 	public static String getDictionaryCom(String word)
 	{
-		return "http://www.dictionary.com/browse/"+word;
+		return "https://www.dictionary.com/browse/"+word;
 	}
 	public static String getThesaurusCom(String word)
 	{
-		return "http://www.thesaurus.com/browse/"+word;
+		return "https://www.thesaurus.com/browse/"+word;
 	}
 	public static String getWikipediaURL(String word)
 	{

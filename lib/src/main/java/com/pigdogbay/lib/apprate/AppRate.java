@@ -3,7 +3,7 @@ package com.pigdogbay.lib.apprate;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;

@@ -177,7 +177,7 @@ public interface WordListCallback {
 			letters = letters.toLowerCase(Locale.US);
 			letters = letters.replace(".", "[a-z]");
 			letters = letters.replace("@", "[a-z]+");
-			pattern = Pattern.compile(letters);
+			pattern = Pattern.compile("\\b"+letters+"\\b");
 		}
 
 		@Override

@@ -28,6 +28,7 @@ public class WordSearch {
     public static final char CROSSWORD_CHAR = '.';
     public static final char CROSSWORD_CHAR_ALTERNATIVE = '?';
     public static final char TWOWORD_CHAR = ' ';
+    public static final char TWOWORD_CHAR_ALTERNATIVE = '-';
     public static final char WILDCARD_CHAR = '#';
     public static final char WILDCARD_CHAR_ALTERNATIVE = '@';
     public static final char BLANK_CHAR = '+';
@@ -107,6 +108,7 @@ public class WordSearch {
                     .toLowerCase(Locale.US)
                     .replace(WILDCARD_CHAR_ALTERNATIVE, WILDCARD_CHAR)
                     .replace(CROSSWORD_CHAR_ALTERNATIVE, CROSSWORD_CHAR)
+                    .replace(TWOWORD_CHAR_ALTERNATIVE, TWOWORD_CHAR)
                     .replace("1", ".")
                     .replace("2", "..")
                     .replace("3", "...")

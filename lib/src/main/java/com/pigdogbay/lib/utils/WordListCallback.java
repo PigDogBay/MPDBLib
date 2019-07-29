@@ -176,6 +176,7 @@ public interface WordListCallback {
 			this.wrappedCallback = wrappedCallback;
 			letters = letters.toLowerCase(Locale.US);
 			letters = letters.replace(".", "[a-z]");
+			letters = letters.replace("?", "[a-z]");
 			letters = letters.replace("@", "[a-z]+");
 			pattern = Pattern.compile("\\b"+letters+"\\b");
 		}

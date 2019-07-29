@@ -1,9 +1,7 @@
 package com.pigdogbay.lib.utils;
 
 
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
-import androidx.test.filters.SmallTest;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.util.Log;
 
 import com.pigdogbay.lib.test.R;
@@ -11,16 +9,13 @@ import com.pigdogbay.lib.test.R;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
+import androidx.test.platform.app.InstrumentationRegistry;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-@SmallTest
 public class WordSolverTests {
 
     private static class LimitTestFilterFactory implements WordListCallbackAbstractFactory{
@@ -35,16 +30,16 @@ public class WordSolverTests {
         WordSolver target = new WordSolver();
         target.wordListCallbackFactory = new LimitTestFilterFactory();
         target.setResultsLimit(42);
-        target.loadDictionary(getInstrumentation().getContext(), R.raw.standard);
+        target.loadDictionary(InstrumentationRegistry.getInstrumentation().getContext(), R.raw.standard);
         while (target.stateObservable.getValue()!= WordSolver.States.ready){
-            try {Thread.sleep(100);} catch (InterruptedException e) {}
+            try {Thread.sleep(100);} catch (InterruptedException ignored) {}
         }
 
         target.setAndValidateQuery("procureblast");
         target.prepareToSearch();
         target.search();
         while (target.stateObservable.getValue()!= WordSolver.States.finished){
-            try {Thread.sleep(100);} catch (InterruptedException e) {}
+            try {Thread.sleep(100);} catch (InterruptedException ignored) {}
         }
         assertThat(target.wordMatches.getMatches().size(),is(42));
     }
@@ -97,16 +92,16 @@ public class WordSolverTests {
 
             }
         });
-        target.loadDictionary(getInstrumentation().getContext(), R.raw.standard);
+        target.loadDictionary(InstrumentationRegistry.getInstrumentation().getContext(), R.raw.standard);
         while (target.stateObservable.getValue()!= WordSolver.States.ready){
-            try {Thread.sleep(100);} catch (InterruptedException e) {}
+            try {Thread.sleep(100);} catch (InterruptedException ignored) {}
         }
 
         target.setAndValidateQuery("largebaps");
         target.prepareToSearch();
         target.search();
         while (target.stateObservable.getValue()!= WordSolver.States.finished){
-            try {Thread.sleep(100);} catch (InterruptedException e) {}
+            try {Thread.sleep(100);} catch (InterruptedException ignored) {}
         }
         assertEquals(347, target.wordMatches.getMatches().size());
         assertEquals("graspable", target.wordMatches.getWord(0));
@@ -115,7 +110,7 @@ public class WordSolverTests {
     /**
      * Test the match found callback
      */
-    int callbackCount=0;
+    private int callbackCount=0;
     @Test
     public void search2()
     {
@@ -125,16 +120,16 @@ public class WordSolverTests {
             WordSolverTests.this.callbackCount++;
             Log.v("wstests", update);
         });
-        target.loadDictionary(getInstrumentation().getContext(), R.raw.standard);
+        target.loadDictionary(InstrumentationRegistry.getInstrumentation().getContext(), R.raw.standard);
         while (target.stateObservable.getValue()!= WordSolver.States.ready){
-            try {Thread.sleep(100);} catch (InterruptedException e) {}
+            try {Thread.sleep(100);} catch (InterruptedException ignored) {}
         }
 
         target.setAndValidateQuery("largebaps");
         target.prepareToSearch();
         target.search();
         while (target.stateObservable.getValue()!= WordSolver.States.finished){
-            try {Thread.sleep(100);} catch (InterruptedException e) {}
+            try {Thread.sleep(100);} catch (InterruptedException ignored) {}
         }
 
         assertEquals(WordSolver.TABLE_MAX_COUNT_TO_RELOAD, callbackCount);

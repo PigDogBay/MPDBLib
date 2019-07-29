@@ -1,9 +1,8 @@
 package com.pigdogbay.lib.utils;
 
 
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
-import androidx.test.filters.SmallTest;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.pigdogbay.lib.test.R;
 
@@ -12,16 +11,11 @@ import org.junit.runner.RunWith;
 
 import java.util.Locale;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-@SmallTest
 public class PreferencesHelperTest
 {
 
@@ -34,7 +28,7 @@ public class PreferencesHelperTest
         int expected = 42;
         int actual;
         int id = R.string.code_pref_weight_units_key;
-        PreferencesHelper target = new PreferencesHelper(getInstrumentation().getContext());
+        PreferencesHelper target = new PreferencesHelper(InstrumentationRegistry.getInstrumentation().getContext());
         target.setInt(id,expected);
         actual = target.getInt(id,0);
         assertEquals(expected, actual);
@@ -58,7 +52,7 @@ public class PreferencesHelperTest
         int expected = 88;
         int actual;
         int id = R.string.code_pref_weight_units_key;
-        PreferencesHelper target = new PreferencesHelper(getInstrumentation().getContext());
+        PreferencesHelper target = new PreferencesHelper(InstrumentationRegistry.getInstrumentation().getContext());
         target.setDouble(id,1.23);
         actual = target.getInt(id,expected);
         assertEquals(expected, actual);
@@ -72,7 +66,7 @@ public class PreferencesHelperTest
         double expected = 1.23;
         double actual;
         int id = R.string.code_pref_height_key;
-        PreferencesHelper target = new PreferencesHelper(getInstrumentation().getContext());
+        PreferencesHelper target = new PreferencesHelper(InstrumentationRegistry.getInstrumentation().getContext());
         target.setDouble(id,expected);
         actual = target.getDouble(id,0);
         assertEquals(expected, actual,0.0001D);
@@ -107,7 +101,7 @@ public class PreferencesHelperTest
     public void testGetBoolean1()
     {
         int id = R.string.code_pref_welcome_shown_key;
-        PreferencesHelper target = new PreferencesHelper(getInstrumentation().getContext());
+        PreferencesHelper target = new PreferencesHelper(InstrumentationRegistry.getInstrumentation().getContext());
         target.setBoolean(id,true);
         assertTrue(target.getBoolean(id,false));
         target.setBoolean(id,false);

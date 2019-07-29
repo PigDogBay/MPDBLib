@@ -1,7 +1,7 @@
 package com.pigdogbay.lib.utils;
 
-
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.pigdogbay.lib.diagnostics.Timing;
 import com.pigdogbay.lib.test.R;
@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -66,7 +65,7 @@ public class WordListTest {
         InputStream inputStream = null;
         try
         {
-            inputStream = getInstrumentation().getContext().getResources().openRawResource(listId);
+            inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(listId);
             return FileUtils.ReadLines(inputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -254,7 +253,7 @@ public class WordListTest {
     public void RunQueryTest1()
     {
         TestWordListCallback callback = runQueryHelper("CRAno");
-        assertTrue(callback.GetMatches().size() == 1);
+        assertEquals(1, callback.GetMatches().size());
         assertEquals("acorn",callback.GetMatches().get(0));
     }
 
@@ -263,7 +262,7 @@ public class WordListTest {
     public void RunQueryTest2()
     {
         TestWordListCallback callback = runQueryHelper("murTCeps");
-        assertTrue(callback.GetMatches().size() == 3);
+        assertEquals(3, callback.GetMatches().size());
         assertEquals("spectrum", callback.GetMatches().get(0));
         assertEquals("pectrums", callback.GetMatches().get(1));
     }
@@ -273,7 +272,7 @@ public class WordListTest {
     public void RunQueryTest3()
     {
         TestWordListCallback callback = runQueryHelper("IBM");
-        assertTrue(callback.GetMatches().size() == 0);
+        assertEquals(0, callback.GetMatches().size());
     }
 
 
@@ -281,7 +280,7 @@ public class WordListTest {
     public void RunQueryTest4()
     {
         TestWordListCallback callback = runQueryHelper("sp.c....");
-        assertTrue(callback.GetMatches().size() == 1);
+        assertEquals(1, callback.GetMatches().size());
         assertEquals("spectrum", callback.GetMatches().get(0));
     }
 
@@ -300,7 +299,7 @@ public class WordListTest {
     public void RunQueryTest6()
     {
         TestWordListCallback callback = runQueryHelper("zx????");
-        assertTrue(callback.GetMatches().size() == 0);
+        assertEquals(0, callback.GetMatches().size());
     }
 
     @Test
@@ -315,7 +314,7 @@ public class WordListTest {
     public void RunQueryTest8()
     {
         TestWordListCallback callback = runQueryHelper("#on");
-        assertTrue(callback.GetMatches().size() == 2);
+        assertEquals(2, callback.GetMatches().size());
         assertEquals("dragon", callback.GetMatches().get(0));
         assertEquals("electron", callback.GetMatches().get(1));
     }
@@ -324,7 +323,7 @@ public class WordListTest {
     public void RunQueryTest9()
     {
         TestWordListCallback callback = runQueryHelper("#o.");
-        assertTrue(callback.GetMatches().size() == 2);
+        assertEquals(2, callback.GetMatches().size());
         assertEquals("dragon", callback.GetMatches().get(0));
         assertEquals("electron", callback.GetMatches().get(1));
     }

@@ -1,9 +1,7 @@
 package com.pigdogbay.lib.utils;
 
 
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
-import androidx.test.filters.SmallTest;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.util.Log;
 
 import com.pigdogbay.lib.diagnostics.Timing;
@@ -15,19 +13,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-@SmallTest
 public class StringUtilsTests {
 
 
-    static final int LOOP = 100000;
-    static final String TAG = "StringUtilsTests";
+    private static final int LOOP = 100000;
+    private static final String TAG = "StringUtilsTests";
     @Test
     public void wordSort() {
         Log.v(TAG, "Wordsort Time");
@@ -86,7 +79,7 @@ public class StringUtilsTests {
      */
     @Test
     public void sortByLengthReverse1(){
-        ArrayList<String> target = new ArrayList<String>();
+        ArrayList<String> target = new ArrayList<>();
         target.add("apple");
         target.add("kiwi");
         target.add("Pineapple");

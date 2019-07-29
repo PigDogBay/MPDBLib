@@ -1,6 +1,6 @@
 package com.pigdogbay.lib.utils;
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,6 @@ import static org.junit.Assert.assertThat;
  * Unit tests for CodewordSolver
  */
 @RunWith(AndroidJUnit4.class)
-@SmallTest
 public class CodewordSolverTest {
 
     /**

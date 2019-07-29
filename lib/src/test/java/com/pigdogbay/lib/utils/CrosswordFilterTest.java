@@ -53,4 +53,13 @@ public class CrosswordFilterTest implements WordListCallback {
         filter.Update("commodore");
         assertEquals("",result);
     }
+    @Test
+    public void update6(){
+        CrosswordFilter filter = new CrosswordFilter(this, "?p?c???m");
+        filter.Update("spectrum");
+        assertEquals("spectrum",result);
+        result = "";
+        filter.Update("commodore");
+        assertEquals("",result);
+    }
 }

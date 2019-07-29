@@ -1,7 +1,6 @@
 package com.pigdogbay.lib.utils;
 
 
-import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.pigdogbay.lib.diagnostics.Timing;
@@ -23,7 +22,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-@SmallTest
 public class WordListTest {
 
     private static final String TAG = "WordListTest";
@@ -223,6 +221,16 @@ public class WordListTest {
         assertEquals(2,callback.GetMatches().size());
         assertEquals("eight",callback.GetMatches().get(0));
         assertEquals("bit",callback.GetMatches().get(1));
+    }
+    public void FindAnagramsExactLengthTest1()
+    {
+        TestWordListCallback callback = new TestWordListCallback();
+        WordList target = new WordList();
+        target.SetWordList(CreateList());
+        target.FindAnagramsExactLength("aai",2,callback);
+        assertEquals(2,callback.GetMatches().size());
+        assertEquals("amiga",callback.GetMatches().get(0));
+        assertEquals("atari",callback.GetMatches().get(1));
     }
 
     /*

@@ -229,7 +229,11 @@ public class WordSearch {
                 int numberOfBlanks = query.length();
                 query = query.replace("+", "");
                 numberOfBlanks = numberOfBlanks - query.length();
-                _WordList.FindAnagrams(query, numberOfBlanks, callback);
+                if (_FindSubAnagrams) {
+                    _WordList.FindAnagrams(query, numberOfBlanks, callback);
+                } else {
+                    _WordList.FindAnagramsExactLength(query, numberOfBlanks, callback);
+                }
                 break;
             case Supergram:
                 query = query.replace("*", "");

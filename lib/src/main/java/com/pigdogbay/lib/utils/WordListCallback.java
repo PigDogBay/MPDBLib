@@ -14,7 +14,7 @@ public interface WordListCallback {
 		ArrayList<String> matches = new ArrayList<>();
 		WordListCallback wrappedCallback;
 
-		public FilterWrapper(WordListCallback callback) {
+		FilterWrapper(WordListCallback callback) {
 			wrappedCallback = callback;
 		}
 
@@ -209,6 +209,25 @@ public interface WordListCallback {
 		public void Update(String result) {
 			if (pattern.matcher(result).matches())
 			{
+				wrappedCallback.Update(result);
+			}
+		}
+	}
+
+	class DistinctFilter implements WordListCallback{
+		private final WordListCallback wrappedCallback;
+		private final LetterSet letterSet;
+
+		public DistinctFilter(WordListCallback wrappedCallback) {
+			this.wrappedCallback = wrappedCallback;
+			letterSet = new LetterSet("");
+		}
+
+		@Override
+		public void Update(String result) {
+			letterSet.clear();
+			letterSet.add(result);
+			if (letterSet.isDistinct()){
 				wrappedCallback.Update(result);
 			}
 		}

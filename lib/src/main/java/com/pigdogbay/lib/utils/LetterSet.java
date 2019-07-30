@@ -96,6 +96,21 @@ public class LetterSet
 		addToSetB(word);
 		return isASupersetOfB();
 	}
+	public boolean isDistinct(){
+		int count = 0;
+		for (int i=0; i<26; i++)
+		{
+			int numLetters = setA[i];
+			if (numLetters>1)
+			{
+				return false;
+			}
+			count = count + numLetters;
+		}
+		return count>0;
+	}
+
+
 	int getCount(int c){
 		return setA[c-LOWEST_CHAR_VALUE];
 	}

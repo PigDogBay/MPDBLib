@@ -174,11 +174,18 @@ public interface WordListCallback {
 
 		public CrosswordFilter(WordListCallback wrappedCallback, String letters) {
 			this.wrappedCallback = wrappedCallback;
-			letters = letters.toLowerCase(Locale.US);
-			letters = letters.replace(".", "[a-z]");
-			letters = letters.replace("?", "[a-z]");
-			letters = letters.replace("@", "[a-z]+");
-			pattern = Pattern.compile("\\b"+letters+"\\b");
+			Pattern compiled;
+			try {
+				letters = letters.toLowerCase(Locale.US);
+				letters = letters.replace(".", "[a-z]");
+				letters = letters.replace("?", "[a-z]");
+				letters = letters.replace("@", "[a-z]+");
+				compiled = Pattern.compile("\\b" + letters + "\\b", Pattern.CASE_INSENSITIVE);
+			} catch (PatternSyntaxException ex){
+				//blocks any match
+				compiled = Pattern.compile("");
+			}
+			this.pattern = compiled;
 		}
 
 		@Override

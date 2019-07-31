@@ -1,7 +1,8 @@
 package com.pigdogbay.lib.utils;
 
 import org.junit.Test;
-import static junit.framework.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class CrosswordFilterTest implements WordListCallback {
     private String result = null;
@@ -61,5 +62,10 @@ public class CrosswordFilterTest implements WordListCallback {
         result = "";
         filter.Update("commodore");
         assertEquals("",result);
+    }
+    @Test
+    public void update_bad_regex(){
+        CrosswordFilter filter = new CrosswordFilter(this, ")");
+        filter.Update("spectrum");
     }
 }

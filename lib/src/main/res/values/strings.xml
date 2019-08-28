@@ -9,18 +9,7 @@
     <string translatable="false" name="twitter">https://www.twitter.com/pigdogbay</string>
     <string translatable="false" name="blogger">https://pigdogbay.blogspot.co.uk</string>
     <string translatable="false" name="market">https://play.google.com/store/search?q=pub:Pig Dog Bay</string>
-    <string translatable="false" name="code_pref_background_colour">background_colour_pref_key</string>
-    <string translatable="false" name="code_pref_is_first_time_key">is_first_time_pref_key</string>
-    <string name="pref_background_color_title">Background Color</string>
-    <string name="pref_background_color_summary">Choose the background color</string>
 
-    <string name="color_skyblue">Sky Blue</string>
-    <string name="color_dark_pink">Deep Pink</string>
-    <string name="color_light_pink">Apple Blossom</string>
-    <string name="color_turquoise">Ocean</string>
-    <string name="color_yellow">Sunshine</string>
-    <string name="color_grey">Shades of Grey</string>
-    <string name="color_white">Simply White</string>
     <string name="ok">OK</string>
     <string name="number_picker_minus">-</string>
     <string name="number_picker_plus">+</string>

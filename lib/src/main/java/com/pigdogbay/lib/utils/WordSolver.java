@@ -29,7 +29,7 @@ import android.os.AsyncTask;
  */
 public class WordSolver
 {
-	public static final int TABLE_MAX_COUNT_TO_RELOAD = 40;
+	static final int TABLE_MAX_COUNT_TO_RELOAD = 40;
 	public static final int DEFAULT_RESULTS_LIMIT = 500;
 	public static final WordListCallbackAbstractFactory.Null NULL_WLC_FACTORY = new WordListCallbackAbstractFactory.Null();
 	public static String getWordURL(String word)
@@ -70,6 +70,9 @@ public class WordSolver
 	public static String getWordGameDictionaryURL(String word)
 	{
 		return "https://www.wordgamedictionary.com/dictionary/word/"+word;
+	}
+	public static String getChambersUrl(String word){
+		return "https://chambers.co.uk/search/?query="+word+"&title=21st";
 	}
 
 	public int getResultsLimit() {
@@ -233,7 +236,7 @@ public class WordSolver
 		int standandWordListId, proWordListId;
 		boolean isLoadError = false;
 
-		public LoadTask(Context context, int stdId, int proId)
+		LoadTask(Context context, int stdId, int proId)
 		{
 			this.context = context;
 			this.standandWordListId = stdId;

@@ -33,20 +33,17 @@ public class SoundManager
 
     public void initialize()
     {
-        _HashMap = new HashMap<Integer, Integer>();
-        _LoadedSounds = new ArrayList<Integer>();
+        _HashMap = new HashMap<>();
+        _LoadedSounds = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             createNewSoundPool();
         }else{
             createOldSoundPool();
         }
-        _SoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                if (status==0 && !_LoadedSounds.contains(sampleId))
-                {
-                    _LoadedSounds.add(sampleId);
-                }
+        _SoundPool.setOnLoadCompleteListener((soundPool, sampleId, status) -> {
+            if (status==0 && !_LoadedSounds.contains(sampleId))
+            {
+                _LoadedSounds.add(sampleId);
             }
         });
     }

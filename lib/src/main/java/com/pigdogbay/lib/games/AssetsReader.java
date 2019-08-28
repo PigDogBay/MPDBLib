@@ -48,11 +48,8 @@ public class AssetsReader
         Options options = new Options();
         options.inPreferredConfig = config;
 
-        InputStream in = null;
-        Bitmap bitmap = null;
-        try
-        {
-            in = _AssetManager.open(fileName);
+        Bitmap bitmap;
+        try (InputStream in = _AssetManager.open(fileName)) {
             bitmap = BitmapFactory.decodeStream(in, null, options);
             if (bitmap == null) {
                 throw new RuntimeException("Couldn't load bitmap from asset '"
@@ -61,13 +58,6 @@ public class AssetsReader
         } catch (IOException e) {
             throw new RuntimeException("Couldn't load bitmap from asset '"
                     + fileName + "'");
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                }
-            }
         }
         return bitmap;
     }

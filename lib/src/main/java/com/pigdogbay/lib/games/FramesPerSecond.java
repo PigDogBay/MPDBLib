@@ -1,7 +1,7 @@
 package com.pigdogbay.lib.games;
 
 public class FramesPerSecond {
-    long _FrameCount=0L,_StartTime=0L;
+    private long _FrameCount=0L,_StartTime=0L;
     String _FPS="";
 
     public void CalculateFPS()

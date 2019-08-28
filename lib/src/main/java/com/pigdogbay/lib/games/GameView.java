@@ -9,9 +9,6 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.pigdogbay.lib.games.FramesPerSecond;
-import com.pigdogbay.lib.games.GameThread;
-
 public class GameView extends SurfaceView implements GameThread.GameThreadClient {
     public interface IGame
     {
@@ -20,11 +17,11 @@ public class GameView extends SurfaceView implements GameThread.GameThreadClient
     }
 
     private GameThread _GameThread;
-    private SurfaceHolder _Holder;
-    private IGame _Game;
+    private final SurfaceHolder _Holder;
+    private final IGame _Game;
     private boolean _ShowFPS=false;
-    private Paint _TextPaint;
-    private FramesPerSecond _FPS;
+    private final Paint _TextPaint;
+    private final FramesPerSecond _FPS;
 
     public void setShowFPS(boolean show)
     {
@@ -53,7 +50,7 @@ public class GameView extends SurfaceView implements GameThread.GameThreadClient
                 _GameThread = null;
                 break;
 
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
         }
 

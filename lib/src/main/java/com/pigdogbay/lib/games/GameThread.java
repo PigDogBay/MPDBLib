@@ -57,7 +57,7 @@ public class GameThread extends Thread
                 {
                     //nano->ms
                     Thread.sleep(sleepTime/1000000L);
-                } catch(InterruptedException e){}
+                } catch(InterruptedException ignored){}
                 //sleep() is inaccurate, calculate the amount of time it over slept
                 overSleepTime = (System.nanoTime() -afterTime)-sleepTime;
             }

@@ -18,8 +18,8 @@ public class FrameBuffer {
 
     private Bitmap _Buffer;
     private Canvas _Canvas;
-    Rect _SrcRect = new Rect();
-    Rect _DstRect = new Rect();
+    private Rect _SrcRect = new Rect();
+    private Rect _DstRect = new Rect();
 
     /**
      * @return the buffer's underlying bitmap
@@ -49,13 +49,6 @@ public class FrameBuffer {
     /**
      * Draws a section of the bitmap to the buffer
      * Ideal for sprite sheets/image atlas
-     * @param bitmap
-     * @param x - buffer x co-ord
-     * @param y - buffer y co-ord
-     * @param srcX
-     * @param srcY
-     * @param srcWidth
-     * @param srcHeight
      */
     public void draw(Bitmap bitmap, int x, int y, int srcX, int srcY,
                      int srcWidth, int srcHeight) {

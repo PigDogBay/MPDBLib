@@ -48,10 +48,10 @@ public class ObjectTouchHandler implements OnTouchListener {
 
     }
 
-    List<ITouchable> _Touchables;
-    ITouchable _Selected = null;
+    private List<ITouchable> _Touchables;
+    private ITouchable _Selected = null;
     private float _XScale, _YScale;
-    public int _X,_Y;
+    private int _X,_Y;
 
     public float getXScale() {
         return _XScale;
@@ -59,7 +59,6 @@ public class ObjectTouchHandler implements OnTouchListener {
     /**
      * The buffer may be a different size to the screen
      * xScale = Buffer width / screen width
-     * @param xScale
      */
     public void setXScale(float xScale) {
         _XScale = xScale;
@@ -70,14 +69,13 @@ public class ObjectTouchHandler implements OnTouchListener {
     /**
      * The buffer may be a different size to the screen
      * yScale = Buffer height / screen height
-     * @param yScale
      */
     public void setYScale(float yScale) {
         _YScale = yScale;
     }
 
     public ObjectTouchHandler() {
-        _Touchables = new ArrayList<ObjectTouchHandler.ITouchable>();
+        _Touchables = new ArrayList<>();
         _XScale = 1.0f;
         _YScale = 1.0f;
     }
@@ -103,7 +101,7 @@ public class ObjectTouchHandler implements OnTouchListener {
             // ignore multi-touch events
             return false;
         }
-        TouchState state = TouchState.None;
+        TouchState state;
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:

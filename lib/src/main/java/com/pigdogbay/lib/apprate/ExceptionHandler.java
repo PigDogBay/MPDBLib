@@ -8,10 +8,10 @@ import android.content.SharedPreferences;
 public class ExceptionHandler implements UncaughtExceptionHandler {
 
 	private UncaughtExceptionHandler defaultExceptionHandler;
-	SharedPreferences preferences;
+	private SharedPreferences preferences;
 
 	// Constructor.
-	public ExceptionHandler(UncaughtExceptionHandler uncaughtExceptionHandler, Context context)
+	ExceptionHandler(UncaughtExceptionHandler uncaughtExceptionHandler, Context context)
 	{
 		preferences = context.getSharedPreferences(PrefsContract.SHARED_PREFS_NAME, 0);
 		defaultExceptionHandler = uncaughtExceptionHandler;
@@ -19,7 +19,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
 
 	public void uncaughtException(Thread thread, Throwable throwable) {
 
-		preferences.edit().putBoolean(PrefsContract.PREF_APP_HAS_CRASHED, true).commit();
+		preferences.edit().putBoolean(PrefsContract.PREF_APP_HAS_CRASHED, true).apply();
 
 		// Call the original handler.
 		defaultExceptionHandler.uncaughtException(thread, throwable);

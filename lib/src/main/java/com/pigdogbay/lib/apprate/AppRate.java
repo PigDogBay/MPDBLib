@@ -99,7 +99,7 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 	 * @param context A context.
 	 */
 	public static void reset(Context context) {
-		context.getSharedPreferences(PrefsContract.SHARED_PREFS_NAME, 0).edit().clear().commit();
+		context.getSharedPreferences(PrefsContract.SHARED_PREFS_NAME, 0).edit().clear().apply();
 		Log.d(TAG, "Cleared AppRate shared preferences.");
 	}
 
@@ -122,11 +122,11 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 		Editor editor = preferences.edit();
 
 		// Get and increment launch counter.
-		long launch_count = preferences.getLong(PrefsContract.PREF_LAUNCH_COUNT, 0) + 1;
+		long launch_count = preferences.getLong(PrefsContract.PREF_LAUNCH_COUNT, 0L) + 1L;
 		editor.putLong(PrefsContract.PREF_LAUNCH_COUNT, launch_count);
 
 		// Get date of first launch.
-		Long date_firstLaunch = preferences.getLong(PrefsContract.PREF_DATE_FIRST_LAUNCH, 0);
+		long date_firstLaunch = preferences.getLong(PrefsContract.PREF_DATE_FIRST_LAUNCH, 0L);
 		if (date_firstLaunch == 0) {
 			date_firstLaunch = System.currentTimeMillis();
 			editor.putLong(PrefsContract.PREF_DATE_FIRST_LAUNCH, date_firstLaunch);
@@ -144,7 +144,7 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 			}
 		}
 
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
@@ -166,7 +166,6 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 
 	/**
 	 * Shows the default rate dialog.
-	 * @return
 	 */
 	private void showDefaultDialog() {
 
@@ -190,7 +189,6 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 
 	/**
 	 * Show the custom rate dialog.
-	 * @return
 	 */
 	private void showDialog(AlertDialog.Builder builder) {
 
@@ -216,7 +214,7 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 		Editor editor = preferences.edit();
 		editor.putLong(PrefsContract.PREF_DATE_FIRST_LAUNCH, System.currentTimeMillis());
 		editor.putLong(PrefsContract.PREF_LAUNCH_COUNT, 0);
-		editor.commit();
+		editor.apply();
 	}
 
 	@Override
@@ -251,14 +249,14 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 			break;
 		}
 
-		editor.commit();
+		editor.apply();
 		dialog.dismiss();
 	}
 	/**
 	 * @param context A context of the current application.
 	 * @return The application name of the current application.
 	 */
-	private static final String getApplicationName(Context context) {
+	private static String getApplicationName(Context context) {
 		final PackageManager packageManager = context.getPackageManager();
 		ApplicationInfo applicationInfo;
 		try {

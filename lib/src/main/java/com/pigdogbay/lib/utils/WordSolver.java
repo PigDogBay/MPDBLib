@@ -30,7 +30,6 @@ import android.os.AsyncTask;
 public class WordSolver
 {
 	static final int TABLE_MAX_COUNT_TO_RELOAD = 40;
-	public static final int DEFAULT_RESULTS_LIMIT = 500;
 	public static final WordListCallbackAbstractFactory.Null NULL_WLC_FACTORY = new WordListCallbackAbstractFactory.Null();
 	public static String getWordURL(String word)
 	{
@@ -75,15 +74,8 @@ public class WordSolver
 		return "https://chambers.co.uk/search/?query="+word+"&title=21st";
 	}
 
-	public int getResultsLimit() {
-		return resultsLimit;
-	}
 	public void setResultsLimit(int resultsLimit) {
 		this.resultsLimit = resultsLimit;
-	}
-
-	public int getResultsCount() {
-		return resultsCount;
 	}
 
 	public void setShowSubanagrams(boolean show){
@@ -122,17 +114,13 @@ public class WordSolver
 	
 	public void loadDictionary(Context context, int resourceId)
 	{
-		loadDictionary(context, resourceId, -1);
-	}
-	public void loadDictionary(Context context, int stdId, int proId)
-	{
 		States state = stateObservable.getValue();
 		switch (state){
 
 			case uninitialized:
 			case ready:
 			case finished:
-				this.new LoadTask(context, stdId, proId).execute();
+				this.new LoadTask(context, resourceId).execute();
 				break;
 			default:
 				break;
@@ -232,15 +220,14 @@ public class WordSolver
 	 */
 	private class LoadTask extends AsyncTask<Void, Void, Void> {
 		
-		Context context;
-		int standandWordListId, proWordListId;
+		final Context context;
+		final int wordListId;
 		boolean isLoadError = false;
 
-		LoadTask(Context context, int stdId, int proId)
+		LoadTask(Context context, int wordListId)
 		{
-			this.context = context;
-			this.standandWordListId = stdId;
-			this.proWordListId = proId;
+			this.context = context.getApplicationContext();
+			this.wordListId = wordListId;
 		}
 
 		@Override
@@ -251,19 +238,13 @@ public class WordSolver
 		protected Void doInBackground(Void... params) {
 			try 
 			{
-				List<String> words = LineReader.Read(context, standandWordListId);
-				if (proWordListId!=-1){
-					List<String> proWords = LineReader.Read(context, proWordListId);
-					words.addAll(proWords);
-					Collections.sort(words, new StringUtils.sizeThenAtoZComparator());
-				}
+				List<String> words = LineReader.Read(context, wordListId);
 				wordList.SetWordList(words);
 			} 
 			catch (Exception e) 
 			{
 				isLoadError = true;
 			}
-			context=null;
 			return null;
 		}
 

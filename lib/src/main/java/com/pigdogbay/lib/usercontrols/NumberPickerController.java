@@ -12,7 +12,7 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 	private INumberPickerValue numberPickerValue;
 	private INumberEditorDialog numberEditorDialog;
 	private OnValueChangedListener onValueChangedListener;
-	Button setButton;
+	private Button setButton;
 
 	Button getMinusBtn(){return minusBtn;}
 	Button getPlusBtn(){return plusBtn;}
@@ -48,50 +48,20 @@ public class NumberPickerController implements DialogInterface.OnDismissListener
 	{
 		minusBtn = minus;
 		plusBtn = plus;
-		minus.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				minusButtonClicked();
-			}
-		});
-		plus.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				plusButtonClicked();
-			}
-		});
+		minus.setOnClickListener(v -> minusButtonClicked());
+		plus.setOnClickListener(v -> plusButtonClicked());
 		setButton = set;
-		setButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				displayButtonClicked();
-			}
-		});
+		setButton.setOnClickListener(v -> displayButtonClicked());
 		
 	}
 	public NumberPickerController(View view, int minusButtonId, int setButtonId, int plusButtonId)
 	{
-		minusBtn = (Button)view.findViewById(minusButtonId);
-		plusBtn = (Button)view.findViewById(plusButtonId);
-		minusBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				minusButtonClicked();
-			}
-		});
-		plusBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				plusButtonClicked();
-			}
-		});
-		setButton = (Button)view.findViewById(setButtonId);
-		setButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				displayButtonClicked();
-			}
-		});
+		minusBtn = view.findViewById(minusButtonId);
+		plusBtn = view.findViewById(plusButtonId);
+		minusBtn.setOnClickListener(v -> minusButtonClicked());
+		plusBtn.setOnClickListener(v -> plusButtonClicked());
+		setButton = view.findViewById(setButtonId);
+		setButton.setOnClickListener(v -> displayButtonClicked());
 	}
 
 	private void minusButtonClicked()

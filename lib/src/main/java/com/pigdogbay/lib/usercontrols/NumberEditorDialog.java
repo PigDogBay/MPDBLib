@@ -11,9 +11,9 @@ import android.widget.EditText;
 
 public class NumberEditorDialog implements INumberEditorDialog {
 
-	Context _Context;
-	String _Title, _Hint;
-	OnDismissListener _OnDismissListener;
+	private Context _Context;
+	private String _Title, _Hint;
+	private OnDismissListener _OnDismissListener;
 	public NumberEditorDialog(Context context, String hint, String title)
 	{
 		_Context = context;
@@ -30,29 +30,19 @@ public class NumberEditorDialog implements INumberEditorDialog {
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		alert.setTitle(_Title);
 		alert.setView(input);
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int whichButton)
+		alert.setPositiveButton("Ok", (dialog, whichButton) -> {
+			try
 			{
-				try
-				{
-					String value = input.getText().toString().trim();
-					numberPickerValue.setValue(Double.parseDouble(value));
-					onDismiss();
-				}
-				catch (NumberFormatException ex)
-				{
-				}
-			}
-		});
-
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int whichButton)
-			{
-				dialog.cancel();
+				String value = input.getText().toString().trim();
+				numberPickerValue.setValue(Double.parseDouble(value));
 				onDismiss();
 			}
+			catch (NumberFormatException ignored){}
+		});
+
+		alert.setNegativeButton("Cancel", (dialog, whichButton) -> {
+			dialog.cancel();
+			onDismiss();
 		});
 		alert.show();
 		
@@ -61,7 +51,7 @@ public class NumberEditorDialog implements INumberEditorDialog {
 	public void setOnDismissListener(OnDismissListener listener) {
 		_OnDismissListener = listener;
 	}
-	void onDismiss()
+	private void onDismiss()
 	{
 		if (_OnDismissListener!=null)
 		{

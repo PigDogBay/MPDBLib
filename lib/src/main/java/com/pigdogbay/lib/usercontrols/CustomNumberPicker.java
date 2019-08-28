@@ -2,7 +2,6 @@ package com.pigdogbay.lib.usercontrols;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -71,7 +70,9 @@ public class CustomNumberPicker extends LinearLayout{
 	private void init(Context context){
 		this.setOrientation(HORIZONTAL);
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.number_picker,this);
+		if (inflater != null) {
+			inflater.inflate(R.layout.number_picker,this);
+		}
 	}
 
 	@Override
@@ -88,7 +89,6 @@ public class CustomNumberPicker extends LinearLayout{
 	protected Parcelable onSaveInstanceState() {
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(STATE_SUPER_CLASS,super.onSaveInstanceState());
-		double d = controller.getValue();
 		bundle.putDouble(STATE_VALUE,controller.getValue());
 		return bundle;
 	}
@@ -98,7 +98,6 @@ public class CustomNumberPicker extends LinearLayout{
 		if (state instanceof Bundle){
 			Bundle bundle = (Bundle)state;
 			super.onRestoreInstanceState(bundle.getParcelable(STATE_SUPER_CLASS));
-			double d = controller.getValue();
 			controller.setValue(bundle.getDouble(STATE_VALUE));
 		}else {
 			super.onRestoreInstanceState(state);

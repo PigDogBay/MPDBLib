@@ -96,7 +96,7 @@ public class WordListTest {
         target.findCodewords(codewordSolver,callback);
         assertEquals(1, callback.GetMatches().size());
         assertThat(callback.GetMatches().get(0),is("aardvark"));
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class WordListTest {
         Timing timing = new Timing();
         target.FindWildcardWords("t#and",callback);
         assertEquals(10, callback.GetMatches().size());
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
 
     @Test
@@ -122,7 +122,7 @@ public class WordListTest {
         assertEquals(51, callback.GetMatches().size());
         assertEquals("detachment insure",callback.GetMatches().get(7));
         assertEquals("unmastered ethnic",callback.GetMatches().get(49));
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
     @Test
     public void FindMultiwordAnagramsTest2()
@@ -135,7 +135,7 @@ public class WordListTest {
         assertEquals(51, callback.GetMatches().size());
         assertEquals("dement raunchiest",callback.GetMatches().get(7));
         assertEquals("tamest unenriched",callback.GetMatches().get(42));
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
 
     /*
@@ -151,7 +151,7 @@ public class WordListTest {
         target.FindMultiwordAnagrams("bangers","and","mash", callback);
         assertEquals(3227, callback.GetMatches().size());
         assertEquals("smashed nan garb",callback.GetMatches().get(3179));
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
     /*
         3 words - same length
@@ -166,7 +166,7 @@ public class WordListTest {
         target.FindMultiwordAnagrams("time","will","tell", callback);
         assertEquals(708, callback.GetMatches().size());
         assertEquals("item lilt well",callback.GetMatches().get(21));
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
 
     /*
@@ -182,7 +182,7 @@ public class WordListTest {
         target.FindMultiwordAnagrams("spectrum","computer","magazine", callback);
         assertEquals(366, callback.GetMatches().size());
         assertEquals("mutineer compacts gazumper",callback.GetMatches().get(227));
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
 
     @Test
@@ -385,7 +385,7 @@ public class WordListTest {
         Timing timing = new Timing();
         target.FindSupergrams("kayleigh",callback,0);
         assertEquals(2, callback.GetMatches().size());
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
     @Test
     public void FindSupergrams2()
@@ -400,7 +400,7 @@ public class WordListTest {
         target.FindSupergrams("kayleigh",callback,15);
         assertEquals(2, callback.GetMatches().size());
         assertEquals("heartbreakingly", callback.GetMatches().get(1));
-        timing.LogDuration(TAG);
+        timing.logDuration(TAG);
     }
     @Test
     public void IsSupergram1() {
@@ -434,7 +434,7 @@ public class WordListTest {
             boolean actual = target.isSupergram("supergram");
             assertTrue(actual);
         }
-        t.LogDuration("ASUT");
+        t.logDuration("ASUT");
 
     }
 

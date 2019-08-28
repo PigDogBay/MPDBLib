@@ -29,7 +29,7 @@ public class StringUtilsTests {
         for (int i=0;i<LOOP;i++){
             word = StringUtils.WordSort("qazwsxedc");
         }
-        t.LogDuration(TAG);
+        t.logDuration(TAG);
         assertEquals("acdeqswxz", word);
 
     }
@@ -66,7 +66,7 @@ public class StringUtilsTests {
     public void getSubWordsRecursive(){
         Timing t = new Timing();
         List<String> actual = StringUtils.GetSubWords("abcdefghi",6);
-        t.LogDuration(TAG);
+        t.logDuration(TAG);
         //7*8*9 + 8*9 + 9 = 585
         assertEquals(585,actual.size());
         for (String w : actual){
@@ -98,7 +98,7 @@ public class StringUtilsTests {
         List<String> list = StringUtils.GetSubWords("abcdefghi",3);
         Timing t = new Timing();
         StringUtils.sortByLengthReverse(list);
-        t.LogDuration(TAG);
+        t.logDuration(TAG);
     }
     @Test
     public void sizeThenAtoZComparator1()

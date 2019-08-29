@@ -1,17 +1,14 @@
 package com.pigdogbay.lib.utils;
 
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.IBinder;
 import android.provider.Settings;
@@ -26,8 +23,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public final class ActivityUtils
@@ -135,8 +132,6 @@ public final class ActivityUtils
 	/**
 	 * Also see
 	 * http://stackoverflow.com/questions/10296711/androidtake-screenshot-and-share-it
-	 * @param activity
-	 * @return
 	 */
 	public static Bitmap takeScreenShot(Activity activity)
 	{
@@ -160,12 +155,7 @@ public final class ActivityUtils
 				.setTitle(title)
 				.setMessage(message)
 				.setPositiveButton(okID,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.dismiss();
-							}
-						}).show();
+						(dialog, which) -> dialog.dismiss()).show();
 
 	}
 	
@@ -177,7 +167,7 @@ public final class ActivityUtils
 				imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception ignored) {
 		}
 	}
 	public static void hideKeyboard(Activity activity, IBinder token)
@@ -188,7 +178,7 @@ public final class ActivityUtils
 				imm.hideSoftInputFromWindow(token, 0);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception ignored) {
 		}
 	}
 
@@ -198,38 +188,17 @@ public final class ActivityUtils
 		//also use findViewById(android.R.id.content).getWind‌​owToken()
 		hideKeyboard(activity,activity.getWindow().getDecorView().getRootView().getWindowToken());
 	}
-	@SuppressLint("NewApi")
-	@SuppressWarnings("deprecation")
-	public static void setBackground(Activity activity, int viewID, int backgroundID)
-	{
-		Drawable background = activity.getResources().getDrawable(backgroundID);
-		View view = (View)activity.findViewById(viewID);
-		int sdk = android.os.Build.VERSION.SDK_INT;
-		if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN)
-		{
-			view.setBackgroundDrawable(background);
-		}
-		else
-		{
-			view.setBackground(background);
-		}
-	}
 
 	public static String readResource(Context c, int id) throws IOException {
-		InputStream is = c.getResources().openRawResource(id);
-		Writer writer = new StringWriter();
-		char[] buffer = new char[1024];
-		try {
-			Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		try (InputStream is = c.getResources().openRawResource(id)) {
+			Writer writer = new StringWriter();
+			char[] buffer = new char[1024];
+			Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 			int n;
 			while ((n = reader.read(buffer)) != -1) {
 				writer.write(buffer, 0, n);
 			}
-		} finally {
-			is.close();
+			return writer.toString();
 		}
-		return writer.toString();
 	}
-
-
 }

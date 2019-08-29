@@ -14,7 +14,7 @@ public final class LineReader
 	public static List<String> Read(InputStream inputStream)
 			throws IOException
 	{
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		InputStreamReader isr = new InputStreamReader(inputStream);
 		BufferedReader br = new BufferedReader(isr);
 		String line;
@@ -27,18 +27,8 @@ public final class LineReader
 	
 	public static List<String> Read(Context context, int resourceId) throws IOException
 	{
-		InputStream inputStream = null;
-		try
-		{
-			inputStream = context.getResources().openRawResource(resourceId);
+		try (InputStream inputStream = context.getResources().openRawResource(resourceId)) {
 			return Read(inputStream);
-		} 
-		finally
-		{
-			if (inputStream != null)
-			{
-				inputStream.close();
-			}
-		}		
+		}
 	}
 }

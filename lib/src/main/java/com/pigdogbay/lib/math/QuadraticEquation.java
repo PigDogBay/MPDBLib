@@ -8,8 +8,17 @@ package com.pigdogbay.lib.math;
 //y = ax^2 + bx + c
 public class  QuadraticEquation
 {
-    private double _A = 0, _B = 0, _C = 0;
+    private final double _A, _B, _C;
 
+    public double getA() {
+        return _A;
+    }
+    public double getB() {
+        return _B;
+    }
+    public double getC() {
+        return _C;
+    }
 
     public QuadraticEquation(double x0, double y0, double x1, double y1, double x2, double y2) {
         //b = [(y₀-y₁)(x₁²-x₂²)+(y₂-y₁)(x₀²-x₁²)] ⁄ [(x₀-x₁)(x₁²-x₂²)+(x₂-x₁)(x₀²-x₁²)]
@@ -17,9 +26,10 @@ public class  QuadraticEquation
                 bDenominator = ((x0 - x1) * ((x1 * x1) - (x2 * x2)) + (x2 - x1) * ((x0 * x0) - (x1 * x1)));
         if (bDenominator != 0) {
             _B = bNumerator / bDenominator;
-        } else
-        {
-            if (bNumerator == 0)_B = 1;
+        } else if (bNumerator == 0){
+            _B = 1;
+        } else {
+            _B=0;
         }
 
         //a = [y₀-y₁-b⋅(x₀-x₁)] ⁄ (x₀²-x₁²)
@@ -53,8 +63,7 @@ public class  QuadraticEquation
 
             if (add >= 0) result = add;
             else {
-                double subtract = (-_B - squareRoot) / (2 * _A);
-                result =  subtract;
+                result = (-_B - squareRoot) / (2 * _A);
             }
         }
         else if(_B!=0)
@@ -69,34 +78,8 @@ public class  QuadraticEquation
         return result;
     }
 
-    public void ScaleEquation(double scaleFactor)
+    public QuadraticEquation ScaleEquation(double scaleFactor)
     {
-        _A *= scaleFactor;
-        _B *= scaleFactor;
-        _C *= scaleFactor;
-    }
-
-    public double getA() {
-        return _A;
-    }
-
-    public void setA(double _A) {
-        this._A = _A;
-    }
-
-    public double getB() {
-        return _B;
-    }
-
-    public void setB(double _B) {
-        this._B = _B;
-    }
-
-    public double getC() {
-        return _C;
-    }
-
-    public void setC(double _C) {
-        this._C = _C;
+        return new QuadraticEquation(_A*scaleFactor,_B*scaleFactor, _C*scaleFactor);
     }
 }

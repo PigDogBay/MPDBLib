@@ -16,17 +16,17 @@ import java.util.List;
 public class BestLineFit
 {
 	//Sum of x-values
-	double sx = 0;
+	private double sx = 0;
 	//Sum of y-values
-	double sy = 0;
+	private double sy = 0;
 	//Sum of the x squared values
-	double sxx = 0;
+	private double sxx = 0;
 	//Sum of the y squared values
-	double syy = 0;
+	private double syy = 0;
 	//sum of xy values
-	double sxy = 0;
+	private double sxy = 0;
 	//number of points
-	int count = 0;
+	private int count = 0;
 	public BestLineFit()
 	{
 	}

@@ -1,5 +1,7 @@
 package com.pigdogbay.lib.math;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 
 /**
@@ -274,6 +276,7 @@ public class Matrix {
         return invMatrix;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return Arrays.deepToString(matrix);

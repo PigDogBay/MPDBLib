@@ -82,13 +82,13 @@ public class StationaryPoints
      */
     public List<TurningPoint> CalculateTurningPoints()
     {
-        turningPoints = new ArrayList<TurningPoint>();
+        turningPoints = new ArrayList<>();
         smoothDiffPoints();
         findTurningPoints();
         return turningPoints;
 
     }
-    void smoothDiffPoints() {
+    private void smoothDiffPoints() {
         if (threshold == 0d) {
             //no smoothing required
             return;
@@ -104,7 +104,7 @@ public class StationaryPoints
             }
         }
     }
-    void findTurningPoints()
+    private void findTurningPoints()
     {
         int startIndex = 0;
         SPSS state = SPSS.Nothing;
@@ -150,7 +150,7 @@ public class StationaryPoints
             }
         }
     }
-    void scanForPeak(int startIndex, int endIndex)
+    private void scanForPeak(int startIndex, int endIndex)
     {
         DPoint pt = points.get(startIndex);
         int index = startIndex;
@@ -164,7 +164,7 @@ public class StationaryPoints
         }
         turningPoints.add(new TurningPoint(pt,true,index));
     }
-    void scanForTrough(int startIndex, int endIndex)
+    private void scanForTrough(int startIndex, int endIndex)
     {
         DPoint pt = points.get(startIndex);
         int index = startIndex;

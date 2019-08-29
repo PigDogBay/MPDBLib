@@ -1,9 +1,11 @@
 package com.pigdogbay.lib.math;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * Structure to hold a X,Y data point
@@ -19,10 +21,11 @@ public class DPoint
 		this.Y = Y;
 	}
 	
-	@Override
+	@NotNull
+    @Override
 	public String toString()
 	{
-		return String.format("(%f,%f)", X,Y);
+		return String.format(Locale.US,"(%f,%f)", X,Y);
 	}
 
     public static List<DPoint> createList(int[] data)
@@ -36,12 +39,7 @@ public class DPoint
     }
 
     public static void sortByX(List<DPoint> points){
-        Collections.sort(points, new Comparator<DPoint>() {
-            @Override
-            public int compare(DPoint lhs, DPoint rhs) {
-                return Double.compare(lhs.X, rhs.X);
-            }
-        });
+        Collections.sort(points, (lhs, rhs) -> Double.compare(lhs.X, rhs.X));
     }
 
     public static DPoint getMinY(List<DPoint> points){

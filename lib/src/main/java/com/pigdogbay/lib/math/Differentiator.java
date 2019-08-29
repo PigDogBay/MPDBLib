@@ -23,7 +23,7 @@ public class Differentiator
      * is then considered to be that points differential value. Use smaller sample sizes if you have smooth continuous data, uses larger sample sizes
      * if the data is noisy, as larger sample sample sizes will give a better average.
      *
-     * @param sampleSize
+     * @param sampleSize Sample Size
      */
     public void setSampleSize(int sampleSize) {
         this.sampleSize = sampleSize;
@@ -66,13 +66,13 @@ public class Differentiator
 
     /**
      * Uses a moving sample and best line slope to calculate the differentials for each data point
-     * @return
+     * @return list of points
      */
-    List<DPoint> SampleAveragedDifferentiation()
+    private List<DPoint> SampleAveragedDifferentiation()
     {
         //ensure points are sorted, in order of x value
         DPoint.sortByX(points);
-        ArrayList<DPoint> diffPoints = new ArrayList<DPoint>();
+        ArrayList<DPoint> diffPoints = new ArrayList<>();
         int start = sampleSize / 2;
         int end = points.size() - start;
 
@@ -101,11 +101,11 @@ public class Differentiator
 
     /**
      * Simply fits a best line to calculate the differential
-     * @return
+     * @return list of points
      */
-    List<DPoint> SmallDataSet()
+    private List<DPoint> SmallDataSet()
     {
-        ArrayList<DPoint> diffPoints = new ArrayList<DPoint>();
+        ArrayList<DPoint> diffPoints = new ArrayList<>();
         BestLineFit bl = new BestLineFit(points);
         for (int i = 0; i < points.size(); i++)
         {

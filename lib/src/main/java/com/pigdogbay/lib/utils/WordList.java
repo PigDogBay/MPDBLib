@@ -6,16 +6,8 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class WordList {
-	private int resourceId;
 	private volatile boolean _Stop;
-	List<String> _WordList;
-
-	public int getResourceId() {
-		return resourceId;
-	}
-	public void setResourceId(int resourceId) {
-		this.resourceId = resourceId;
-	}
+	private List<String> _WordList;
 
 	/**
 	 * Signal to stop any searches
@@ -30,7 +22,7 @@ public class WordList {
 		_Stop = false;
 	}
 	/*
-	 * Wordlist must be sorted and all lower case
+	 * Word list must be sorted and all lower case
 	 */
 	public void SetWordList(List<String> wordList) {
 		_WordList = wordList;
@@ -297,7 +289,7 @@ public class WordList {
 
 	private void findOtherMultiwordAnagrams(String letters, WordListCallback callback, int i) {
 		String word1 = letters.substring(0,i);
-		String word2 = letters.substring(i,letters.length());
+		String word2 = letters.substring(i);
 		FindMultiwordAnagrams(word1,word2,callback);
 	}
 

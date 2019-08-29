@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class StringUtils {
-	public static final String LOWERCASE_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
 	public static String WordSort(String word) {
 		char[] letters = word.toCharArray();
@@ -19,12 +18,12 @@ public final class StringUtils {
 	/**
 	 * Returns all the words that are one letter less, eg ABCD returns BCD, ACD,ABD, ABC
 	 * 
-	 * @param word
+	 * @param word word
 	 * @return list of the subwords
 	 */
 	public static List<String> GetSubWords(String word) {
 		word = WordSort(word);
-		ArrayList<String> subwords = new ArrayList<String>();
+		ArrayList<String> subwords = new ArrayList<>();
 		int len = word.length();
 		if (len > 1) {
 			StringBuilder sb = new StringBuilder();
@@ -42,7 +41,7 @@ public final class StringUtils {
 	}
 
 	/**
-	 * Recusively finds subwords
+	 * Recursively finds sub-words
 	 * 
 	 * If word is 9 letters and min length =6, expect to get a list of 9*8*7 + 9*8 + 9
 	 * For example,  abcdefghi will take around 20ms and create 585 words.
@@ -52,7 +51,7 @@ public final class StringUtils {
 	 * @return unsorted list of sub-words
 	 */
 	public static List<String> GetSubWords(String word, int minLen) {
-		ArrayList<String> agregate = new ArrayList<String>();
+		ArrayList<String> agregate = new ArrayList<>();
 		if (word.length() > minLen) {
 			List<String> sublist = GetSubWords(word);
 			agregate.addAll(sublist);
@@ -97,8 +96,8 @@ public final class StringUtils {
 			char[] bannedLetters) {
 		char[] chars = word.toCharArray();
 		for (char c : bannedLetters) {
-			for (int i = 0; i < chars.length; i++) {
-				if (c == chars[i]) {
+			for (char d : chars) {
+				if (c == d) {
 					return false;
 				}
 			}
@@ -107,12 +106,7 @@ public final class StringUtils {
 	}
 	
 	public static void sortByLengthReverse(List<String> list){
-		Collections.sort(list, new Comparator<String>() {
-			@Override
-			public int compare(String lhs, String rhs) {
-				return rhs.length()-lhs.length();
-			}
-		});
+		Collections.sort(list, (lhs, rhs) -> rhs.length()-lhs.length());
 	}
 
 	/**
@@ -130,7 +124,7 @@ public final class StringUtils {
 	public static int parseInt(String s, int defaultValue) {
 		try {
 			defaultValue = Integer.parseInt(s);
-		} catch (Exception ex) {
+		} catch (Exception ignored) {
 		}
 		return defaultValue;
 	}
@@ -150,7 +144,7 @@ public final class StringUtils {
 	public static long parseLong(String s, long defaultValue) {
 		try {
 			defaultValue = Long.parseLong(s);
-		} catch (Exception ex) {
+		} catch (Exception ignored) {
 		}
 		return defaultValue;
 	}
@@ -170,7 +164,7 @@ public final class StringUtils {
 	public static double parseDouble(String s, double defaultValue) {
 		try {
 			defaultValue = Double.parseDouble(s);
-		} catch (Exception ex) {
+		} catch (Exception ignored) {
 		}
 		return defaultValue;
 	}
@@ -190,7 +184,7 @@ public final class StringUtils {
 	public static boolean parseBoolean(String s, boolean defaultValue) {
 		try {
 			defaultValue = Boolean.parseBoolean(s);
-		} catch (Exception ex) {
+		} catch (Exception ignored) {
 		}
 		return defaultValue;
 	}

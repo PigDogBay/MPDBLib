@@ -25,26 +25,25 @@ public class WordSearch {
         Codeword
     }
 
-    public static final char CROSSWORD_CHAR = '.';
-    public static final char CROSSWORD_CHAR_ALTERNATIVE = '?';
-    public static final char TWOWORD_CHAR = ' ';
-    public static final char TWOWORD_CHAR_ALTERNATIVE = '-';
-    public static final char WILDCARD_CHAR = '#';
-    public static final char WILDCARD_CHAR_ALTERNATIVE = '@';
-    public static final char BLANK_CHAR = '+';
-    public static final char SUPERGRAM_CHAR = '*';
-    public static final char LOWEST_ASCII_VALUE = ' ';
-    public static final char CODEWORD_CHAR = '1';
-    public static final char HIGHEST_ASCII_VALUE = 'z';
-    public static final String CROSSWORD_STR = ".";
-    public static final String TWOWORD_STR = " ";
-    public static final String WILDCARD_STR = "#";
-    public static final String BLANK_STR = "+";
-    public static final String SUPERGRAM_STR = "*";
-    public static final String CODEWORD_STR = "1";
+    private static final char CROSSWORD_CHAR = '.';
+    private static final char CROSSWORD_CHAR_ALTERNATIVE = '?';
+    private static final char TWOWORD_CHAR = ' ';
+    private static final char TWOWORD_CHAR_ALTERNATIVE = '-';
+    private static final char WILDCARD_CHAR = '#';
+    private static final char WILDCARD_CHAR_ALTERNATIVE = '@';
+    private static final char BLANK_CHAR = '+';
+    private static final char SUPERGRAM_CHAR = '*';
+    private static final char LOWEST_ASCII_VALUE = ' ';
+    private static final char CODEWORD_CHAR = '1';
+    private static final char HIGHEST_ASCII_VALUE = 'z';
+    static final String CROSSWORD_STR = ".";
+    static final String TWOWORD_STR = " ";
+    static final String WILDCARD_STR = "#";
+    static final String BLANK_STR = "+";
+    static final String SUPERGRAM_STR = "*";
 
 
-    public final static int MAX_WORD_LEN = 42;
+    final static int MAX_WORD_LEN = 42;
 
     private static final char DEL_CHAR = 'X';
     private static final String DEL_STR = "X";
@@ -248,8 +247,6 @@ public class WordSearch {
                 }
                 break;
             case Wildcard:
-                _WordList.FindWildcardWords(query, callback);
-                break;
             case WildcardAndCrossword:
                 _WordList.FindWildcardWords(query, callback);
                 break;

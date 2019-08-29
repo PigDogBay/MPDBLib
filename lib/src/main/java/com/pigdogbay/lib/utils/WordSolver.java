@@ -1,10 +1,9 @@
 package com.pigdogbay.lib.utils;
 
-import java.util.Collections;
-import java.util.List;
-
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.util.List;
 
 /**
  * 

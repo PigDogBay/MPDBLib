@@ -7,7 +7,7 @@ package com.pigdogbay.lib.utils;
 public interface WordListCallbackAbstractFactory {
     WordListCallback createChainedCallback(WordListCallback lastCallback);
 
-    public class Null implements WordListCallbackAbstractFactory {
+    class Null implements WordListCallbackAbstractFactory {
         @Override
         public WordListCallback createChainedCallback(WordListCallback lastCallback) {
             return lastCallback;

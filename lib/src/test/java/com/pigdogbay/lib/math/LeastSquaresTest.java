@@ -93,9 +93,9 @@ public class LeastSquaresTest {
     /// R2 = 0.9564
     /// Sum(y) = 41
     /// </summary>
-    DPoint[] testData1()
+    private DPoint[] testData1()
     {
-        DPoint[] testData = new DPoint[]{
+        return new DPoint[]{
                 new DPoint(0,1),
                 new DPoint(1,3),
                 new DPoint(2,6),
@@ -106,7 +106,6 @@ public class LeastSquaresTest {
                 new DPoint(7,4),
                 new DPoint(8,2),
                 new DPoint(9,-1)};
-        return testData;
     }
     @Test
    public void calculateParametersTest3()
@@ -124,7 +123,7 @@ public class LeastSquaresTest {
     {
         LeastSquares target = new QuadraticFit();
         target.getPoints().addAll(Arrays.asList(testData1()));
-        Matrix coeff = target.calculateParameters();
+        target.calculateParameters();
         assertEquals(4.1, target.meanYValue(),0.01);
         assertEquals(0.9564, target.coefficientOfDetermination(),0.0001);
     }

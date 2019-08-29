@@ -13,11 +13,10 @@ import static org.junit.Assert.assertThat;
 public class MatrixTest {
 
     private double[][] createArray(){
-        double[][] array = {
+        return new double[][]{
                 {1.0,2.056789,3.0},
                 {4.0,5.0,6.0}
         };
-        return array;
     }
 
     @Test

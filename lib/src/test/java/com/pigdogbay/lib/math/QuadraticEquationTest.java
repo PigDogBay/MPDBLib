@@ -2,7 +2,7 @@ package com.pigdogbay.lib.math;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 
 /**
  * Created by Mark on 20/06/2015.

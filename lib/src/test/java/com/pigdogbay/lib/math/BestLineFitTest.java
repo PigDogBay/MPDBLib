@@ -2,7 +2,7 @@ package com.pigdogbay.lib.math;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 
 /**
  * Created by Mark on 03/07/2015.
@@ -39,8 +39,8 @@ public class BestLineFitTest
         target.Add(3, 13);
         target.Add(4, 19);
 
-        assertTrue(7d==target.calculateY(2));
-        assertTrue(2d==target.calculateX(7));
+        assertEquals(7d, target.calculateY(2), 0.0);
+        assertEquals(2d, target.calculateX(7), 0.0);
     }
     @Test
     public void bestLineFit3()

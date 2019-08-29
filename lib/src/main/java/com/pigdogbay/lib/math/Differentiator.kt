@@ -1,48 +1,34 @@
-package com.pigdogbay.lib.math;
+package com.pigdogbay.lib.math
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList
 
 /**
  * Created by Mark on 02/07/2015.
  *
  * Differentiates a data set
  */
-public class Differentiator
-{
-    private int sampleSize = 9;
-    private List<DPoint> points;
-
-
-    public int getSampleSize() {
-        return sampleSize;
-    }
-
+class Differentiator {
     /**
      * The differential algorithm takes a sample of data around a point to calculate the best line fit, the slope of the best line
      * is then considered to be that points differential value. Use smaller sample sizes if you have smooth continuous data, uses larger sample sizes
      * if the data is noisy, as larger sample sample sizes will give a better average.
-     *
-     * @param sampleSize Sample Size
      */
-    public void setSampleSize(int sampleSize) {
-        this.sampleSize = sampleSize;
+    var sampleSize = 9
+    private val points = ArrayList<DPoint>()
+
+    fun getPoints(): List<DPoint>? {
+        return points
     }
 
-    public List<DPoint> getPoints() {
-        return points;
+    constructor() {
     }
 
-    public Differentiator(){
-        points = new ArrayList<>();
+    constructor(points: List<DPoint>) {
+        this.points.addAll(points)
     }
 
-    public Differentiator(List<DPoint> points){
-        this.points = points;
-    }
-
-    public void Add(double x, double y){
-        points.add(new DPoint(x,y));
+    fun Add(x: Double, y: Double) {
+        points.add(DPoint(x, y))
     }
 
     /**
@@ -60,58 +46,52 @@ public class Differentiator
      *
      * @return Array of points whose Y-values are the differential values
      */
-    public List<DPoint> Differentiate(){
-        return points.size()>sampleSize ?SampleAveragedDifferentiation():SmallDataSet();
+    fun Differentiate(): List<DPoint> {
+        return if (points.size > sampleSize) SampleAveragedDifferentiation() else SmallDataSet()
     }
 
     /**
      * Uses a moving sample and best line slope to calculate the differentials for each data point
      * @return list of points
      */
-    private List<DPoint> SampleAveragedDifferentiation()
-    {
+    private fun SampleAveragedDifferentiation(): List<DPoint> {
         //ensure points are sorted, in order of x value
-        DPoint.sortByX(points);
-        ArrayList<DPoint> diffPoints = new ArrayList<>();
-        int start = sampleSize / 2;
-        int end = points.size() - start;
+        DPoint.sortByX(points)
+        val diffPoints = ArrayList<DPoint>()
+        val start = sampleSize / 2
+        val end = points.size - start
 
         //Start points: calculate best line fit of the first batch of points
         //and set the differential as the lines slope.
-        List<DPoint> selection = points.subList(0, sampleSize);
-        BestLineFit bl = new BestLineFit(selection);
-        for (int i = 0; i < start; i++)
-        {
-            diffPoints.add(new DPoint(points.get(i).X, bl.getSlope()));
+        var selection = points.subList(0, sampleSize)
+        var bl = BestLineFit(selection)
+        for (i in 0 until start) {
+            diffPoints.add(DPoint(points[i].X, bl.slope))
         }
         //mid points
-        for (int i = start; i < end; i++)
-        {
-            selection = points.subList(i-start,i-start+sampleSize);
-            bl = new BestLineFit(selection);
-            diffPoints.add(new DPoint(points.get(i).X, bl.getSlope()));
+        for (i in start until end) {
+            selection = points.subList(i - start, i - start + sampleSize)
+            bl = BestLineFit(selection)
+            diffPoints.add(DPoint(points[i].X, bl.slope))
         }
         //end points, use the last calculated best line fit
-        for (int i = end; i < points.size(); i++)
-        {
-            diffPoints.add(new DPoint(points.get(i).X, bl.getSlope()));
+        for (i in end until points.size) {
+            diffPoints.add(DPoint(points[i].X, bl.slope))
         }
-        return diffPoints;
+        return diffPoints
     }
 
     /**
      * Simply fits a best line to calculate the differential
      * @return list of points
      */
-    private List<DPoint> SmallDataSet()
-    {
-        ArrayList<DPoint> diffPoints = new ArrayList<>();
-        BestLineFit bl = new BestLineFit(points);
-        for (int i = 0; i < points.size(); i++)
-        {
-            diffPoints.add(new DPoint(points.get(i).X, bl.getSlope()));
+    private fun SmallDataSet(): List<DPoint> {
+        val diffPoints = ArrayList<DPoint>()
+        val bl = BestLineFit(points)
+        for (i in points.indices) {
+            diffPoints.add(DPoint(points[i].X, bl.slope))
         }
-        return diffPoints;
+        return diffPoints
 
     }
 }

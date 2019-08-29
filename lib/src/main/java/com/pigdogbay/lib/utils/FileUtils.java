@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -50,31 +51,22 @@ public final class FileUtils {
 	 * Creates the file in the external downloads directory
 	 * @param filename - first part of filename, eg results.txt
 	 * @return File pointing to the file in the downloads directory
-	 * @throws IOException
+	 * @throws IOException if cannot create the file
 	 */
 	public static File createDownloadsFile(String filename) throws IOException {
 		File path = Environment
 				.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 		File file = new File(path, filename);
 		if (!file.exists()) {
-			file.createNewFile();
+			if (!file.createNewFile()){
+				throw new IOException("Unable to create file");
+			}
 		}
 		return file;
 	}
 	public static void writeImage(File file, Bitmap bmp) throws IOException {
-		FileOutputStream fos = null;
-		try
-		{
-			fos = new FileOutputStream(file);	
-			bmp.compress(CompressFormat.PNG,100,fos);
-		}
-		finally{
-			if (fos!=null){
-				try{
-					fos.close();
-				}catch (Exception e){}
-			}
-			
+		try (FileOutputStream fos = new FileOutputStream(file)) {
+			bmp.compress(CompressFormat.PNG, 100, fos);
 		}
 		
 	}
@@ -86,21 +78,9 @@ public final class FileUtils {
 	 * @throws IOException if anything went wrong, stream is closed.
 	 */
 	public static void writeTextFile(File file, String data) throws IOException {
-		BufferedWriter writer = null;
-		try {
-			writer = new BufferedWriter(new FileWriter(file, true));
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
 			writer.append(data);
 			writer.newLine();
-		}
-		finally {
-
-			try {
-				if (writer != null) {
-					writer.close();
-				}
-			}
-			catch (Exception e) {
-			}
 		}
 
 	}
@@ -108,7 +88,6 @@ public final class FileUtils {
 	 * Reads a text file
 	 * @param file read from
 	 * @return file contents read as string
-	 * @throws IOException
 	 */
 	public static String readText(File file) throws IOException
 	{
@@ -118,30 +97,17 @@ public final class FileUtils {
 	public static String readText(Context ctx, Uri uri) throws IOException
 	{
     	InputStream inputStream = ctx.getContentResolver().openInputStream(uri);
-    	return readText(new InputStreamReader(inputStream));		
+    	return readText(new InputStreamReader(Objects.requireNonNull(inputStream)));
 	}	
 	
 	public static String readText(Reader baseReader) throws IOException
 	{
-		BufferedReader reader = null;
 		StringBuilder builder = new StringBuilder();
-		try
-		{
-			reader = new BufferedReader(baseReader);
+		try (BufferedReader reader = new BufferedReader(baseReader)) {
 			String line;
-			while((line=reader.readLine())!=null)
-			{
+			while ((line = reader.readLine()) != null) {
 				builder.append(line);
 				builder.append('\n');
-			}
-		}
-		finally {
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			}
-			catch (Exception e) {
 			}
 		}
 		
@@ -166,12 +132,11 @@ public final class FileUtils {
 	 * Read each line of the input stream and store in a list
 	 * @param inputStream - source stream to read
 	 * @return lines as a list of strings
-	 * @throws IOException
 	 */
 	public static List<String> ReadLines(InputStream inputStream)
 			throws IOException
 	{
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		InputStreamReader isr = new InputStreamReader(inputStream);
 		BufferedReader br = new BufferedReader(isr);
 		String line;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.pigdogbay.lib.utils;
 
 import java.io.File;
@@ -18,18 +15,16 @@ public class DateStampedFileFilter implements FileFilter {
 		_Prefix = prefix;
 		_Suffix = suffix;
 	}
-	/* (non-Javadoc)
-	 * @see java.io.FileFilter#accept(java.io.File)
-	 */
+
 	@Override
 	public boolean accept(File file) {
 		String name = file.getName();
-		if (name==null || name.equals("")){return false;}
+		if (name.equals("")){return false;}
 		if (name.startsWith(_Prefix) && name.endsWith(_Suffix)){
 			try{
 				FileUtils.extractDate(file);
 				return true;
-			}catch(Exception e){}
+			}catch(Exception ignored){}
 		}
 		return false;
 	}

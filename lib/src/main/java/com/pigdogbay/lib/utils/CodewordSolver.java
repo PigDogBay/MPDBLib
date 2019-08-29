@@ -10,14 +10,14 @@ import java.util.List;
 
 public class CodewordSolver {
 
-    public static final int CROSSWORD_CHAR = '.';
-    public static final int SAME_CHAR_1 = '1';
-    public static final int SAME_CHAR_2 = '2';
-    public static final int SAME_CHAR_3 = '3';
-    public static final int SAME_CHAR_4 = '4';
-    public static final int SAME_CHAR_5 = '5';
-    public static final int SAME_CHAR_6 = '6';
-    public static final int SAME_CHAR_7 = '7';
+    private static final int CROSSWORD_CHAR = '.';
+    private static final int SAME_CHAR_1 = '1';
+    private static final int SAME_CHAR_2 = '2';
+    private static final int SAME_CHAR_3 = '3';
+    private static final int SAME_CHAR_4 = '4';
+    private static final int SAME_CHAR_5 = '5';
+    private static final int SAME_CHAR_6 = '6';
+    private static final int SAME_CHAR_7 = '7';
 
     private static class Letter {
         Letter(int character, int position){
@@ -27,7 +27,6 @@ public class CodewordSolver {
         int character;
         int position;
     }
-    private List<String> _WordList;
     private List<Letter> unknowns, knowns, same1, same2, same3, same4, same5, same6, same7;
     private String foundLetters;
     private LetterSet letterSet;
@@ -101,13 +100,13 @@ public class CodewordSolver {
             if (letter.character != word.charAt(letter.position)) return false;
         }
         //check if numbered letters are the same and different to the rest
-        if (!checkSameLetters(word, same1)) return false;
-        if (!checkSameLetters(word, same2)) return false;
-        if (!checkSameLetters(word, same3)) return false;
-        if (!checkSameLetters(word, same4)) return false;
-        if (!checkSameLetters(word, same5)) return false;
-        if (!checkSameLetters(word, same6)) return false;
-        if (!checkSameLetters(word, same7)) return false;
+        if (checkSameLetters(word, same1)) return false;
+        if (checkSameLetters(word, same2)) return false;
+        if (checkSameLetters(word, same3)) return false;
+        if (checkSameLetters(word, same4)) return false;
+        if (checkSameLetters(word, same5)) return false;
+        if (checkSameLetters(word, same6)) return false;
+        if (checkSameLetters(word, same7)) return false;
 
         //check knowns do not equal unknown
         for (Letter unknown : unknowns){
@@ -134,27 +133,27 @@ public class CodewordSolver {
      * Check that the pattern of same letters are actually the same
      * @param word to test
      * @param sameLetters index of each letter that are the same
-     * @return true - word matches
+     * @return true - word does not match
      */
     private boolean checkSameLetters(String word, List<Letter> sameLetters) {
         if (sameLetters.size()>1){
             int c = word.charAt(sameLetters.get(0).position);
             //check that letter has not already been found
-            if (foundLetters.indexOf(c)!=-1) return false;
+            if (foundLetters.indexOf(c)!=-1) return true;
             //check if numbered letters are the same
             for (int i = 1; i< sameLetters.size(); i++){
-                if (c!=word.charAt(sameLetters.get(i).position)) return false;
+                if (c!=word.charAt(sameLetters.get(i).position)) return true;
             }
             //check that the other letters in the word are different
             for (int i=0; i<word.length();i++){
                 if (!containsPosition(i,sameLetters)){
-                    if (c==word.charAt(i)) return false;
+                    if (c==word.charAt(i)) return true;
                 }
             }
             //store for later use
             sameLetters.get(0).character = c;
         }
-        return true;
+        return false;
     }
     private boolean containsPosition(int pos, List<Letter> letters){
         for (Letter letter : letters){

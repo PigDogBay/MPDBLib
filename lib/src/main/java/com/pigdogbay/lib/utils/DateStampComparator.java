@@ -9,7 +9,7 @@ public class DateStampComparator implements Comparator<File>
 	{
 		try{
 			return FileUtils.extractDate(lhs).compareTo(FileUtils.extractDate(rhs));
-		}catch(Exception e){
+		}catch(Exception ignored){
 		}
 		return -1;
 	}

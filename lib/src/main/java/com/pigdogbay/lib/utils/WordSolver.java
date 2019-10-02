@@ -47,7 +47,8 @@ public class WordSolver
 		return "https://www.merriam-webster.com/thesaurus/"+word;
 	}
 	public static String getCollinsUrl(String word){
-		return "https://www.collinsdictionary.com/dictionary/english/"+word;
+		String processed = word.replace(" ", "-");
+		return "https://www.collinsdictionary.com/dictionary/english/"+processed;
 	}
 	public static String getLexicoUrl(String word){
 		return "https://www.lexico.com/en/definition/"+word;
@@ -63,14 +64,24 @@ public class WordSolver
 	}
 	public static String getWikipediaURL(String word)
 	{
-		return "https://en.wikipedia.org/wiki/"+word;
+		String processed = word.replace(" ", "_");
+		return "https://en.wikipedia.org/wiki/"+processed;
 	}
 	public static String getWordGameDictionaryURL(String word)
 	{
 		return "https://www.wordgamedictionary.com/dictionary/word/"+word;
 	}
 	public static String getChambersUrl(String word){
-		return "https://chambers.co.uk/search/?query="+word+"&title=21st";
+		String processed = word.replace(" ", "+");
+		return "https://chambers.co.uk/search/?query="+processed+"&title=21st";
+	}
+	public static String getWikionaryUrl(String word){
+		String processed = word.replace(" ", "_");
+		return "https://en.wiktionary.org/wiki/"+processed;
+	}
+	public static String getCambridgeUrl(String word){
+		String processed = word.replace(" ", "-");
+		return "https://dictionary.cambridge.org/dictionary/english/"+processed;
 	}
 
 	public void setResultsLimit(int resultsLimit) {

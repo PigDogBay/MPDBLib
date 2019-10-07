@@ -16,7 +16,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.pigdogbay.lib.R;
@@ -100,15 +99,12 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 	 */
 	public static void reset(Context context) {
 		context.getSharedPreferences(PrefsContract.SHARED_PREFS_NAME, 0).edit().clear().apply();
-		Log.d(TAG, "Cleared AppRate shared preferences.");
 	}
 
 	/**
 	 * Display the rate dialog if needed.
 	 */
 	public void init() {
-
-		Log.d(TAG, "Init AppRate");
 
 		if (preferences.getBoolean(PrefsContract.PREF_DONT_SHOW_AGAIN, false) || (
 				preferences.getBoolean(PrefsContract.PREF_APP_HAS_CRASHED, false) && !showIfHasCrashed)) {
@@ -152,8 +148,6 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 	 */
 	private void initExceptionHandler() {
 
-		Log.d(TAG, "Init AppRate ExceptionHandler");
-
 		UncaughtExceptionHandler currentHandler = Thread.getDefaultUncaughtExceptionHandler();
 
 		// Don't register again if already registered.
@@ -168,8 +162,6 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 	 * Shows the default rate dialog.
 	 */
 	private void showDefaultDialog() {
-
-		Log.d(TAG, "Create default dialog.");
 
 		String title = "Rate " + getApplicationName(hostActivity.getApplicationContext());
 		String message = "If you enjoy using " + getApplicationName(hostActivity.getApplicationContext()) + ", please take a moment to rate it. Thanks for your support!";
@@ -191,8 +183,6 @@ public class AppRate implements android.content.DialogInterface.OnClickListener,
 	 * Show the custom rate dialog.
 	 */
 	private void showDialog(AlertDialog.Builder builder) {
-
-		Log.d(TAG, "Create custom dialog.");
 
 		AlertDialog dialog = builder.create();
 		dialog.show();

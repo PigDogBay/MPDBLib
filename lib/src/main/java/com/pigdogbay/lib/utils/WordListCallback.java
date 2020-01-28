@@ -239,5 +239,23 @@ public interface WordListCallback {
 			}
 		}
 	}
+	class RepeatedFilter implements WordListCallback{
+		private final WordListCallback wrappedCallback;
+		private final LetterSet letterSet;
+
+		public RepeatedFilter(WordListCallback wrappedCallback) {
+			this.wrappedCallback = wrappedCallback;
+			letterSet = new LetterSet("");
+		}
+
+		@Override
+		public void Update(String result) {
+			letterSet.clear();
+			letterSet.add(result);
+			if (!letterSet.isDistinct()){
+				wrappedCallback.Update(result);
+			}
+		}
+	}
 
 }

@@ -79,6 +79,10 @@ public class WordSolver
 		String processed = word.replace(" ", "_");
 		return "https://en.wiktionary.org/wiki/"+processed;
 	}
+	public static String getWikionaryDeutschUrl(String word){
+		String processed = word.replace(" ", "_");
+		return "https://de.wiktionary.org/wiki/"+processed;
+	}
 	public static String getCambridgeUrl(String word){
 		String processed = word.replace(" ", "-");
 		return "https://dictionary.cambridge.org/dictionary/english/"+processed;

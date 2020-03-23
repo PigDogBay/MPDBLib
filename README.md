@@ -1,2 +1,2 @@
 # MPDBLib
-Copyright MPD Bailey Technology 2012
+Copyright MPD Bailey Technology

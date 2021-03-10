@@ -6,7 +6,9 @@ import java.util.regex.Pattern
 class WordList {
     @Volatile
     private var stop = false
-    private var wordList : List<String>? = null
+    private var wordList : List<Pair<String,String>> = listOf(Pair("",""))
+    private val inBuffer = CharArray(64)
+    private val outBuffer = CharArray(64)
 
     /**
      * Signal to stop any searches
@@ -22,21 +24,37 @@ class WordList {
     /*
 	 * Word list must be sorted and all lower case
 	 */
-    fun SetWordList(wordList: List<String>?) {
-        this.wordList = wordList
+    fun SetWordList(wordList: List<String>) {
+        this.wordList = wordList.map{Pair(strip(it),it)}
+    }
+
+    /**
+     * Optimised code to remove spaces, hyphens and any punctuation from a string
+     */
+    private fun strip(raw: String) : String {
+        val l = raw.length
+        raw.toCharArray(inBuffer, 0, 0, l)
+        var j = 0
+        for (i in 0 until l){
+            val c = inBuffer[i]
+            if (c in 'a'..'z' || c in 'A'..'Z'){
+                outBuffer[j++] = c
+            }
+        }
+        return outBuffer.concatToString(0,j)
     }
 
     fun FindSupergrams(anagram: String, callback: WordListCallback, length: Int) {
         val anagramLength = anagram.length
         val set = LetterSet(anagram)
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            if (length == 0 && word.length > anagramLength
-                    || word.length == length) {
-                if (set.isSupergram(word)) {
-                    callback.Update(word)
+            if (length == 0 && word.first.length > anagramLength
+                    || word.first.length == length) {
+                if (set.isSupergram(word.first)) {
+                    callback.Update(word.second)
                 }
             }
         }
@@ -46,13 +64,13 @@ class WordList {
         val len = anagram.length
         val set = LetterSet(anagram)
         val tooBig = len + numberOfBlanks + 1
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            if (word.length < tooBig) {
-                if (set.isAnagram(word, numberOfBlanks)) {
-                    callback.Update(word)
+            if (word.first.length < tooBig) {
+                if (set.isAnagram(word.first, numberOfBlanks)) {
+                    callback.Update(word.second)
                 }
             }
         }
@@ -61,13 +79,13 @@ class WordList {
     fun FindAnagramsExactLength(anagram: String, numberOfBlanks: Int, callback: WordListCallback) {
         val len = anagram.length + numberOfBlanks
         val set = LetterSet(anagram)
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            if (word.length == len) {
-                if (set.isAnagram(word, numberOfBlanks)) {
-                    callback.Update(word)
+            if (word.first.length == len) {
+                if (set.isAnagram(word.first, numberOfBlanks)) {
+                    callback.Update(word.second)
                 }
             }
         }
@@ -76,13 +94,13 @@ class WordList {
     fun FindAnagrams(anagram: String, callback: WordListCallback) {
         val len = anagram.length
         val set = LetterSet(anagram)
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            if (word.length == len) {
-                if (set.isAnagram(word)) {
-                    callback.Update(word)
+            if (word.first.length == len) {
+                if (set.isAnagram(word.first)) {
+                    callback.Update(word.second)
                 }
             }
         }
@@ -94,14 +112,14 @@ class WordList {
             return
         }
         val set = LetterSet(anagram)
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            val wordLen = word.length
+            val wordLen = word.first.length
             if (wordLen < len) {
-                if (set.isSubgram(word)) {
-                    callback.Update(word)
+                if (set.isSubgram(word.first)) {
+                    callback.Update(word.second)
                 }
             }
         }
@@ -110,13 +128,13 @@ class WordList {
     fun FindPartialWords(partialWord: String, callback: WordListCallback) {
         val length = partialWord.length
         val pattern = createPattern(partialWord)
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            if (word.length == length) {
-                if (pattern.matcher(word).matches()) {
-                    callback.Update(word)
+            if (word.first.length == length) {
+                if (pattern.matcher(word.first).matches()) {
+                    callback.Update(word.second)
                 }
             }
         }
@@ -124,12 +142,12 @@ class WordList {
 
     fun FindWildcardWords(wildcard: String, callback: WordListCallback) {
         val pattern = createPattern(wildcard)
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            if (pattern.matcher(word).matches()) {
-                callback.Update(word)
+            if (pattern.matcher(word.first).matches()) {
+                callback.Update(word.second)
             }
         }
     }
@@ -183,16 +201,13 @@ class WordList {
         val superset = LetterSet(word1 + word2 + word3)
         val listA = getFilteredList(superset, word1.length)
         var listB = listA
-        val listC: List<String>
         if (word1.length != word2.length) {
             listB = getFilteredList(superset, word2.length)
         }
-        listC = if (word3.length == word1.length) {
-            listA
-        } else if (word3.length == word2.length) {
-            listB
-        } else {
-            getFilteredList(superset, word3.length)
+        val listC = when (word3.length) {
+            word1.length -> listA
+            word2.length -> listB
+            else -> getFilteredList(superset, word3.length)
         }
         val sublistB = ArrayList<String>()
         val are2And3SameLength = word2.length == word3.length
@@ -270,12 +285,13 @@ class WordList {
 
     private fun getFilteredList(set: LetterSet, length: Int): List<String> {
         val matches = ArrayList<String>()
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            if (word.length == length && set.isSubgram(word)) {
-                matches.add(word)
+            //skip phrases by checking display word is same length
+            if (word.first.length == length && word.second.length == length && set.isSubgram(word.first)) {
+                matches.add(word.first)
             }
         }
         return matches
@@ -283,14 +299,14 @@ class WordList {
 
     fun findCodewords(codewordSolver: CodewordSolver, callback: WordListCallback) {
         val expectedLength = codewordSolver.wordLength
-        for (word in wordList!!) {
+        for (word in wordList) {
             if (stop) {
                 break
             }
-            val len = word.length
+            val len = word.first.length
             if (len != expectedLength) continue
-            if (codewordSolver.isMatch(word)) {
-                callback.Update(word)
+            if (codewordSolver.isMatch(word.first)) {
+                callback.Update(word.second)
             }
         }
     }

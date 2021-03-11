@@ -213,42 +213,42 @@ public class WordSearch {
         _WordList.reset();
         switch (type) {
             case Anagram:
-                _WordList.FindAnagrams(query, callback);
+                _WordList.findAnagrams(query, callback);
                 if (_FindSubAnagrams
                         && query.length() <= MAX_WORD_LEN) {
                     WordListCallback filterWrapper = new WordListCallback.FilterWrapper(
                             callback);
-                    _WordList.FindSubAnagrams(query, filterWrapper);
+                    _WordList.findSubAnagrams(query, filterWrapper);
                 }
                 break;
             case Crossword:
-                _WordList.FindPartialWords(query, callback);
+                _WordList.findPartialWords(query, callback);
                 break;
             case Blanks:
                 int numberOfBlanks = query.length();
                 query = query.replace("+", "");
                 numberOfBlanks = numberOfBlanks - query.length();
                 if (_FindSubAnagrams) {
-                    _WordList.FindAnagrams(query, numberOfBlanks, callback);
+                    _WordList.findAnagrams(query, numberOfBlanks, callback);
                 } else {
-                    _WordList.FindAnagramsExactLength(query, numberOfBlanks, callback);
+                    _WordList.findAnagramsExactLength(query, numberOfBlanks, callback);
                 }
                 break;
             case Supergram:
                 query = query.replace("*", "");
-                _WordList.FindSupergrams(query, callback, 0);
+                _WordList.findSupergrams(query, callback, 0);
                 break;
             case TwoWordAnagram:
                 String[] words = query.split(" ");
                 if (isThreeWordAnagramsEnabled && words.length > 2){
-                    _WordList.FindMultiwordAnagrams(words[0],words[1],words[2],callback);
+                    _WordList.findMultiwordAnagrams(words[0],words[1],words[2],callback);
                 } else {
-                    _WordList.FindMultiwordAnagrams(words[0] + words[1], words[0].length(), callback);
+                    _WordList.findMultiwordAnagrams(words[0] + words[1], words[0].length(), callback);
                 }
                 break;
             case Wildcard:
             case WildcardAndCrossword:
-                _WordList.FindWildcardWords(query, callback);
+                _WordList.findWildcardWords(query, callback);
                 break;
             case Codeword:
                 getCodewordSolver().parse(query);

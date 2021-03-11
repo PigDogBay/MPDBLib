@@ -88,7 +88,7 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.standard));
+        target.setWordList(LoadList(R.raw.standard));
         CodewordSolver codewordSolver = new CodewordSolver();
         codewordSolver.parse("112..12.");
         codewordSolver.setFoundLetters("");
@@ -104,9 +104,9 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.standard));
+        target.setWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
-        target.FindWildcardWords("t#and",callback);
+        target.findWildcardWords("t#and",callback);
         assertEquals(10, callback.GetMatches().size());
         timing.logDuration(TAG);
     }
@@ -116,9 +116,9 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.standard));
+        target.setWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
-        target.FindMultiwordAnagrams("manchester", "united", callback);
+        target.findMultiwordAnagrams("manchester", "united", callback);
         assertEquals(51, callback.GetMatches().size());
         assertEquals("detachment insure",callback.GetMatches().get(7));
         assertEquals("unmastered ethnic",callback.GetMatches().get(49));
@@ -129,9 +129,9 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.standard));
+        target.setWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
-        target.FindMultiwordAnagrams("united","manchester", callback);
+        target.findMultiwordAnagrams("united","manchester", callback);
         assertEquals(51, callback.GetMatches().size());
         assertEquals("dement raunchiest",callback.GetMatches().get(7));
         assertEquals("tamest unenriched",callback.GetMatches().get(42));
@@ -146,9 +146,9 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.words));
+        target.setWordList(LoadList(R.raw.words));
         Timing timing = new Timing();
-        target.FindMultiwordAnagrams("bangers","and","mash", callback);
+        target.findMultiwordAnagrams("bangers","and","mash", callback);
         assertEquals(3227, callback.GetMatches().size());
         assertEquals("smashed nan garb",callback.GetMatches().get(3179));
         timing.logDuration(TAG);
@@ -161,9 +161,9 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.words));
+        target.setWordList(LoadList(R.raw.words));
         Timing timing = new Timing();
-        target.FindMultiwordAnagrams("time","will","tell", callback);
+        target.findMultiwordAnagrams("time","will","tell", callback);
         assertEquals(708, callback.GetMatches().size());
         assertEquals("item lilt well",callback.GetMatches().get(21));
         timing.logDuration(TAG);
@@ -177,9 +177,9 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.words));
+        target.setWordList(LoadList(R.raw.words));
         Timing timing = new Timing();
-        target.FindMultiwordAnagrams("spectrum","computer","magazine", callback);
+        target.findMultiwordAnagrams("spectrum","computer","magazine", callback);
         assertEquals(366, callback.GetMatches().size());
         assertEquals("mutineer compacts gazumper",callback.GetMatches().get(227));
         timing.logDuration(TAG);
@@ -190,8 +190,8 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(CreateList());
-        target.FindPartialWords("a....",callback);
+        target.setWordList(CreateList());
+        target.findPartialWords("a....",callback);
         assertEquals(3,callback.GetMatches().size());
         assertEquals("acorn",callback.GetMatches().get(0));
         assertEquals("amiga",callback.GetMatches().get(1));
@@ -203,8 +203,8 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(CreateList());
-        target.FindAnagrams("trumspec",callback);
+        target.setWordList(CreateList());
+        target.findAnagrams("trumspec",callback);
         assertEquals(3,callback.GetMatches().size());
         assertEquals("spectrum",callback.GetMatches().get(0));
         assertEquals("pectrums",callback.GetMatches().get(1));
@@ -215,8 +215,8 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(CreateList());
-        target.FindAnagrams("think",2,callback);
+        target.setWordList(CreateList());
+        target.findAnagrams("think",2,callback);
         assertEquals(2,callback.GetMatches().size());
         assertEquals("eight",callback.GetMatches().get(0));
         assertEquals("bit",callback.GetMatches().get(1));
@@ -225,8 +225,8 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(CreateList());
-        target.FindAnagramsExactLength("aai",2,callback);
+        target.setWordList(CreateList());
+        target.findAnagramsExactLength("aai",2,callback);
         assertEquals(2,callback.GetMatches().size());
         assertEquals("amiga",callback.GetMatches().get(0));
         assertEquals("atari",callback.GetMatches().get(1));
@@ -240,7 +240,7 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList wordlist = new WordList();
-        wordlist.SetWordList(CreateList());
+        wordlist.setWordList(CreateList());
         WordSearch wordSearch = new WordSearch(wordlist);
         query = wordSearch.preProcessQuery(query);
         WordSearch.SearchType type = wordSearch.getQueryType(query);
@@ -335,8 +335,8 @@ public class WordListTest {
         TestWordListCallback callback = new TestWordListCallback();
         List<String> list = LoadList(R.raw.standard);
         WordList target = new WordList();
-        target.SetWordList(list);
-        target.FindSubAnagrams("earths",callback);
+        target.setWordList(list);
+        target.findSubAnagrams("earths",callback);
         assertEquals(128, callback.GetMatches().size());
 
     }
@@ -347,8 +347,8 @@ public class WordListTest {
         TestWordListCallback callback = new TestWordListCallback();
         List<String> list = LoadList(R.raw.standard);
         WordList target = new WordList();
-        target.SetWordList(list);
-        target.FindSubAnagrams("galls",callback);
+        target.setWordList(list);
+        target.findSubAnagrams("galls",callback);
         assertEquals(13, callback.GetMatches().size());
 
     }
@@ -359,8 +359,8 @@ public class WordListTest {
         TestWordListCallback callback = new TestWordListCallback();
         List<String> list = LoadList(R.raw.standard);
         WordList target = new WordList();
-        target.SetWordList(list);
-        target.FindSubAnagrams("X",callback);
+        target.setWordList(list);
+        target.findSubAnagrams("X",callback);
         assertEquals(0, callback.GetMatches().size());
 
     }
@@ -371,8 +371,8 @@ public class WordListTest {
         TestWordListCallback callback = new TestWordListCallback();
         List<String> list = LoadList(R.raw.standard);
         WordList target = new WordList();
-        target.SetWordList(list);
-        target.FindSubAnagrams("xy",callback);
+        target.setWordList(list);
+        target.findSubAnagrams("xy",callback);
         assertEquals(0, callback.GetMatches().size());
 
     }
@@ -381,9 +381,9 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.standard));
+        target.setWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
-        target.FindSupergrams("kayleigh",callback,0);
+        target.findSupergrams("kayleigh",callback,0);
         assertEquals(2, callback.GetMatches().size());
         timing.logDuration(TAG);
     }
@@ -392,12 +392,12 @@ public class WordListTest {
     {
         TestWordListCallback callback = new TestWordListCallback();
         WordList target = new WordList();
-        target.SetWordList(LoadList(R.raw.standard));
+        target.setWordList(LoadList(R.raw.standard));
         Timing timing = new Timing();
-        target.FindSupergrams("kayleigh",callback,14);
+        target.findSupergrams("kayleigh",callback,14);
         assertEquals(1, callback.GetMatches().size());
         assertEquals("breathtakingly", callback.GetMatches().get(0));
-        target.FindSupergrams("kayleigh",callback,15);
+        target.findSupergrams("kayleigh",callback,15);
         assertEquals(2, callback.GetMatches().size());
         assertEquals("heartbreakingly", callback.GetMatches().get(1));
         timing.logDuration(TAG);

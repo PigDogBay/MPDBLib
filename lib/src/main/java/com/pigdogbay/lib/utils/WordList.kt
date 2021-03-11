@@ -24,7 +24,7 @@ class WordList {
     /*
 	 * Word list must be sorted and all lower case
 	 */
-    fun SetWordList(wordList: List<String>) {
+    fun setWordList(wordList: List<String>) {
         this.wordList = wordList.map{Pair(strip(it),it)}
     }
 
@@ -44,7 +44,7 @@ class WordList {
         return outBuffer.concatToString(0,j)
     }
 
-    fun FindSupergrams(anagram: String, callback: WordListCallback, length: Int) {
+    fun findSupergrams(anagram: String, callback: WordListCallback, length: Int) {
         val anagramLength = anagram.length
         val set = LetterSet(anagram)
         for (word in wordList) {
@@ -60,7 +60,7 @@ class WordList {
         }
     }
 
-    fun FindAnagrams(anagram: String, numberOfBlanks: Int, callback: WordListCallback) {
+    fun findAnagrams(anagram: String, numberOfBlanks: Int, callback: WordListCallback) {
         val len = anagram.length
         val set = LetterSet(anagram)
         val tooBig = len + numberOfBlanks + 1
@@ -76,7 +76,7 @@ class WordList {
         }
     }
 
-    fun FindAnagramsExactLength(anagram: String, numberOfBlanks: Int, callback: WordListCallback) {
+    fun findAnagramsExactLength(anagram: String, numberOfBlanks: Int, callback: WordListCallback) {
         val len = anagram.length + numberOfBlanks
         val set = LetterSet(anagram)
         for (word in wordList) {
@@ -91,7 +91,7 @@ class WordList {
         }
     }
 
-    fun FindAnagrams(anagram: String, callback: WordListCallback) {
+    fun findAnagrams(anagram: String, callback: WordListCallback) {
         val len = anagram.length
         val set = LetterSet(anagram)
         for (word in wordList) {
@@ -106,7 +106,7 @@ class WordList {
         }
     }
 
-    fun FindSubAnagrams(anagram: String, callback: WordListCallback) {
+    fun findSubAnagrams(anagram: String, callback: WordListCallback) {
         val len = anagram.length
         if (len == 1) {
             return
@@ -125,7 +125,7 @@ class WordList {
         }
     }
 
-    fun FindPartialWords(partialWord: String, callback: WordListCallback) {
+    fun findPartialWords(partialWord: String, callback: WordListCallback) {
         val length = partialWord.length
         val pattern = createPattern(partialWord)
         for (word in wordList) {
@@ -140,7 +140,7 @@ class WordList {
         }
     }
 
-    fun FindWildcardWords(wildcard: String, callback: WordListCallback) {
+    fun findWildcardWords(wildcard: String, callback: WordListCallback) {
         val pattern = createPattern(wildcard)
         for (word in wordList) {
             if (stop) {
@@ -172,7 +172,7 @@ class WordList {
      * Then for each word in the second list see if it is an anagram of the unused letters,
      * if it is the first and second words make a two word anagram
      */
-    fun FindMultiwordAnagrams(word1: String, word2: String,
+    fun findMultiwordAnagrams(word1: String, word2: String,
                               callback: WordListCallback) {
         val superset = LetterSet(word1 + word2)
         val listA = getFilteredList(superset, word1.length)
@@ -196,7 +196,7 @@ class WordList {
         }
     }
 
-    fun FindMultiwordAnagrams(word1: String, word2: String, word3: String,
+    fun findMultiwordAnagrams(word1: String, word2: String, word3: String,
                               callback: WordListCallback) {
         val superset = LetterSet(word1 + word2 + word3)
         val listA = getFilteredList(superset, word1.length)
@@ -258,7 +258,7 @@ class WordList {
     /*
 		Tries to find all word size combinations
 	 */
-    fun FindMultiwordAnagrams(letters: String, startLen: Int, callback: WordListCallback) {
+    fun findMultiwordAnagrams(letters: String, startLen: Int, callback: WordListCallback) {
         val len = letters.length
         val middleWordSize = len / 2
 
@@ -280,7 +280,7 @@ class WordList {
     private fun findOtherMultiwordAnagrams(letters: String, callback: WordListCallback, i: Int) {
         val word1 = letters.substring(0, i)
         val word2 = letters.substring(i)
-        FindMultiwordAnagrams(word1, word2, callback)
+        findMultiwordAnagrams(word1, word2, callback)
     }
 
     private fun getFilteredList(set: LetterSet, length: Int): List<String> {

@@ -253,7 +253,7 @@ public class WordSolver
 			try 
 			{
 				List<String> words = LineReader.Read(context, wordListId);
-				wordList.SetWordList(words);
+				wordList.setWordList(words);
 			} 
 			catch (Exception e) 
 			{

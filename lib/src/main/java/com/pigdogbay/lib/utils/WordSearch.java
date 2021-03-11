@@ -14,6 +14,7 @@ import java.util.Locale;
  * _WordSearch.runQuery(query, type, callback);
  */
 public class WordSearch {
+
     public enum SearchType {
         Crossword,
         Anagram,
@@ -48,6 +49,7 @@ public class WordSearch {
     private static final char DEL_CHAR = 'X';
     private static final String DEL_STR = "X";
     private WordList _WordList;
+    private PhraseWordList phraseWordList;
     private boolean _FindSubAnagrams = true;
     private boolean isThreeWordAnagramsEnabled = true;
     private CodewordSolver codewordSolver;
@@ -58,10 +60,14 @@ public class WordSearch {
     public void setThreeWordAnagramsEnabled(boolean threeWordAnagramsEnabled) {
         this.isThreeWordAnagramsEnabled = threeWordAnagramsEnabled;
     }
+    public PhraseWordList getPhraseWordList() {
+        return phraseWordList;
+    }
 
 
     public WordSearch(WordList list) {
         _WordList = list;
+        phraseWordList = new PhraseWordList();
     }
 
     public CodewordSolver getCodewordSolver() {

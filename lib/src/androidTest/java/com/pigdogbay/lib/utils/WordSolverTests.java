@@ -1,15 +1,16 @@
 package com.pigdogbay.lib.utils;
 
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.util.Log;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.pigdogbay.lib.test.R;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.platform.app.InstrumentationRegistry;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -133,6 +134,15 @@ public class WordSolverTests {
         }
 
         assertEquals(WordSolver.TABLE_MAX_COUNT_TO_RELOAD, callbackCount);
+    }
+
+    @Test
+    public void loadTest1(){
+        WordSolver target = new WordSolver();
+        target.loadDictionary(InstrumentationRegistry.getInstrumentation().getContext(), R.raw.standard,R.raw.phrases);
+        while (target.stateObservable.getValue()!= WordSolver.States.ready){
+            try {Thread.sleep(100);} catch (InterruptedException ignored) {}
+        }
     }
 
 

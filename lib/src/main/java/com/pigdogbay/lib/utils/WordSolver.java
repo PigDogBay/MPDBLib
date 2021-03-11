@@ -125,8 +125,12 @@ public class WordSolver
 		stateObservable = new ObservableProperty<>(States.uninitialized);
 		matchObservable = new ObservableProperty<>("");
 	}
-	
+
 	public void loadDictionary(Context context, int resourceId)
+	{
+		loadDictionary(context,resourceId, -1);
+	}
+	public void loadDictionary(Context context, int resourceId, int phraseId)
 	{
 		States state = stateObservable.getValue();
 		switch (state){
@@ -134,7 +138,7 @@ public class WordSolver
 			case uninitialized:
 			case ready:
 			case finished:
-				this.new LoadTask(context, resourceId).execute();
+				this.new LoadTask(context, resourceId, phraseId).execute();
 				break;
 			default:
 				break;
@@ -236,12 +240,14 @@ public class WordSolver
 		
 		final Context context;
 		final int wordListId;
+		final int phraseListId;
 		boolean isLoadError = false;
 
-		LoadTask(Context context, int wordListId)
+		LoadTask(Context context, int wordListId, int phraseListId)
 		{
 			this.context = context.getApplicationContext();
 			this.wordListId = wordListId;
+			this.phraseListId = phraseListId;
 		}
 
 		@Override
@@ -252,8 +258,10 @@ public class WordSolver
 		protected Void doInBackground(Void... params) {
 			try 
 			{
-				List<String> words = LineReader.Read(context, wordListId);
-				wordList.setWordList(words);
+				wordList.setWordList(LineReader.Read(context, wordListId));
+				if (phraseListId>0){
+					wordSearch.getPhraseWordList().setWordList(LineReader.Read(context,phraseListId));
+				}
 			} 
 			catch (Exception e) 
 			{

@@ -15,7 +15,7 @@ class WordListPhraseTests : WordListCallback {
 
     private fun testAnagram(query : String, results : Array<String>){
         matches.clear()
-        val target = WordList()
+        val target = PhraseWordList()
         target.setWordList(wordList)
         target.findAnagrams(query, this)
         assertArrayEquals(results,matches.toArray())
@@ -23,7 +23,7 @@ class WordListPhraseTests : WordListCallback {
 
     private fun testCrossword(query : String, results : Array<String>){
         matches.clear()
-        val target = WordList()
+        val target = PhraseWordList()
         target.setWordList(wordList)
         target.findPartialWords(query, this)
         assertArrayEquals(results,matches.toArray())

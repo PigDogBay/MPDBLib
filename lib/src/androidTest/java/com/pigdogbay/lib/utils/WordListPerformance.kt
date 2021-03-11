@@ -7,7 +7,7 @@ import org.junit.Test
 
 class WordListPerformance {
 
-    fun loadWordList(id: Int) = InstrumentationRegistry.getInstrumentation()
+    private fun loadWordList(id: Int) = InstrumentationRegistry.getInstrumentation()
             .context.resources.openRawResource(id)
             .bufferedReader(Charsets.UTF_8)
             .readLines()

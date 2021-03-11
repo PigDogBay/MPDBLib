@@ -5,7 +5,7 @@ import org.junit.Assert.*
 import org.junit.Before
 
 class WordListPhraseTests : WordListCallback {
-    private val wordList = listOf("jack-o-lantern","narrow escape","holly bailey","henry bailey", "close shave","close","shave")
+    private val wordList = listOf("jack-o-lanterns","jack-o-lantern","narrow escape","holly bailey","henry bailey", "close shave","close","shave")
     private val matches = ArrayList<String>()
 
     @Before
@@ -31,15 +31,15 @@ class WordListPhraseTests : WordListCallback {
 
     @Test
     fun anagrams1() {
-        testAnagram("vasechesol", arrayOf("close shave"))
-        testAnagram("yeliabhyllo", arrayOf("holly bailey"))
+        testAnagram("vasec-hesol", arrayOf("close shave"))
+        testAnagram("yelia bhyllo", arrayOf("holly bailey"))
     }
 
 
     @Test
     fun crossword1() {
-        testCrossword("j..ko....e..", arrayOf("jack-o-lantern"))
-        testCrossword("h....bailey", arrayOf("holly bailey","henry bailey"))
+        testCrossword("j..k-o-....e..", arrayOf("jack-o-lantern"))
+        testCrossword("h.... bailey", arrayOf("holly bailey","henry bailey"))
     }
 
     override fun Update(result: String?) {

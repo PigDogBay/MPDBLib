@@ -6,7 +6,7 @@ import java.util.regex.Pattern
 class PhraseWordList {
     @Volatile
     private var stop = false
-    private var wordList : List<Pair<String,String>> = listOf(Pair("",""))
+    private var wordList : List<String> = listOf("")
     private val inBuffer = CharArray(64)
     private val outBuffer = CharArray(64)
 
@@ -18,7 +18,7 @@ class PhraseWordList {
     }
 
     fun setWordList(wordList: List<String>) {
-        this.wordList = wordList.map{Pair(strip(it),it)}
+        this.wordList = wordList
     }
 
     /**
@@ -44,9 +44,9 @@ class PhraseWordList {
             if (stop) {
                 break
             }
-            if (word.first.length == len) {
-                if (set.isAnagram(word.first)) {
-                    callback.Update(word.second)
+            if (word.length == len) {
+                if (set.isAnagram(word)) {
+                    callback.Update(word)
                 }
             }
         }
@@ -59,9 +59,9 @@ class PhraseWordList {
             if (stop) {
                 break
             }
-            if (word.first.length == length) {
-                if (pattern.matcher(word.first).matches()) {
-                    callback.Update(word.second)
+            if (word.length == length) {
+                if (pattern.matcher(word).matches()) {
+                    callback.Update(word)
                 }
             }
         }
@@ -69,8 +69,10 @@ class PhraseWordList {
 
     private fun createPattern(s: String): Pattern {
         val converted = s.toLowerCase(Locale.US)
+                .replace(' ','-')
+                .replace("-","[- ]")
                 .replace(".", "[a-z]")
-                .replace("#", "[a-z]+")
+        println("Pattern $converted")
         return Pattern.compile(converted, Pattern.CASE_INSENSITIVE)
     }
 }

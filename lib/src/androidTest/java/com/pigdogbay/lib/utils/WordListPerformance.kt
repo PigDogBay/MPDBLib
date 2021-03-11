@@ -14,8 +14,8 @@ class WordListPerformance {
 
     @Test
     fun setWordList1(){
-        val words = loadWordList(R.raw.idea)
-        val wordList = WordList()
+        val words = loadWordList(R.raw.phrases)
+        val wordList = PhraseWordList()
         val timing = Timing()
         wordList.setWordList(words)
         timing.logDuration("mpdb")

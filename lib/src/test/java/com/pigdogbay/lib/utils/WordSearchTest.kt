@@ -74,10 +74,19 @@ class WordSearchTest {
     }
 
     @Test
+    fun preProcessQuery10() {
+        val wordList = WordList()
+        val target = WordSearch(wordList)
+        val actual = target.preProcessQuery("m??k??-m?g?c")
+        assertEquals("m..k.. m.g.c", actual)
+    }
+
+    @Test
     fun getQueryType() {
         val wordList = WordList()
         val target = WordSearch(wordList)
         assertEquals(WordSearch.SearchType.Crossword, target.getQueryType("m.g.c"))
+        assertEquals(WordSearch.SearchType.CrosswordPhrase, target.getQueryType("m..k.. m.g.c"))
         assertEquals(WordSearch.SearchType.WildcardAndCrossword, target.getQueryType("m.g#"))
         assertEquals(WordSearch.SearchType.Wildcard, target.getQueryType("mag#"))
         assertEquals(WordSearch.SearchType.Anagram, target.getQueryType("magic"))
@@ -94,6 +103,7 @@ class WordSearchTest {
         val wordList = WordList()
         val target = WordSearch(wordList)
         assertEquals("m.g.c", target.postProcessQuery("m.g.c", WordSearch.SearchType.Crossword))
+        assertEquals("m..k.. m.g.c", target.postProcessQuery("m..k.. m.g.c", WordSearch.SearchType.CrosswordPhrase))
         assertEquals("m.g#", target.postProcessQuery("m.g#", WordSearch.SearchType.WildcardAndCrossword))
         assertEquals("#mag#", target.postProcessQuery("#mag#", WordSearch.SearchType.Wildcard))
         assertEquals("magic", target.postProcessQuery("magic", WordSearch.SearchType.Anagram))
@@ -108,6 +118,7 @@ class WordSearchTest {
         val wordList = WordList()
         val target = WordSearch(wordList)
         assertEquals("m.g.c", target.postProcessQuery("?m.?g.c??", WordSearch.SearchType.Crossword))
+        assertEquals("m..k.. m.g.c", target.postProcessQuery("m..k.. m.g.c?#", WordSearch.SearchType.CrosswordPhrase))
         assertEquals("m.g#", target.postProcessQuery("m.!g#*", WordSearch.SearchType.WildcardAndCrossword))
         assertEquals("#mag#", target.postProcessQuery("#mAaBg$.#", WordSearch.SearchType.Wildcard))
         assertEquals("magic", target.postProcessQuery("magic.#*+", WordSearch.SearchType.Anagram))
@@ -123,6 +134,7 @@ class WordSearchTest {
         val wordList = WordList()
         val target = WordSearch(wordList)
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Crossword))
+        assertEquals("", target.postProcessQuery("", WordSearch.SearchType.CrosswordPhrase))
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.WildcardAndCrossword))
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Wildcard))
         assertEquals("", target.postProcessQuery("", WordSearch.SearchType.Anagram))
@@ -140,6 +152,9 @@ class WordSearchTest {
         var actual = target.clean(expected)
         assertEquals(expected, actual)
         expected = "m.g.."
+        actual = target.clean(expected)
+        assertEquals(expected, actual)
+        expected = "m??k??-m.g.."
         actual = target.clean(expected)
         assertEquals(expected, actual)
         expected = "#ace"

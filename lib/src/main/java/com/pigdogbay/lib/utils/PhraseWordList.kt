@@ -72,7 +72,6 @@ class PhraseWordList {
                 .replace(' ','-')
                 .replace("-","[- ]")
                 .replace(".", "[a-z]")
-        println("Pattern $converted")
         return Pattern.compile(converted, Pattern.CASE_INSENSITIVE)
     }
 }

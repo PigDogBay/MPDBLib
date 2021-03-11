@@ -23,7 +23,8 @@ public class WordSearch {
         WildcardAndCrossword,
         Blanks,
         Supergram,
-        Codeword
+        Codeword,
+        CrosswordPhrase
     }
 
     private static final char CROSSWORD_CHAR = '.';
@@ -137,6 +138,8 @@ public class WordSearch {
             return SearchType.Wildcard;
         } else if (isCodeWord(query)) {
             return SearchType.Codeword;
+        } else if (query.contains(CROSSWORD_STR) && query.contains(TWOWORD_STR)) {
+            return SearchType.CrosswordPhrase;
         } else if (query.contains(CROSSWORD_STR)) {
             return SearchType.Crossword;
         } else if (query.contains(TWOWORD_STR)) {
@@ -181,6 +184,10 @@ public class WordSearch {
                 break;
             case Codeword:
                 query = stripCharsForCodeWord(query);
+                break;
+            case CrosswordPhrase:
+                //keep a-z, . and ' '
+                query = stripChars(query, CROSSWORD_CHAR, TWOWORD_CHAR);
                 break;
             default:
                 query = "";
@@ -260,6 +267,9 @@ public class WordSearch {
                 getCodewordSolver().parse(query);
                 _WordList.findCodewords(getCodewordSolver(),callback);
                 break;
+            case CrosswordPhrase:
+                phraseWordList.findPartialWords(query,callback);
+                break;
             default:
                 break;
 
@@ -284,6 +294,8 @@ public class WordSearch {
                 return "wildcard and crossword";
             case Codeword:
                 return "codeword";
+            case CrosswordPhrase:
+                return "crossword phrase";
         }
         return "undefined";
     }

@@ -285,9 +285,7 @@ class WordList {
             if (stop) {
                 break
             }
-            val len = word.length
-            if (len != expectedLength) continue
-            if (codewordSolver.isMatch(word)) {
+            if (word.length == expectedLength && codewordSolver.isMatch(word)) {
                 callback.Update(word)
             }
         }

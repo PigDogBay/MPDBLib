@@ -6,9 +6,7 @@ import java.util.regex.Pattern
 class WordList {
     @Volatile
     private var stop = false
-    private var wordList : List<Pair<String,String>> = listOf(Pair("",""))
-    private val inBuffer = CharArray(64)
-    private val outBuffer = CharArray(64)
+    private var wordList : List<String> = listOf("")
 
     /**
      * Signal to stop any searches
@@ -25,23 +23,7 @@ class WordList {
 	 * Word list must be sorted and all lower case
 	 */
     fun setWordList(wordList: List<String>) {
-        this.wordList = wordList.map{Pair(strip(it),it)}
-    }
-
-    /**
-     * Optimised code to remove spaces, hyphens and any punctuation from a string
-     */
-    private fun strip(raw: String) : String {
-        val l = raw.length
-        raw.toCharArray(inBuffer, 0, 0, l)
-        var j = 0
-        for (i in 0 until l){
-            val c = inBuffer[i]
-            if (c in 'a'..'z' || c in 'A'..'Z'){
-                outBuffer[j++] = c
-            }
-        }
-        return if (j==l) raw else outBuffer.concatToString(0,j)
+        this.wordList = wordList
     }
 
     fun findSupergrams(anagram: String, callback: WordListCallback, length: Int) {
@@ -51,10 +33,10 @@ class WordList {
             if (stop) {
                 break
             }
-            if (length == 0 && word.first.length > anagramLength
-                    || word.first.length == length) {
-                if (set.isSupergram(word.first)) {
-                    callback.Update(word.second)
+            if (length == 0 && word.length > anagramLength
+                    || word.length == length) {
+                if (set.isSupergram(word)) {
+                    callback.Update(word)
                 }
             }
         }
@@ -68,9 +50,9 @@ class WordList {
             if (stop) {
                 break
             }
-            if (word.first.length < tooBig) {
-                if (set.isAnagram(word.first, numberOfBlanks)) {
-                    callback.Update(word.second)
+            if (word.length < tooBig) {
+                if (set.isAnagram(word, numberOfBlanks)) {
+                    callback.Update(word)
                 }
             }
         }
@@ -83,9 +65,9 @@ class WordList {
             if (stop) {
                 break
             }
-            if (word.first.length == len) {
-                if (set.isAnagram(word.first, numberOfBlanks)) {
-                    callback.Update(word.second)
+            if (word.length == len) {
+                if (set.isAnagram(word, numberOfBlanks)) {
+                    callback.Update(word)
                 }
             }
         }
@@ -98,9 +80,9 @@ class WordList {
             if (stop) {
                 break
             }
-            if (word.first.length == len) {
-                if (set.isAnagram(word.first)) {
-                    callback.Update(word.second)
+            if (word.length == len) {
+                if (set.isAnagram(word)) {
+                    callback.Update(word)
                 }
             }
         }
@@ -116,10 +98,10 @@ class WordList {
             if (stop) {
                 break
             }
-            val wordLen = word.first.length
+            val wordLen = word.length
             if (wordLen < len) {
-                if (set.isSubgram(word.first)) {
-                    callback.Update(word.second)
+                if (set.isSubgram(word)) {
+                    callback.Update(word)
                 }
             }
         }
@@ -132,9 +114,9 @@ class WordList {
             if (stop) {
                 break
             }
-            if (word.first.length == length) {
-                if (pattern.matcher(word.first).matches()) {
-                    callback.Update(word.second)
+            if (word.length == length) {
+                if (pattern.matcher(word).matches()) {
+                    callback.Update(word)
                 }
             }
         }
@@ -146,8 +128,8 @@ class WordList {
             if (stop) {
                 break
             }
-            if (pattern.matcher(word.first).matches()) {
-                callback.Update(word.second)
+            if (pattern.matcher(word).matches()) {
+                callback.Update(word)
             }
         }
     }
@@ -290,8 +272,8 @@ class WordList {
                 break
             }
             //skip phrases by checking display word is same length
-            if (word.first.length == length && word.second.length == length && set.isSubgram(word.first)) {
-                matches.add(word.first)
+            if (word.length == length && set.isSubgram(word)) {
+                matches.add(word)
             }
         }
         return matches
@@ -303,10 +285,10 @@ class WordList {
             if (stop) {
                 break
             }
-            val len = word.first.length
+            val len = word.length
             if (len != expectedLength) continue
-            if (codewordSolver.isMatch(word.first)) {
-                callback.Update(word.second)
+            if (codewordSolver.isMatch(word)) {
+                callback.Update(word)
             }
         }
     }

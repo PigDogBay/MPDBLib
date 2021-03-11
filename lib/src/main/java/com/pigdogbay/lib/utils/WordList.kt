@@ -41,7 +41,7 @@ class WordList {
                 outBuffer[j++] = c
             }
         }
-        return outBuffer.concatToString(0,j)
+        return if (j==l) raw else outBuffer.concatToString(0,j)
     }
 
     fun findSupergrams(anagram: String, callback: WordListCallback, length: Int) {

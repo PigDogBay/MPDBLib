@@ -6,9 +6,11 @@ import java.util.regex.Pattern
 class PhraseWordList {
     @Volatile
     private var stop = false
-    private var wordList : List<String> = listOf("")
+    private var wordList : List<String> = emptyList()
     private val inBuffer = CharArray(64)
     private val outBuffer = CharArray(64)
+
+    val isWordListEmpty : Boolean get() = wordList.isEmpty()
 
     /**
      * Signal to stop any searches

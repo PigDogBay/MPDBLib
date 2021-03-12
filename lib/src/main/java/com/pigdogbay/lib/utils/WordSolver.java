@@ -259,7 +259,7 @@ public class WordSolver
 			try 
 			{
 				wordList.setWordList(LineReader.Read(context, wordListId));
-				if (phraseListId>0){
+				if (phraseListId>0 && wordSearch.getPhraseWordList().isWordListEmpty()){
 					wordSearch.getPhraseWordList().setWordList(LineReader.Read(context,phraseListId));
 				}
 			} 

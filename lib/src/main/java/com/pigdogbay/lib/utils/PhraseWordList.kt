@@ -7,8 +7,6 @@ class PhraseWordList {
     @Volatile
     private var stop = false
     private var wordList : List<String> = emptyList()
-    private val inBuffer = CharArray(64)
-    private val outBuffer = CharArray(64)
 
     val isWordListEmpty : Boolean get() = wordList.isEmpty()
 
@@ -21,22 +19,6 @@ class PhraseWordList {
 
     fun setWordList(wordList: List<String>) {
         this.wordList = wordList
-    }
-
-    /**
-     * Optimised code to remove spaces, hyphens and any punctuation from a string
-     */
-    private fun strip(raw: String) : String {
-        val l = raw.length
-        raw.toCharArray(inBuffer, 0, 0, l)
-        var j = 0
-        for (i in 0 until l){
-            val c = inBuffer[i]
-            if (c in 'a'..'z' || c in 'A'..'Z'){
-                outBuffer[j++] = c
-            }
-        }
-        return if (j==l) raw else outBuffer.concatToString(0,j)
     }
 
     fun findAnagrams(anagram: String, callback: WordListCallback) {

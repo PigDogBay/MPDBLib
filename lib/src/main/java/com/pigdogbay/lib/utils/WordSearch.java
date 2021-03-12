@@ -229,8 +229,7 @@ public class WordSearch {
                 _WordList.findAnagrams(query, callback);
                 if (_FindSubAnagrams
                         && query.length() <= MAX_WORD_LEN) {
-                    WordListCallback filterWrapper = new WordListCallback.FilterWrapper(
-                            callback);
+                    WordListCallback filterWrapper = new WordListCallback.FilterWrapper(callback);
                     _WordList.findSubAnagrams(query, filterWrapper);
                 }
                 break;
@@ -252,6 +251,7 @@ public class WordSearch {
                 _WordList.findSupergrams(query, callback, 0);
                 break;
             case TwoWordAnagram:
+                phraseWordList.findAnagrams(query, callback);
                 String[] words = query.split(" ");
                 if (isThreeWordAnagramsEnabled && words.length > 2){
                     _WordList.findMultiwordAnagrams(words[0],words[1],words[2],callback);

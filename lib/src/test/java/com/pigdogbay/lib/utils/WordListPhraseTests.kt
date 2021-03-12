@@ -42,6 +42,20 @@ class WordListPhraseTests : WordListCallback {
         testCrossword("h.... bailey", arrayOf("holly bailey","henry bailey"))
     }
 
+    @Test
+    fun emptyWordList1(){
+        val target = PhraseWordList()
+        target.findAnagrams("h.... bailey", this)
+        assertTrue(matches.isEmpty())
+    }
+
+    @Test
+    fun emptyWordList2(){
+        val target = PhraseWordList()
+        target.findPartialWords("yelia bhyllo", this)
+        assertTrue(matches.isEmpty())
+    }
+
     override fun Update(result: String?) {
         matches.add(result!!)
     }

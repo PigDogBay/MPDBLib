@@ -56,7 +56,7 @@ class PhraseWordList {
 
     fun findPartialWords(partialWord: String, callback: WordListCallback) {
         val length = partialWord.length
-        val pattern = createPattern(partialWord)
+        val pattern = Pattern.compile(partialWord.toCrosswordRegex(), Pattern.CASE_INSENSITIVE)
         for (word in wordList) {
             if (stop) {
                 break
@@ -67,13 +67,5 @@ class PhraseWordList {
                 }
             }
         }
-    }
-
-    private fun createPattern(s: String): Pattern {
-        val converted = s.toLowerCase(Locale.US)
-                .replace(' ','-')
-                .replace("-","[- ]")
-                .replace(".", "[a-z]")
-        return Pattern.compile(converted, Pattern.CASE_INSENSITIVE)
     }
 }

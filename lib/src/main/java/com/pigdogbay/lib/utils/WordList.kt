@@ -134,12 +134,7 @@ class WordList {
         }
     }
 
-    private fun createPattern(s: String): Pattern {
-        val converted = s.toLowerCase(Locale.US)
-                .replace(".", "[a-z]")
-                .replace("#", "[a-z]+")
-        return Pattern.compile(converted, Pattern.CASE_INSENSITIVE)
-    }
+    private fun createPattern(s: String) = Pattern.compile(s.toCrosswordRegex(),Pattern.CASE_INSENSITIVE)
 
     /**
      * Filter the word list so that it contains letters that are same size as word1

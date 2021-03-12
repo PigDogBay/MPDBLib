@@ -176,11 +176,7 @@ public interface WordListCallback {
 			this.wrappedCallback = wrappedCallback;
 			Pattern compiled;
 			try {
-				letters = letters.toLowerCase(Locale.US);
-				letters = letters.replace(".", "[a-z]");
-				letters = letters.replace("?", "[a-z]");
-				letters = letters.replace("@", "[a-z]+");
-				compiled = Pattern.compile("\\b" + letters + "\\b", Pattern.CASE_INSENSITIVE);
+				compiled = Pattern.compile(ExtensionsKt.toCrosswordRegex(letters), Pattern.CASE_INSENSITIVE);
 			} catch (PatternSyntaxException ex){
 				//blocks any match
 				compiled = Pattern.compile("");
